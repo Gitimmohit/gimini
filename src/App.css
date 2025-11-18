@@ -43,10 +43,3 @@
   flex-direction: column;
 }
 
-
-/* For mobile devices */
-@media (max-width: 768px) {
-  .main-content {
-    margin-top: 70px;
-  }
-}
