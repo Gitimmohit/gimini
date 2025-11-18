@@ -205,6 +205,7 @@ h1 {
   gap: 25px;
 }
 
+
 .form-group {
   display: flex;
   flex-direction: column;
@@ -544,5 +545,132 @@ input.error {
   
   h1 {
     font-size: 1.7rem;
+  }
+}
+
+
+/* Add this to your Login.css file */
+
+/* User Type Selection */
+.user-type-selection {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.user-type-option {
+  display: block;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.user-type-option:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(106, 17, 203, 0.3);
+}
+
+.user-type-option.selected {
+  background: rgba(106, 17, 203, 0.15);
+  border-color: #6a11cb;
+  box-shadow: 0 0 20px rgba(106, 17, 203, 0.3);
+}
+
+.user-type-option input {
+  display: none;
+}
+
+.option-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.option-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: #6a11cb;
+}
+
+.user-type-option.selected .option-icon {
+  background: #6a11cb;
+  color: white;
+}
+
+.option-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.option-label {
+  font-weight: 600;
+  color: white;
+  font-size: 0.95rem;
+}
+
+.option-desc {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 2px;
+}
+
+/* Demo Hint */
+.demo-hint {
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 10px;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+}
+
+.hint-content {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.hint-examples {
+  display: flex;
+  gap: 8px;
+  margin-top: 5px;
+  flex-wrap: wrap;
+}
+
+.hint-examples code {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: #ffd700;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .user-type-selection {
+    grid-template-columns: 1fr;
+  }
+  
+  .hint-examples {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .option-content {
+    gap: 10px;
+  }
+  
+  .option-icon {
+    width: 35px;
+    height: 35px;
   }
 }

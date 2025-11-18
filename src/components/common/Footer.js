@@ -27,7 +27,7 @@ const Footer = () => {
           <div className="footer-brand">
             <div className="brand-logo">
               <Star className="logo-icon" />
-              <span className="brand-name">CosmicVision</span>
+              <span className="brand-name">Gimini Planetarium</span>
             </div>
             <p className="brand-description">
               Where the universe comes alive. Experience breathtaking
@@ -126,7 +126,7 @@ const Footer = () => {
               <div className="contact-item">
                 <Email className="contact-icon" />
                 <div>
-                  <div className="contact-text">info@cosmicvision.com</div>
+                  <div className="contact-text">info@Gimini Planetarium.com</div>
                   <div className="contact-subtext">
                     Quick response guaranteed
                   </div>

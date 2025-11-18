@@ -71,7 +71,7 @@ const ContactUs = () => {
     {
       icon: <Email className="contact-icon" />,
       title: "Email Us",
-      details: ["info@cosmicvision.com", "bookings@cosmicvision.com"],
+      details: ["info@Gimini Planetarium.com", "bookings@Gimini Planetarium.com"],
       description: "We typically respond within 2-4 hours"
     },
    
