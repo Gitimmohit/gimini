@@ -167,6 +167,103 @@
   justify-content: center;
   flex-wrap: wrap;
 }
+/* Overlay */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* Transparent Background */
+  backdrop-filter: blur(2px);     /* Optional: soft blur */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+
+/* Modal Box */
+.modalBox {
+  /* background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4); */
+  background: rgba(0, 0, 0, 0.85);
+  width: 700px;
+  max-height: 80vh;     /* 🔥 Set max height */
+  /* overflow-y: auto;      🔥 Enable scrolling */
+  padding: 40px;
+  border-radius: 8px;
+  position: relative;
+  color: white;
+  animation: fadeIn .3s ease;
+}
+
+/* Close Button */
+.closeBtn {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 26px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Title */
+.modalTitle {
+  font-size: 40px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/* Form Grid: 2 Columns */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px 25px;
+}
+
+/* Label Styling */
+.formGrid label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 6px;
+  text-align: left;
+}
+
+.formGrid label span {
+  color: red;
+}
+
+/* Input Field */
+.formGrid input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  background: #eaeaea;
+  font-size: 14px;
+}
+
+/* Send Button */
+.sendBtn {
+  display: block;
+  margin: 25px auto 0 auto;
+  background: #c89b34;
+  border: none;
+  color: white;
+  padding: 14px 50px;
+  border-radius: 40px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 
 .btn {
   padding: 1rem 2rem;
@@ -212,6 +309,132 @@
   from { box-shadow: 0 0 20px rgba(100, 255, 218, 0.5); }
   to { box-shadow: 0 0 30px rgba(100, 255, 218, 0.8), 0 0 40px rgba(100, 255, 218, 0.6); }
 }
+
+.imgSectionHero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  /* background-color: #000; or any background you want */
+}
+/* -------------------------------
+   SECOND SECTION - SHOW SECTION
+--------------------------------*/
+.imgSectionShow {
+  position: relative;
+  width: 100%;
+  height: 100vh;               
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 40px;
+}
+
+/* Background image */
+.showImg {
+  width: 100%;
+  height: 100vh;
+  object-fit: contain; /* keeps entire image visible */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -2;
+}
+.infoContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  padding: 20px 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 200px;
+  color: white;
+}
+
+.infoIcon {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 15px;
+  filter: invert(74%) sepia(56%) saturate(460%) hue-rotate(2deg) brightness(96%) contrast(92%);
+}
+
+.infoTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.infoText {
+  font-size: 1.1rem;
+  color: #d7d7d7;
+}
+
+/* Optional: Dark overlay for better text visibility */
+.imgSectionShow::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);  
+  z-index: -1;
+}
+
+/* Content Box */
+.imgSectionShow .heroContent {
+  position: relative;
+  z-index: 5;
+  max-width: 900px;
+  text-align: center;
+  color: white;
+}
+
+/* Title */
+.imgSectionShow .heroTitle {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    font-size: 2.2rem;
+  }
+}
+
+/* Gradient text
+.gradientText {
+  background: linear-gradient(45deg, #21d4fd, #b721ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+} */
+
+/* Subtitle */
+.imgSectionShow .heroSubtitle {
+  font-size: 1.3rem;
+  margin-top: 10px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0.95;
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
+}
+
+
 
 /* Trust Indicators */
 .trustIndicators {
@@ -477,7 +700,7 @@
 
 /* Showcase Section */
 .showcaseSection {
-  padding: 100px 0;
+  padding: 40px 0;
   background: #112240;
 }
 
@@ -490,6 +713,7 @@
 
 .showcaseText {
   max-width: 500px;
+  align-items: center;
 }
 
 .showBadge {

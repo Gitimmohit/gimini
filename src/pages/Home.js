@@ -1,8 +1,13 @@
 // pages/Home.js
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import pic2 from "../assets/pic2.jpg";
+import dome2 from "../assets/dome2.png";
+import maximize from "../assets/maximize.png";
+import Asset from "../assets/Asset.png";
+import Asse from "../assets/Asse.png";
+import Assets from "../assets/Assets.png";
 
 import {
   Star,
@@ -22,15 +27,22 @@ import {
   Science,
   Language,
   Nightlight,
+  Maximize,
 } from "@mui/icons-material";
 import styles from "./Home.module.css";
 
 const Home = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className={styles.homePage}>
       {/* Hero Section with Space Background */}
       <section className={styles.heroSection}>
-        <img src={pic2} alt="Digital Dome Projection" className={styles.heroImg} />
+        <img
+          src={pic2}
+          alt="Digital Dome Projection"
+          className={styles.heroImg}
+        />
 
         <motion.div
           className={styles.heroContent}
@@ -64,17 +76,93 @@ const Home = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.9, duration: 1 }}
           >
-            <Link to="/shows" className={`${styles.btn} ${styles.primaryBtn} ${styles.glowEffect}`}>
+            <Link
+              to="/registerstudent"
+              className={`${styles.btn} ${styles.primaryBtn} ${styles.glowEffect}`}
+            >
               <RocketLaunch sx={{ mr: 1 }} />
-              Explore Shows
+              Register Now
             </Link>
-            <Link to="/register" className={`${styles.btn} ${styles.secondaryBtn}`}>
-              <Groups sx={{ mr: 1 }} />
-              Book Now
-            </Link>
-          </motion.div>
+            <>
+              {/* Book Now Button */}
+              <button
+                className={`${styles.btn} ${styles.primaryBtn} ${styles.glowEffect}`}
+                onClick={() => setIsModalOpen(true)}
+              >
+                <Groups sx={{ mr: 1 }} />
+                Book Now
+              </button>
 
-   
+              {/* Modal */}
+              {isModalOpen && (
+                <div className={styles.modalOverlay}>
+                  <div className={styles.modalBox}>
+                    {/* Close Button */}
+                    <button
+                      className={styles.closeBtn}
+                      onClick={() => setIsModalOpen(false)}
+                    >
+                      ×
+                    </button>
+
+                    {/* Title */}
+                    <h2 className={styles.modalTitle}>BOOK YOUR SHOW</h2>
+
+                    {/* Form */}
+                    <form className={styles.formGrid}>
+                      {/* Row 1 */}
+                      <div>
+                        <label>
+                          Name <span>*</span>
+                        </label>
+                        <input type="text" placeholder="Name" />
+                      </div>
+
+                      <div>
+                        <label>
+                          Mobile Number <span>*</span>
+                        </label>
+                        <input type="text" placeholder="Mobile Number" />
+                      </div>
+
+                      {/* Row 2 */}
+                      <div>
+                        <label>Email</label>
+                        <input type="email" placeholder="Email" />
+                      </div>
+
+                      <div>
+                        <label>
+                          School/Organization name <span>*</span>
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="School/Organization name"
+                        />
+                      </div>
+
+                      {/* Row 3 */}
+                      <div>
+                        <label>
+                          City <span>*</span>
+                        </label>
+                        <input type="text" placeholder="City" />
+                      </div>
+
+                      <div>
+                        <label>No of Students</label>
+                        <input type="text" placeholder="No of Students" />
+                      </div>
+                    </form>
+                    {/* Submit Button */}
+                    <div className={styles.actionButtons}>
+                      <button className={styles.sendBtn}>Book</button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
+          </motion.div>
         </motion.div>
 
         <motion.div
@@ -84,6 +172,78 @@ const Home = () => {
         >
           <div className={styles.mouse}></div>
           <span>Scroll to Explore</span>
+        </motion.div>
+      </section>
+      <section className={styles.imgSectionShow}>
+        <img
+          src={dome2}
+          alt="Digital Dome Projection"
+          className={styles.showImg}
+        />
+        <motion.div
+          className={styles.heroContent}
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <motion.h1
+            className={styles.heroTitle}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 1 }}
+          >
+            Digital Portable Planetarium:{" "}
+            <span className={styles.gradientText}>
+              Bringing Space Science to Schools
+            </span>
+          </motion.h1>
+          <motion.p
+            className={styles.heroSubtitle}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6, duration: 1 }}
+          >
+            Journey through the cosmos. Experience the universe like never
+            before in our state-of-the-art digital dome theater.
+          </motion.p>
+
+          <div className={styles.infoContainer}>
+            <div className={styles.infoItem}>
+              <img
+                src={maximize}
+                alt="Space Icon"
+                className={styles.infoIcon}
+              />
+              <h3 className={styles.infoTitle}>Space Required</h3>
+              <p className={styles.infoText}>20 x 20 x 10 ft</p>
+            </div>
+
+            <div className={styles.infoItem}>
+              <img
+                src={Asset}
+                alt="Duration Icon"
+                className={styles.infoIcon}
+              />
+              <h3 className={styles.infoTitle}>Show Duration</h3>
+              <p className={styles.infoText}>30 mins (approx)</p>
+            </div>
+
+            <div className={styles.infoItem}>
+              <img src={Asse} alt="Capacity Icon" className={styles.infoIcon} />
+              <h3 className={styles.infoTitle}>Capacity Per Show</h3>
+              <p className={styles.infoText}>60–70 Students</p>
+            </div>
+
+            <div className={styles.infoItem}>
+              <img
+                src={Assets}
+                alt="Daily Shows Icon"
+                className={styles.infoIcon}
+              />
+              <h3 className={styles.infoTitle}>Shows Per Day</h3>
+              <p className={styles.infoText}>12–16 Shows</p>
+            </div>
+          </div>
         </motion.div>
       </section>
 
@@ -119,7 +279,7 @@ const Home = () => {
             >
               <div className={styles.featureImage}>
                 <img
-                  src="https://images.unsplash.com/photo-1543722530-d2c3201371e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2074&q=80"
+                  src="https://images.unsplash.com/photo-1614726365930-627c75da663e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Digital Dome Projection"
                 />
                 <div className={styles.featureOverlay}></div>
@@ -160,7 +320,7 @@ const Home = () => {
             >
               <div className={styles.featureImage}>
                 <img
-                  src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&auto=format&fit=crop&w=2094&q=80"
+                  src="https://images.unsplash.com/photo-1614315517650-3771cf72d18a?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Expert Astronomers"
                 />
                 <div className={styles.featureOverlay}></div>
@@ -200,7 +360,7 @@ const Home = () => {
             >
               <div className={styles.featureImage}>
                 <img
-                  src="https://images.unsplash.com/photo-1502136969935-8d8eef54d77b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80"
+                  src="https://images.unsplash.com/photo-1667264920644-b119acc173d5?q=80&w=874&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Educational Programs"
                 />
                 <div className={styles.featureOverlay}></div>
@@ -324,7 +484,10 @@ const Home = () => {
               </div>
 
               <div className={styles.showActions}>
-                <Link to="/shows" className={`${styles.btn} ${styles.primaryBtn} ${styles.large}`}>
+                <Link
+                  to="/shows"
+                  className={`${styles.btn} ${styles.primaryBtn} ${styles.large}`}
+                >
                   <ConfirmationNumber sx={{ mr: 1 }} />
                   Book Your Seat Now
                 </Link>
@@ -355,7 +518,7 @@ const Home = () => {
               viewport={{ once: true }}
             >
               <img
-                src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&auto=format&fit=crop&w=2020&q=80"
+                src="https://images.unsplash.com/photo-1698107146613-44b0f9fafad7?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="Journey to the Edge of the Universe Show"
                 className={styles.showImage}
               />
@@ -396,7 +559,7 @@ const Home = () => {
                 time: "6:00 PM",
                 duration: "45 mins",
                 image:
-                  "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                  "https://plus.unsplash.com/premium_photo-1733983990725-efe831f53e32?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                 tags: ["New", "Scientific"],
                 rating: 4.8,
                 reviews: 127,
@@ -419,7 +582,7 @@ const Home = () => {
                 date: "Feb 2, 2024",
                 duration: "50 mins",
                 image:
-                  "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                  "https://plus.unsplash.com/premium_photo-1721276303453-24a790e952e8?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                 tags: ["Educational", "Kids"],
               },
               {
@@ -427,7 +590,7 @@ const Home = () => {
                 date: "Feb 10, 2024",
                 duration: "55 mins",
                 image:
-                  "https://images.unsplash.com/photo-1465101162946-4377e57745c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                  "https://plus.unsplash.com/premium_photo-1681399977843-3efee572acd4?q=80&w=580&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                 tags: ["Action", "3D"],
               },
             ].map((show, index) => (
@@ -569,11 +732,17 @@ const Home = () => {
             </div>
 
             <div className={styles.ctaButtons}>
-              <Link to="/shows" className={`${styles.btn} ${styles.primaryBtn} ${styles.large}`}>
+              <Link
+                to="/shows"
+                className={`${styles.btn} ${styles.primaryBtn} ${styles.large}`}
+              >
                 <ConfirmationNumber sx={{ mr: 1 }} />
                 View Show Schedule
               </Link>
-              <Link to="/register" className={`${styles.btn} ${styles.secondaryBtn} ${styles.large}`}>
+              <Link
+                to="/register"
+                className={`${styles.btn} ${styles.secondaryBtn} ${styles.large}`}
+              >
                 <Groups sx={{ mr: 1 }} />
                 Register Now
               </Link>
