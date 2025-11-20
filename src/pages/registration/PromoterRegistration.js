@@ -12,9 +12,9 @@ import {
   Campaign,
   RocketLaunch
 } from '@mui/icons-material';
-import './Registration.css';
+import './PromoterRegistration.css';
 
-const Registration = () => {
+const PromoterRegistration = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -224,38 +224,13 @@ const Registration = () => {
               </div>
             </div>
 
-            {/* User Type Selection - Compact */}
-            <div className="form-group compact">
-              <label>Join As *</label>
-              <div className="user-type-compact">
-                {userTypes.map((type) => (
-                  <label
-                    key={type.value}
-                    className={`type-option ${formData.userType === type.value ? 'selected' : ''}`}
-                  >
-                    <input
-                      type="radio"
-                      name="userType"
-                      value={type.value}
-                      checked={formData.userType === type.value}
-                      onChange={handleChange}
-                    />
-                    <span className="option-icon">{type.icon}</span>
-                    <span className="option-text">
-                      <span className="option-label">{type.label}</span>
-                      <span className="option-desc">{type.description}</span>
-                    </span>
-                  </label>
-                ))}
-              </div>
-            </div>
 
             {/* Referral Code - Compact */}
             <div className="form-group compact">
               <label>Referral Code <span className="optional">(Optional)</span></label>
               <div className="input-wrapper">
                 <Campaign className="input-icon" />
-                <input
+                <input 
                   type="text"
                   name="referralCode"
                   value={formData.referralCode}
@@ -305,4 +280,4 @@ const Registration = () => {
   );
 };
 
-export default Registration;
+export default PromoterRegistration;

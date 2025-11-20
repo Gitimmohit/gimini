@@ -1,21 +1,48 @@
-import { createSlice } from "@reduxjs/toolkit";
+// src/redux/slices/userSlice.js
+import { createSlice } from '@reduxjs/toolkit';
 
+// declare all the initial values of the state
 const initialState = {
-  user: null,
+  value: 0,
+  access_token: "",
+  refresh_token: "",
+  user_details: {},
 };
 
-const userSlice = createSlice({
-  name: "user",
+export const userSlice = createSlice({
+  name: 'authinfo',
   initialState,
   reducers: {
-    setUser: (state, action) => {
-      state.user = action.payload;
+    increment: (state) => {
+      state.value += 1;
     },
-    clearUser: (state) => {
-      state.user = null;
+    decrement: (state) => {
+      state.value -= 1;
+    },
+    incrementByAmount: (state, action) => {
+      state.value += action.payload;
+    },
+
+    setAccessToken: (state, action) => {
+      state.access_token = action.payload;
+    },
+    setRefreshToken: (state, action) => {
+      state.refresh_token = action.payload;
+    },
+    setUserDetails: (state, action) => {
+      state.user_details = action.payload;
     },
   },
 });
 
-export const { setUser, clearUser } = userSlice.actions;
+// Export actions
+export const {
+  increment,
+  decrement,
+  incrementByAmount,
+  setAccessToken,
+  setRefreshToken,
+  setUserDetails
+} = userSlice.actions;
+
 export default userSlice.reducer;

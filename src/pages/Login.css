@@ -1,5 +1,5 @@
 /* pages/Login.css */
-.login-page {
+.log-page {
   min-height: 100vh;
   background: linear-gradient(135deg, #0a0a2a 0%, #1a1a4a 50%, #0f0c29 100%);
   display: flex;
@@ -10,7 +10,7 @@
   overflow: hidden;
 }
 
-.space-bg {
+.log-space-bg {
   position: absolute;
   top: 0;
   left: 0;
@@ -19,7 +19,7 @@
   z-index: 0;
 }
 
-.stars-container {
+.log-stars-container {
   position: absolute;
   top: 0;
   left: 0;
@@ -27,7 +27,7 @@
   height: 100%;
 }
 
-.star {
+.log-star {
   position: absolute;
   background: #ffffff;
   border-radius: 50%;
@@ -35,13 +35,13 @@
 }
 
 /* Planets */
-.planet {
+.log-planet {
   position: absolute;
   border-radius: 50%;
   filter: blur(1px);
 }
 
-.planet-1 {
+.log-planet-1 {
   width: 120px;
   height: 120px;
   background: radial-gradient(circle at 30% 30%, #ff6b6b, #c44569);
@@ -50,7 +50,7 @@
   box-shadow: 0 0 50px rgba(255, 107, 107, 0.4);
 }
 
-.planet-2 {
+.log-planet-2 {
   width: 80px;
   height: 80px;
   background: radial-gradient(circle at 40% 40%, #4ecdc4, #44a08d);
@@ -59,7 +59,7 @@
   box-shadow: 0 0 40px rgba(78, 205, 196, 0.4);
 }
 
-.planet-3 {
+.log-planet-3 {
   width: 60px;
   height: 60px;
   background: radial-gradient(circle at 50% 50%, #ffeaa7, #fdcb6e);
@@ -69,7 +69,7 @@
 }
 
 /* Shooting Star */
-.shooting-star {
+.log-shooting-star {
   position: absolute;
   width: 4px;
   height: 4px;
@@ -80,14 +80,14 @@
 }
 
 /* Nebula Effects */
-.nebula {
+.log-nebula {
   position: absolute;
   border-radius: 50%;
   filter: blur(60px);
   opacity: 0.1;
 }
 
-.nebula-1 {
+.log-nebula-1 {
   width: 300px;
   height: 300px;
   background: #6a11cb;
@@ -95,7 +95,7 @@
   right: -100px;
 }
 
-.nebula-2 {
+.log-nebula-2 {
   width: 400px;
   height: 400px;
   background: #2575fc;
@@ -103,7 +103,7 @@
   left: -150px;
 }
 
-.nebula-3 {
+.log-nebula-3 {
   width: 200px;
   height: 200px;
   background: #ff6b6b;
@@ -111,13 +111,13 @@
   left: 10%;
 }
 
-.container {
+.log-container {
   width: 100%;
-  max-width: 440px;
+  max-width: 80%;
   z-index: 1;
 }
 
-.login-card {
+.log-card {
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
   border-radius: 24px;
@@ -130,7 +130,7 @@
   overflow: hidden;
 }
 
-.login-card::before {
+.log-card::before {
   content: '';
   position: absolute;
   top: 0;
@@ -139,27 +139,27 @@
   height: 4px;
   background: linear-gradient(90deg, #6a11cb, #2575fc, #ff6b6b);
   background-size: 200% 100%;
-  animation: shimmer 3s ease-in-out infinite;
+  animation: log-shimmer 3s ease-in-out infinite;
 }
 
-@keyframes shimmer {
+@keyframes log-shimmer {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
 }
 
-.card-header {
+.log-card-header {
   text-align: center;
   margin-bottom: 35px;
 }
 
-.header-content {
+.log-header-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
 }
 
-.logo-container {
+.log-logo-container {
   position: relative;
   display: flex;
   align-items: center;
@@ -168,20 +168,20 @@
   height: 80px;
 }
 
-.orbit-icon {
+.log-orbit-icon {
   position: absolute;
   font-size: 80px;
   color: rgba(255, 255, 255, 0.1);
 }
 
-.header-icon {
+.log-header-icon {
   font-size: 2.2rem;
   color: #6a11cb;
   filter: drop-shadow(0 0 15px rgba(106, 17, 203, 0.6));
   z-index: 1;
 }
 
-h1 {
+.log-card-header h1 {
   font-family: 'Orbitron', sans-serif;
   font-weight: 700;
   font-size: 2rem;
@@ -193,26 +193,25 @@ h1 {
   letter-spacing: 0.5px;
 }
 
-.card-header p {
+.log-card-header p {
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.95rem;
   font-weight: 300;
 }
 
-.login-form {
+.log-form {
   display: flex;
   flex-direction: column;
   gap: 25px;
 }
 
-
-.form-group {
+.log-form-group {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-label {
+.log-form-group label {
   font-size: 0.9rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.9);
@@ -221,18 +220,18 @@ label {
   gap: 8px;
 }
 
-.label-icon {
+.log-label-icon {
   font-size: 1rem;
   color: #6a11cb;
 }
 
-.input-wrapper {
+.log-input-wrapper {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.input-icon {
+.log-input-icon {
   position: absolute;
   left: 16px;
   color: rgba(255, 255, 255, 0.6);
@@ -240,7 +239,7 @@ label {
   z-index: 1;
 }
 
-input {
+.log-form-group input {
   width: 100%;
   padding: 16px 16px 16px 48px;
   background: rgba(255, 255, 255, 0.07);
@@ -252,7 +251,7 @@ input {
   backdrop-filter: blur(10px);
 }
 
-input:focus {
+.log-form-group input:focus {
   outline: none;
   border-color: #6a11cb;
   box-shadow: 
@@ -261,11 +260,11 @@ input:focus {
   background: rgba(255, 255, 255, 0.1);
 }
 
-input::placeholder {
+.log-form-group input::placeholder {
   color: rgba(255, 255, 255, 0.4);
 }
 
-.password-toggle {
+.log-password-toggle {
   position: absolute;
   right: 16px;
   background: none;
@@ -279,37 +278,37 @@ input::placeholder {
   transition: color 0.3s ease;
 }
 
-.password-toggle:hover {
+.log-password-toggle:hover {
   color: rgba(255, 255, 255, 0.9);
 }
 
-.options-row {
+.log-options-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 0.85rem;
 }
 
-.remember-me {
+.log-remember-me {
   display: flex;
   align-items: center;
   gap: 8px;
   color: rgba(255, 255, 255, 0.7);
 }
 
-.custom-checkbox {
+.log-custom-checkbox {
   position: relative;
   display: inline-block;
 }
 
-.custom-checkbox input {
+.log-custom-checkbox input {
   position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-.checkmark {
+.log-checkmark {
   width: 18px;
   height: 18px;
   background: rgba(255, 255, 255, 0.1);
@@ -321,31 +320,31 @@ input::placeholder {
   transition: all 0.3s ease;
 }
 
-.custom-checkbox input:checked + .checkmark {
+.log-custom-checkbox input:checked + .log-checkmark {
   background: #6a11cb;
   border-color: #6a11cb;
 }
 
-.custom-checkbox input:checked + .checkmark::after {
+.log-custom-checkbox input:checked + .log-checkmark::after {
   content: '✓';
   color: white;
   font-size: 12px;
   font-weight: bold;
 }
 
-.forgot-password {
+.log-forgot-password {
   color: #4ecdc4;
   text-decoration: none;
   transition: all 0.3s ease;
   font-weight: 500;
 }
 
-.forgot-password:hover {
+.log-forgot-password:hover {
   color: #2575fc;
   text-decoration: underline;
 }
 
-.cosmic-btn {
+.log-cosmic-btn {
   background: linear-gradient(135deg, #6a11cb 0%, #2575fc 50%, #4ecdc4 100%);
   background-size: 200% 200%;
   color: white;
@@ -365,7 +364,7 @@ input::placeholder {
   overflow: hidden;
 }
 
-.cosmic-btn::before {
+.log-cosmic-btn::before {
   content: '';
   position: absolute;
   top: 0;
@@ -376,41 +375,41 @@ input::placeholder {
   transition: left 0.5s;
 }
 
-.cosmic-btn:hover::before {
+.log-cosmic-btn:hover::before {
   left: 100%;
 }
 
-.cosmic-btn:hover:not(:disabled) {
+.log-cosmic-btn:hover:not(:disabled) {
   background-position: 100% 100%;
 }
 
-.cosmic-btn:active {
+.log-cosmic-btn:active {
   transform: translateY(0);
 }
 
-.cosmic-btn:disabled {
+.log-cosmic-btn:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
 
-.btn-icon {
+.log-btn-icon {
   font-size: 1.2rem;
 }
 
-.cosmic-spinner {
+.log-cosmic-spinner {
   width: 20px;
   height: 20px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
   border-top-color: white;
-  animation: spin 1s linear infinite;
+  animation: log-spin 1s linear infinite;
 }
 
-@keyframes spin {
+@keyframes log-spin {
   to { transform: rotate(360deg); }
 }
 
-.divider {
+.log-divider {
   display: flex;
   align-items: center;
   margin: 25px 0;
@@ -418,15 +417,15 @@ input::placeholder {
   font-size: 0.85rem;
 }
 
-.divider::before,
-.divider::after {
+.log-divider::before,
+.log-divider::after {
   content: '';
   flex: 1;
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
 }
 
-.divider span {
+.log-divider span {
   padding: 0 20px;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 20px;
@@ -434,13 +433,13 @@ input::placeholder {
   backdrop-filter: blur(10px);
 }
 
-.social-login {
+.log-social-login {
   display: flex;
   gap: 15px;
   margin-bottom: 25px;
 }
 
-.social-btn {
+.log-social-btn {
   flex: 1;
   display: flex;
   align-items: center;
@@ -458,48 +457,48 @@ input::placeholder {
   backdrop-filter: blur(10px);
 }
 
-.social-btn:hover {
+.log-social-btn:hover {
   background: rgba(255, 255, 255, 0.12);
   transform: translateY(-2px);
 }
 
-.social-icon {
+.log-social-icon {
   font-size: 1.1rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.starlink:hover {
+.log-starlink:hover {
   background: rgba(106, 17, 203, 0.2);
   border-color: rgba(106, 17, 203, 0.3);
 }
 
-.galaxy:hover {
+.log-galaxy:hover {
   background: rgba(37, 117, 252, 0.2);
   border-color: rgba(37, 117, 252, 0.3);
 }
 
-.card-footer {
+.log-card-footer {
   text-align: center;
   margin-top: 30px;
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.9rem;
 }
 
-.footer-link {
+.log-footer-link {
   color: #4ecdc4;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s;
 }
 
-.footer-link:hover {
+.log-footer-link:hover {
   color: #2575fc;
   text-decoration: underline;
 }
 
-.security-note {
+.log-security-note {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -509,12 +508,12 @@ input::placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
 
-.security-icon {
+.log-security-icon {
   font-size: 1rem;
   color: #4ecdc4;
 }
 
-.error-msg {
+.log-error-msg {
   color: #ff6b6b;
   font-size: 0.8rem;
   margin-top: 5px;
@@ -523,43 +522,40 @@ input::placeholder {
   gap: 5px;
 }
 
-input.error {
+.log-form-group input.log-error {
   border-color: #ff6b6b;
   box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
 }
 
 @media (max-width: 480px) {
-  .login-card {
+  .log-card {
     padding: 30px 25px;
   }
   
-  .social-login {
+  .log-social-login {
     flex-direction: column;
   }
   
-  .options-row {
+  .log-options-row {
     flex-direction: column;
     gap: 15px;
     align-items: flex-start;
   }
   
-  h1 {
+  .log-card-header h1 {
     font-size: 1.7rem;
   }
 }
 
-
-/* Add this to your Login.css file */
-
 /* User Type Selection */
-.user-type-selection {
+.log-user-type-selection {
   display: grid;
   grid-template-columns: 1fr;
   gap: 10px;
   margin-top: 8px;
 }
 
-.user-type-option {
+.log-user-type-option {
   display: block;
   padding: 15px;
   background: rgba(255, 255, 255, 0.05);
@@ -570,28 +566,28 @@ input.error {
   backdrop-filter: blur(10px);
 }
 
-.user-type-option:hover {
+.log-user-type-option:hover {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(106, 17, 203, 0.3);
 }
 
-.user-type-option.selected {
+.log-user-type-option.selected {
   background: rgba(106, 17, 203, 0.15);
   border-color: #6a11cb;
   box-shadow: 0 0 20px rgba(106, 17, 203, 0.3);
 }
 
-.user-type-option input {
+.log-user-type-option input {
   display: none;
 }
 
-.option-content {
+.log-option-content {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.option-icon {
+.log-option-icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -602,31 +598,31 @@ input.error {
   color: #6a11cb;
 }
 
-.user-type-option.selected .option-icon {
+.log-user-type-option.selected .log-option-icon {
   background: #6a11cb;
   color: white;
 }
 
-.option-text {
+.log-option-text {
   display: flex;
   flex-direction: column;
   text-align: left;
 }
 
-.option-label {
+.log-option-label {
   font-weight: 600;
   color: white;
   font-size: 0.95rem;
 }
 
-.option-desc {
+.log-option-desc {
   font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.7);
   margin-top: 2px;
 }
 
 /* Demo Hint */
-.demo-hint {
+.log-demo-hint {
   background: rgba(255, 215, 0, 0.1);
   border: 1px solid rgba(255, 215, 0, 0.3);
   border-radius: 10px;
@@ -634,19 +630,19 @@ input.error {
   margin-bottom: 15px;
 }
 
-.hint-content {
+.log-hint-content {
   font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.8);
 }
 
-.hint-examples {
+.log-hint-examples {
   display: flex;
   gap: 8px;
   margin-top: 5px;
   flex-wrap: wrap;
 }
 
-.hint-examples code {
+.log-hint-examples code {
   background: rgba(255, 255, 255, 0.1);
   padding: 4px 8px;
   border-radius: 6px;
@@ -656,20 +652,20 @@ input.error {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .user-type-selection {
+  .log-user-type-selection {
     grid-template-columns: 1fr;
   }
   
-  .hint-examples {
+  .log-hint-examples {
     flex-direction: column;
     align-items: flex-start;
   }
   
-  .option-content {
+  .log-option-content {
     gap: 10px;
   }
   
-  .option-icon {
+  .log-option-icon {
     width: 35px;
     height: 35px;
   }

@@ -16,13 +16,20 @@ import {
   Campaign,
 } from "@mui/icons-material";
 import "./Login.css";
+import axios from "axios";
+import { ServerAddress } from "../server/ServerAddress";
+import {
+  setAccessToken,
+  setRefreshToken,
+  setUserDetails,
+} from "../redux/slices/userSlice";
+import { useDispatch } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    rememberMe: false,
-    userType: "student", // Default user type
   });
 
   const [errors, setErrors] = useState({});
@@ -30,6 +37,23 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [stars, setStars] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  // for the login state
+  const [show, setShow] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const showToastMessage = (message) => {
+    toast.error(message, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
 
   // Generate stars for background
   useEffect(() => {
@@ -60,72 +84,59 @@ const Login = () => {
     return newErrors;
   };
 
-  // Function to detect user type based on email
-  const detectUserType = (email) => {
-    // Enhanced detection logic for your specific routes
-    if (email.includes("admin") || email.includes("cosmic.admin")) {
-      return "admin";
-    } else if (email.includes("sales") || email.includes("sales@")) {
-      return "sales";
-    } else if (email.includes("promoter") || email.includes("promo")) {
-      return "promoter";
-    } else if (
-      email.includes("student") ||
-      email.includes("edu") ||
-      email.includes("college")
-    ) {
-      return "student";
-    } else {
-      // Default to student for demo purposes
-      return "student";
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validateForm();
 
     if (Object.keys(newErrors).length === 0) {
       setIsSubmitting(true);
-
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      // Detect user type based on email or other logic
-      const userType = detectUserType(formData.email);
-
-      console.log("Login data:", { ...formData, userType });
-
-      // Store user info in localStorage (for demo purposes)
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          email: formData.email,
-          userType: userType,
-          isLoggedIn: true,
-          name: formData.email.split("@")[0], // Demo name
-        })
-      );
-
-      setIsSubmitting(false);
-
-      // Redirect based on user type - matching your route structure
-      switch (userType) {
-        case "admin":
-          navigate("/admin");
-          break;
-        case "sales":
-          navigate("/sales");
-          break;
-        case "promoter":
-          navigate("/promoter");
-          break;
-        case "student":
-        default:
-          navigate("/student");
-      }
+      logIn(formData.email, formData.password);
     } else {
       setErrors(newErrors);
+    }
+  };
+
+  const logIn = async (username, password) => {
+    setIsLoading(true);
+    setShow(true);
+    try {
+      const response = await axios.post(`${ServerAddress}ems/authentication/`, {
+        username,
+        password,
+      });
+
+      if (response.status === 200) {
+        console.log("data------------", response);
+        setIsSubmitting(false);
+        dispatch(setAccessToken(response.data.access));
+        dispatch(setRefreshToken(response.data.refresh));
+        dispatch(setUserDetails(response.data.user_data));
+        if (response.data.user_data) {
+          if (response.data.user_data.usertype === "STUDENT") {
+            navigate("/student");
+          } else if (response.data.user_data.usertype === "SALES") {
+            navigate("/sales");
+          } else if (response.data.user_data.usertype === "PROMOTER") {
+            navigate("/promoter");
+          } else {
+            navigate("/admin");
+          }
+        }
+      }
+    } catch (error) {
+      setIsLoading(false);
+      setIsSubmitting(false);
+      setShow(false);
+      const errorMsg = error.response?.data?.detail;
+      if (errorMsg === "Your Channel Access Is Not Correct") {
+        showToastMessage("You are not authorized. Please contact the admin.");
+      } else if (
+        errorMsg === "No active account found with the given credentials"
+      ) {
+        showToastMessage("Invalid username or password");
+      } else {
+        showToastMessage("Login failed. Please try again.");
+      }
     }
   };
 
@@ -186,367 +197,254 @@ const Login = () => {
   };
 
   return (
-    <div className="login-page">
-      {/* Enhanced Space Background */}
-      <div className="space-bg">
-        {/* Animated Stars */}
-        <div className="stars-container">
-          {stars.map((star) => (
-            <motion.div
-              key={star.id}
-              className="star"
-              style={{
-                width: star.size,
-                height: star.size,
-                left: `${star.x}%`,
-                top: `${star.y}%`,
-              }}
-              animate={{
-                opacity: [0.3, 1, 0.3],
-              }}
-              transition={{
-                duration: star.duration,
-                repeat: Infinity,
-                delay: star.delay,
-              }}
-            />
-          ))}
-        </div>
+    <>
+      <ToastContainer />
 
-        {/* Floating Planets */}
-        <motion.div
-          className="planet planet-1"
-          animate={{
-            y: [0, -20, 0],
-            rotate: [0, 5, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-
-        <motion.div
-          className="planet planet-2"
-          animate={{
-            y: [0, 15, 0],
-            rotate: [0, -8, 0],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-
-        <motion.div
-          className="planet planet-3"
-          animate={{
-            y: [0, -25, 0],
-            rotate: [0, 10, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-
-        {/* Shooting Stars */}
-        <motion.div
-          className="shooting-star"
-          animate={{
-            x: [-100, 2000],
-            y: [100, 800],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            repeatDelay: 15,
-          }}
-        />
-
-        {/* Nebula Effects */}
-        <div className="nebula nebula-1"></div>
-        <div className="nebula nebula-2"></div>
-        <div className="nebula nebula-3"></div>
-      </div>
-
-      <div className="container">
-        <motion.div
-          className="login-card"
-          initial={{ opacity: 0, y: 30, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.8, type: "spring" }}
-        >
-          {/* Cosmic Header */}
-          <div className="card-header">
-            <motion.div
-              className="header-content"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-            >
+      <div className="log-page">
+        {/* Enhanced Space Background */}
+        <div className="log-space-bg">
+          {/* Animated Stars */}
+          <div className="log-stars-container">
+            {stars.map((star) => (
               <motion.div
-                className="logo-container"
+                key={star.id}
+                className="log-star"
+                style={{
+                  width: star.size,
+                  height: star.size,
+                  left: `${star.x}%`,
+                  top: `${star.y}%`,
+                }}
                 animate={{
-                  rotate: 360,
+                  opacity: [0.3, 1, 0.3],
                 }}
                 transition={{
-                  duration: 20,
+                  duration: star.duration,
                   repeat: Infinity,
-                  ease: "linear",
+                  delay: star.delay,
                 }}
-              >
-                <Public className="orbit-icon" />
-                <RocketLaunch className="header-icon" />
-              </motion.div>
-              <div>
-                <h1>Welcome to Cosmos</h1>
-                <p>Sign in to explore the universe of possibilities</p>
-              </div>
-            </motion.div>
+              />
+            ))}
           </div>
 
-          <form onSubmit={handleSubmit} className="login-form">
-            {/* User Type Selection */}
-            <motion.div
-              className="form-group"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.35 }}
-            >
-              <label>
-                <BusinessCenter className="label-icon" />I am a *
-              </label>
-              <div className="user-type-selection">
-                {userTypes.map((type) => (
-                  <label
-                    key={type.value}
-                    className={`user-type-option ${
-                      formData.userType === type.value ? "selected" : ""
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="userType"
-                      value={type.value}
-                      checked={formData.userType === type.value}
-                      onChange={handleChange}
-                    />
-                    <div className="option-content">
-                      <span className="option-icon">{type.icon}</span>
-                      <div className="option-text">
-                        <span className="option-label">{type.label}</span>
-                        <span className="option-desc">{type.description}</span>
-                      </div>
-                    </div>
-                  </label>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Email Field */}
-            <motion.div
-              className="form-group"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4 }}
-            >
-              <label>
-                <Email className="label-icon" />
-                Email Address *
-              </label>
-              <div className="input-wrapper">
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className={errors.email ? "error" : ""}
-                  placeholder={getDemoEmail()}
-                  required
-                />
-              </div>
-              {errors.email && (
-                <span className="error-msg">{errors.email}</span>
-              )}
-            </motion.div>
-
-            {/* Password Field */}
-            <motion.div
-              className="form-group"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              <label>
-                <Lock className="label-icon" />
-                Password *
-              </label>
-              <div className="input-wrapper">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className={errors.password ? "error" : ""}
-                  placeholder="Enter your password"
-                  required
-                />
-                <button
-                  type="button"
-                  className="password-toggle"
-                  onClick={togglePasswordVisibility}
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </button>
-              </div>
-              {errors.password && (
-                <span className="error-msg">{errors.password}</span>
-              )}
-            </motion.div>
-
-            {/* Demo Credentials Hint */}
-            <motion.div
-              className="demo-hint"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.55 }}
-            >
-              <div className="hint-content">
-                <span>💡 Demo Tip: Try these email formats:</span>
-                <div className="hint-examples">
-                  <code>student@demo.com</code>
-                  <code>promoter@demo.com</code>
-                  <code>sales@demo.com</code>
-                  <code>admin@demo.com</code>
-                </div>
-                <small>Password can be anything for demo</small>
-              </div>
-            </motion.div>
-
-            {/* Options Row */}
-            <motion.div
-              className="options-row"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-            >
-              <label className="remember-me">
-                <div className="custom-checkbox">
-                  <input
-                    type="checkbox"
-                    name="rememberMe"
-                    checked={formData.rememberMe}
-                    onChange={handleChange}
-                  />
-                  <span className="checkmark"></span>
-                </div>
-                Remember my journey
-              </label>
-              <Link to="/forgotpassword" className="forgot-password">
-                Forgot password?
-              </Link>
-            </motion.div>
-
-            {/* Submit Button */}
-            <motion.button
-              type="submit"
-              className={`submit-btn cosmic-btn ${
-                isSubmitting ? "submitting" : ""
-              }`}
-              disabled={isSubmitting}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              whileHover={{
-                scale: isSubmitting ? 1 : 1.05,
-                boxShadow: "0 10px 25px rgba(106, 17, 203, 0.4)",
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {isSubmitting ? (
-                <>
-                  <div className="cosmic-spinner"></div>
-                  Launching to {formData.userType} dashboard...
-                </>
-              ) : (
-                <>
-                  <RocketLaunch className="btn-icon" />
-                  Launch to{" "}
-                  {formData.userType.charAt(0).toUpperCase() +
-                    formData.userType.slice(1)}{" "}
-                  Dashboard
-                </>
-              )}
-            </motion.button>
-
-            {/* Divider */}
-            <motion.div
-              className="divider"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-            >
-              <span>Or connect through</span>
-            </motion.div>
-
-            {/* Social Login */}
-            <motion.div
-              className="social-login"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9 }}
-            >
-              <motion.button
-                type="button"
-                className="social-btn starlink"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <div className="social-icon">
-                  <i className="fas fa-satellite"></i>
-                </div>
-                Starlink
-              </motion.button>
-
-              <motion.button
-                type="button"
-                className="social-btn galaxy"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <div className="social-icon">
-                  <i className="fas fa-globe-americas"></i>
-                </div>
-                Galaxy ID
-              </motion.button>
-            </motion.div>
-          </form>
-
-          {/* Footer */}
+          {/* Floating Planets */}
           <motion.div
-            className="card-footer"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
+            className="log-planet log-planet-1"
+            animate={{
+              y: [0, -20, 0],
+              rotate: [0, 5, 0],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+
+          <motion.div
+            className="log-planet log-planet-2"
+            animate={{
+              y: [0, 15, 0],
+              rotate: [0, -8, 0],
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+
+          <motion.div
+            className="log-planet log-planet-3"
+            animate={{
+              y: [0, -25, 0],
+              rotate: [0, 10, 0],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+
+          {/* Shooting Stars */}
+          <motion.div
+            className="log-shooting-star"
+            animate={{
+              x: [-100, 2000],
+              y: [100, 800],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              repeatDelay: 15,
+            }}
+          />
+
+          {/* Nebula Effects */}
+          <div className="log-nebula log-nebula-1"></div>
+          <div className="log-nebula log-nebula-2"></div>
+          <div className="log-nebula log-nebula-3"></div>
+        </div>
+
+        <div className="log-container">
+          <motion.div
+            className="log-card"
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.8, type: "spring" }}
           >
-            <p>
-              New to the cosmos?{" "}
-              <Link to="/register" className="footer-link">
-                Begin your journey
-              </Link>
-            </p>
-            <div className="security-note">
-              <Star className="security-icon" />
-              <span>Secured by quantum encryption</span>
+            {/* Cosmic Header */}
+            <div className="log-card-header">
+              <motion.div
+                className="log-header-content"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+              >
+                <motion.div
+                  className="log-logo-container"
+                  animate={{
+                    rotate: 360,
+                  }}
+                  transition={{
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                >
+                  <Public className="log-orbit-icon" />
+                  <RocketLaunch className="log-header-icon" />
+                </motion.div>
+                <div>
+                  <h1>Welcome to Gimini planetarium</h1>
+                  <p>Sign in to explore the universe of possibilities</p>
+                </div>
+              </motion.div>
             </div>
+
+            <form onSubmit={handleSubmit} className="log-form">
+              {/* Email Field */}
+              <motion.div
+                className="log-form-group"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4 }}
+              >
+                <label>
+                  <Email className="log-label-icon" />
+                  Email Address *
+                </label>
+                <div className="log-input-wrapper">
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className={errors.email ? "log-error" : ""}
+                    placeholder={getDemoEmail()}
+                    required
+                  />
+                </div>
+                {errors.email && (
+                  <span className="log-error-msg">{errors.email}</span>
+                )}
+              </motion.div>
+
+              {/* Password Field */}
+              <motion.div
+                className="log-form-group"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5 }}
+              >
+                <label>
+                  <Lock className="log-label-icon" />
+                  Password *
+                </label>
+                <div className="log-input-wrapper">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className={errors.password ? "log-error" : ""}
+                    placeholder="Enter your password"
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="log-password-toggle"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </button>
+                </div>
+                {errors.password && (
+                  <span className="log-error-msg">{errors.password}</span>
+                )}
+              </motion.div>
+
+              {/* Options Row */}
+              <motion.div
+                className="log-options-row"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+              >
+                <Link to="/forgotpassword" className="log-forgot-password">
+                  Forgot password?
+                </Link>
+              </motion.div>
+
+              {/* Submit Button */}
+              <motion.button
+                type="submit"
+                className={`log-submit-btn log-cosmic-btn ${
+                  isSubmitting ? "log-submitting" : ""
+                }`}
+                disabled={isSubmitting}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 }}
+                whileHover={{
+                  scale: isSubmitting ? 1 : 1.05,
+                  boxShadow: "0 10px 25px rgba(106, 17, 203, 0.4)",
+                }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="log-cosmic-spinner"></div>
+                    Launching to dashboard...
+                  </>
+                ) : (
+                  <>
+                    <RocketLaunch className="log-btn-icon" />
+                    Sign In
+                  </>
+                )}
+              </motion.button>
+            </form>
+
+            {/* Footer */}
+            <motion.div
+              className="log-card-footer"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+            >
+              <p>
+                Don't have an account?{" "}
+                <Link to="/registerstudent" className="log-footer-link">
+                  Sign Up
+                </Link>
+              </p>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

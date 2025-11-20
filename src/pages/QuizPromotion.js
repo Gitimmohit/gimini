@@ -306,7 +306,7 @@ const QuizPromotion = () => {
         </motion.section>
 
         {/* Features Section */}
-        <section className="features-section">
+        <section className="features-section quiz-section">
           <motion.div
             className="section-header"
             initial={{ opacity: 0, y: 30 }}
@@ -338,7 +338,7 @@ const QuizPromotion = () => {
         </section>
 
         {/* Awards Showcase */}
-        <section className="awards-section">
+        <section className="awards-section quiz-section">
           <motion.div
             className="section-header"
             initial={{ opacity: 0, y: 30 }}
@@ -380,7 +380,7 @@ const QuizPromotion = () => {
         </section>
 
         {/* Upcoming Quizzes */}
-        <section className="quizzes-section">
+        <section className="quizzes-section quiz-section">
           <motion.div
             className="section-header"
             initial={{ opacity: 0, y: 30 }}
@@ -435,7 +435,7 @@ const QuizPromotion = () => {
         </section>
 
         {/* Winners Testimonials */}
-        <section className="testimonials-section">
+        <section className="testimonials-section quiz-section">
           <motion.div
             className="section-header"
             initial={{ opacity: 0, y: 30 }}

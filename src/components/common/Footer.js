@@ -77,25 +77,22 @@ const Footer = () => {
             <h4 className="links-title">Join Our Community</h4>
             <ul className="links-list">
               <li>
-                <Link to="/register?type=student">
+                <Link to="/registerstudent">
                   <School sx={{ fontSize: 16, marginRight: 1 }} />
                   Student
                 </Link>
               </li>
               <li>
-                <Link to="/register?type=sales">
+                <Link to="/registersales">
                   <BusinessCenter sx={{ fontSize: 16, marginRight: 1 }} />
                   Sales Person
                 </Link>
               </li>
               <li>
-                <Link to="/register?type=promoter">
+                <Link to="/registerpromoter">
                   <Campaign sx={{ fontSize: 16, marginRight: 1 }} />
                   Promoter
                 </Link>
-              </li>
-              <li>
-                <Link to="/register">General Admission</Link>
               </li>
               <li>
                 <Link to="/referral">Referral Program</Link>
@@ -126,7 +123,9 @@ const Footer = () => {
               <div className="contact-item">
                 <Email className="contact-icon" />
                 <div>
-                  <div className="contact-text">info@Gimini Planetarium.com</div>
+                  <div className="contact-text">
+                    info@Gimini Planetarium.com
+                  </div>
                   <div className="contact-subtext">
                     Quick response guaranteed
                   </div>
@@ -169,13 +168,11 @@ const Footer = () => {
       <div className="footer-bottom">
         <div className="footer-bottom-content">
           <div className="copyright">
-            &copy; 2024 Cosmic Vision Planetarium. All rights reserved.
+            &copy; {new Date().getFullYear()} Cosmic Vision Planetarium. All rights reserved.
           </div>
           <div className="footer-bottom-links">
             <Link to="/privacy">Privacy Policy</Link>
             <Link to="/terms">Terms of Service</Link>
-            <Link to="/cookies">Cookie Policy</Link>
-            <Link to="/accessibility">Accessibility</Link>
           </div>
         </div>
       </div>

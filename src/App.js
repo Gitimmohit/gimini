@@ -2,6 +2,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
 
 // Component Imports
 import Navbar from "./components/common/Navbar";
@@ -9,7 +10,6 @@ import Footer from "./components/common/Footer";
 
 // Page Imports
 import Home from "./pages/Home";
-import Registration from "./pages/Registration";
 import Login from "./pages/Login";
 import Referral from "./pages/Referral";
 import UpcomingShows from "./pages/UpcomingShows";
@@ -23,6 +23,11 @@ import StudentDashboard from "./pages/dashboard/StudentDashboard";
 import SalesDashboard from "./pages/dashboard/SalesDashboard";
 import PromoterDashboard from "./pages/dashboard/PromoterDashboard";
 import AdminDashboard from "./pages/dashboard/AdminDashboard";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+import StudentRegistration from "./pages/registration/StudentRegistration";
+import SalesRegistration from "./pages/registration/SalesRegistration";
+import PromoterRegistration from "./pages/registration/PromoterRegistration";
 
 function App() {
   return (
@@ -36,14 +41,23 @@ function App() {
             {/* Public Routes */}
             <Route path="/" element={<Home />} />
             <Route path="/shows" element={<UpcomingShows />} />
-            <Route path="/register" element={<Registration />} />
             <Route path="/login" element={<Login />} />
             <Route path="/referral" element={<Referral />} />
+            <Route
+              path="/registerstudent"
+              element={<StudentRegistration />}
+            />{" "}
+            <Route path="/registersales" element={<SalesRegistration />} />{" "}
+            <Route
+              path="/registerpromoter"
+              element={<PromoterRegistration />}
+            />
             <Route path="/contactus" element={<ContactUs />} />
             <Route path="/about" element={<About />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/quizchallenge" element={<QuizPromotion />} />
-
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
             {/* Dashboard Routes */}
             <Route path="/student/*" element={<StudentDashboard />} />
             <Route path="/sales/*" element={<SalesDashboard />} />

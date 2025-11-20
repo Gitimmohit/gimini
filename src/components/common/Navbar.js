@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import pic3 from "../../assets/pic3.jpg";
+import pic3 from "../../assets/giminilogo.png";
 import {
   Menu,
   Close,
@@ -13,7 +13,7 @@ import {
   Dashboard,
   Person,
 } from "@mui/icons-material";
-import "./Navbar.css";
+import styles from "./Navbar.module.css";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -77,7 +77,7 @@ const Navbar = () => {
     { path: "/quizchallenge", label: "Quiz", icon: "🎯" },
     ...(isLoggedIn
       ? []
-      : [{ path: "/register", label: "Register", icon: "👤" }]),
+      : [{ path: "/registerstudent", label: "Register", icon: "👤" }]),
   ];
 
   const isActiveLink = (path) => {
@@ -87,53 +87,52 @@ const Navbar = () => {
   return (
     <>
       <motion.nav
-        className={`navbar compact-navbar ${isScrolled ? "scrolled" : ""}`}
+        className={`${styles.navbar} ${styles.compactNavbar} ${
+          isScrolled ? styles.scrolled : ""
+        }`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <div className="nav-container compact-nav-container">
+        <div className={styles.navContainer}>
           {/* Logo/Brand */}
           <motion.div
-            className="nav-brand compact-brand"
+            className={styles.navBrand}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Link to="/" className="brand-link">
-              <div className="logo compact-logo">
+            <Link to="/" className={styles.brandLink}>
+              <div className={styles.logo}>
                 <img
                   src={pic3}
                   alt="Digital Dome Projection"
-                  // className="hero-img"
-                  style={{ width: "80px", height: "auto" }}
+                  className={styles.logoImage}
                 />
               </div>
             </Link>
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="nav-links compact-nav-links">
+          <div className={styles.navLinks}>
             {navItems.map((item, index) => (
               <motion.div
                 key={item.path}
-                className="nav-item compact-nav-item"
+                className={styles.navItem}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <Link
                   to={item.path}
-                  className={`nav-link compact-nav-link ${
-                    isActiveLink(item.path) ? "active" : ""
+                  className={`${styles.navLink} ${
+                    isActiveLink(item.path) ? styles.active : ""
                   }`}
                 >
-                  <span className="nav-icon compact-nav-icon">{item.icon}</span>
-                  <span className="nav-label compact-nav-label">
-                    {item.label}
-                  </span>
+                  <span className={styles.navIcon}>{item.icon}</span>
+                  <span className={styles.navLabel}>{item.label}</span>
                   {isActiveLink(item.path) && (
                     <motion.div
-                      className="active-indicator compact-active-indicator"
+                      className={styles.activeIndicator}
                       layoutId="activeIndicator"
                     />
                   )}
@@ -144,32 +143,30 @@ const Navbar = () => {
             {/* User Menu for Logged-in Users */}
             {isLoggedIn && (
               <motion.div
-                className="nav-item compact-nav-item"
+                className={styles.navItem}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: navItems.length * 0.1 }}
               >
-                <div className="user-menu">
+                <div className={styles.userMenu}>
                   <button
-                    className="nav-link compact-nav-link user-profile"
+                    className={`${styles.navLink} ${styles.userProfile}`}
                     onClick={goToDashboard}
                   >
-                    <span className="nav-icon compact-nav-icon">
+                    <span className={styles.navIcon}>
                       <Person />
                     </span>
-                    <span className="nav-label compact-nav-label">
-                      Dashboard
-                    </span>
+                    <span className={styles.navLabel}>Dashboard</span>
                   </button>
 
                   <button
-                    className="nav-link compact-nav-link logout-btn"
+                    className={`${styles.navLink} ${styles.logoutBtn}`}
                     onClick={handleLogout}
                   >
-                    <span className="nav-icon compact-nav-icon">
+                    <span className={styles.navIcon}>
                       <Logout />
                     </span>
-                    <span className="nav-label compact-nav-label">Logout</span>
+                    <span className={styles.navLabel}>Logout</span>
                   </button>
                 </div>
               </motion.div>
@@ -178,24 +175,24 @@ const Navbar = () => {
             {/* Login Button for Non-Logged-in Users */}
             {!isLoggedIn && (
               <motion.div
-                className="nav-item compact-nav-item"
+                className={styles.navItem}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: navItems.length * 0.1 }}
               >
                 <Link
                   to="/login"
-                  className={`nav-link compact-nav-link login-btn ${
-                    isActiveLink("/login") ? "active" : ""
+                  className={`${styles.navLink} ${styles.loginBtn} ${
+                    isActiveLink("/login") ? styles.active : ""
                   }`}
                 >
-                  <span className="nav-icon compact-nav-icon">
+                  <span className={styles.navIcon}>
                     <AccountCircle />
                   </span>
-                  <span className="nav-label compact-nav-label">Login</span>
+                  <span className={styles.navLabel}>Login</span>
                   {isActiveLink("/login") && (
                     <motion.div
-                      className="active-indicator compact-active-indicator"
+                      className={styles.activeIndicator}
                       layoutId="activeIndicator"
                     />
                   )}
@@ -206,7 +203,7 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <motion.button
-            className="mobile-menu-btn compact-mobile-btn"
+            className={styles.mobileMenuBtn}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
@@ -217,8 +214,8 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         <motion.div
-          className={`mobile-menu compact-mobile-menu ${
-            isMobileMenuOpen ? "open" : ""
+          className={`${styles.mobileMenu} ${
+            isMobileMenuOpen ? styles.open : ""
           }`}
           initial={{ opacity: 0, height: 0 }}
           animate={{
@@ -227,22 +224,20 @@ const Navbar = () => {
           }}
           transition={{ duration: 0.3 }}
         >
-          <div className="mobile-nav-links compact-mobile-links">
+          <div className={styles.mobileNavLinks}>
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`mobile-nav-link compact-mobile-link ${
-                  isActiveLink(item.path) ? "active" : ""
+                className={`${styles.mobileNavLink} ${
+                  isActiveLink(item.path) ? styles.active : ""
                 }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                <span className="mobile-nav-icon compact-mobile-icon">
-                  {item.icon}
-                </span>
-                <span className="compact-mobile-label">{item.label}</span>
+                <span className={styles.mobileNavIcon}>{item.icon}</span>
+                <span className={styles.mobileNavLabel}>{item.label}</span>
                 {isActiveLink(item.path) && (
-                  <div className="mobile-active-dot compact-mobile-dot" />
+                  <div className={styles.mobileActiveDot} />
                 )}
               </Link>
             ))}
@@ -251,39 +246,39 @@ const Navbar = () => {
             {isLoggedIn ? (
               <>
                 <button
-                  className="mobile-nav-link compact-mobile-link"
+                  className={styles.mobileNavLink}
                   onClick={goToDashboard}
                 >
-                  <span className="mobile-nav-icon compact-mobile-icon">
+                  <span className={styles.mobileNavIcon}>
                     <Dashboard />
                   </span>
-                  <span className="compact-mobile-label">Dashboard</span>
+                  <span className={styles.mobileNavLabel}>Dashboard</span>
                 </button>
 
                 <button
-                  className="mobile-nav-link compact-mobile-link logout-btn"
+                  className={`${styles.mobileNavLink} ${styles.logoutBtn}`}
                   onClick={handleLogout}
                 >
-                  <span className="mobile-nav-icon compact-mobile-icon">
+                  <span className={styles.mobileNavIcon}>
                     <Logout />
                   </span>
-                  <span className="compact-mobile-label">Logout</span>
+                  <span className={styles.mobileNavLabel}>Logout</span>
                 </button>
               </>
             ) : (
               <Link
                 to="/login"
-                className={`mobile-nav-link compact-mobile-link ${
-                  isActiveLink("/login") ? "active" : ""
+                className={`${styles.mobileNavLink} ${
+                  isActiveLink("/login") ? styles.active : ""
                 }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                <span className="mobile-nav-icon compact-mobile-icon">
+                <span className={styles.mobileNavIcon}>
                   <AccountCircle />
                 </span>
-                <span className="compact-mobile-label">Login</span>
+                <span className={styles.mobileNavLabel}>Login</span>
                 {isActiveLink("/login") && (
-                  <div className="mobile-active-dot compact-mobile-dot" />
+                  <div className={styles.mobileActiveDot} />
                 )}
               </Link>
             )}
@@ -294,7 +289,7 @@ const Navbar = () => {
       {/* Overlay for mobile menu */}
       {isMobileMenuOpen && (
         <motion.div
-          className="mobile-overlay compact-overlay"
+          className={styles.mobileOverlay}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

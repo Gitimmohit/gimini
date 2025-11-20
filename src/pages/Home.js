@@ -23,41 +23,34 @@ import {
   Language,
   Nightlight,
 } from "@mui/icons-material";
-import "./Home.css";
+import styles from "./Home.module.css";
 
 const Home = () => {
   return (
-    <div className="home-page">
-      {/* Hero Section with Space Background - Keep as is */}
-      <section className="hero-section">
-        <img src={pic2} alt="Digital Dome Projection" className="hero-img" />
-        {/* <div className="stars-background"></div>
-        <div className="floating-planets">
-          <div className="planet earth"></div>
-          <div className="planet mars"></div>
-          <div className="planet saturn"></div>
-          <div className="planet jupiter"></div>
-        </div> */}
+    <div className={styles.homePage}>
+      {/* Hero Section with Space Background */}
+      <section className={styles.heroSection}>
+        <img src={pic2} alt="Digital Dome Projection" className={styles.heroImg} />
 
         <motion.div
-          className="hero-content"
+          className={styles.heroContent}
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
           <motion.h1
-            className="hero-title"
+            className={styles.heroTitle}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 1 }}
           >
             Digital Portable Planetarium:{" "}
-            <span className="gradient-text">
+            <span className={styles.gradientText}>
               Bringing Space Science to Schools
             </span>
           </motion.h1>
           <motion.p
-            className="hero-subtitle"
+            className={styles.heroSubtitle}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 1 }}
@@ -66,93 +59,74 @@ const Home = () => {
             before in our state-of-the-art digital dome theater.
           </motion.p>
           <motion.div
-            className="hero-buttons"
+            className={styles.heroButtons}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.9, duration: 1 }}
           >
-            <Link to="/shows" className="btn primary-btn glow-effect">
+            <Link to="/shows" className={`${styles.btn} ${styles.primaryBtn} ${styles.glowEffect}`}>
               <RocketLaunch sx={{ mr: 1 }} />
               Explore Shows
             </Link>
-            <Link to="/register" className="btn secondary-btn">
+            <Link to="/register" className={`${styles.btn} ${styles.secondaryBtn}`}>
               <Groups sx={{ mr: 1 }} />
               Book Now
             </Link>
           </motion.div>
 
-          {/* Trust Indicators */}
-          <motion.div
-            className="trust-indicators"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2, duration: 1 }}
-          >
-            <div className="trust-item">
-              <Security sx={{ color: "#032820ff", fontSize: 18 }} />
-              <span className="color-black">Safe & Secure Booking</span>
-            </div>
-            <div className="trust-item">
-              <EmojiEvents sx={{ color: "#032820ff", fontSize: 18 }} />
-              <span>Award Winning Experience</span>
-            </div>
-            <div className="trust-item">
-              <Accessibility sx={{ color: "#032820ff", fontSize: 18 }} />
-              <span>Wheelchair Accessible</span>
-            </div>
-          </motion.div>
+   
         </motion.div>
 
         <motion.div
-          className="scroll-indicator"
+          className={styles.scrollIndicator}
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          <div className="mouse"></div>
+          <div className={styles.mouse}></div>
           <span>Scroll to Explore</span>
         </motion.div>
       </section>
 
       {/* Features Section - Enhanced */}
-      <section className="features-section">
-        <div className="container">
+      <section className={styles.featuresSection}>
+        <div className={styles.container}>
           <motion.div
-            className="section-header"
+            className={styles.sectionHeader}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <span className="section-badge">Why Choose Us</span>
-            <h2 className="section-title">
+            <span className={styles.sectionBadge}>Why Choose Us</span>
+            <h2 className={styles.sectionTitle}>
               An Unforgettable Cosmic Experience
             </h2>
-            <p className="section-description">
+            <p className={styles.sectionDescription}>
               We combine cutting-edge technology with expert storytelling to
               create immersive astronomical experiences that educate and
               inspire.
             </p>
           </motion.div>
 
-          <div className="features-grid">
+          <div className={styles.featuresGrid}>
             <motion.div
-              className="feature-card"
+              className={styles.featureCard}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
               whileHover={{ y: -10, transition: { duration: 0.3 } }}
             >
-              <div className="feature-image">
+              <div className={styles.featureImage}>
                 <img
                   src="https://images.unsplash.com/photo-1543722530-d2c3201371e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2074&q=80"
                   alt="Digital Dome Projection"
                 />
-                <div className="feature-overlay"></div>
-                <div className="feature-badge">Most Popular</div>
+                <div className={styles.featureOverlay}></div>
+                <div className={styles.featureBadge}>Most Popular</div>
               </div>
-              <div className="feature-content">
-                <div className="feature-icon">
+              <div className={styles.featureContent}>
+                <div className={styles.featureIcon}>
                   <Public sx={{ fontSize: 32, color: "#64ffda" }} />
                 </div>
                 <h3>8K Digital Dome Experience</h3>
@@ -161,14 +135,14 @@ const Home = () => {
                   our 360° dome theater with 15.1 surround sound system that
                   transports you to the farthest reaches of space.
                 </p>
-                <div className="feature-highlights">
+                <div className={styles.featureHighlights}>
                   <span>🎯 8K Ultra HD</span>
                   <span>🌐 360° Projection</span>
                   <span>🔊 15.1 Sound</span>
                   <span>💺 200 Capacity</span>
                 </div>
-                <div className="feature-stats">
-                  <div className="stat">
+                <div className={styles.featureStats}>
+                  <div className={styles.stat}>
                     <TrendingUp sx={{ fontSize: 16, color: "#64ffda" }} />
                     <span>98% Visitor Satisfaction</span>
                   </div>
@@ -177,22 +151,22 @@ const Home = () => {
             </motion.div>
 
             <motion.div
-              className="feature-card"
+              className={styles.featureCard}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
               whileHover={{ y: -10, transition: { duration: 0.3 } }}
             >
-              <div className="feature-image">
+              <div className={styles.featureImage}>
                 <img
                   src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&auto=format&fit=crop&w=2094&q=80"
                   alt="Expert Astronomers"
                 />
-                <div className="feature-overlay"></div>
+                <div className={styles.featureOverlay}></div>
               </div>
-              <div className="feature-content">
-                <div className="feature-icon">
+              <div className={styles.featureContent}>
+                <div className={styles.featureIcon}>
                   <School sx={{ fontSize: 32, color: "#64ffda" }} />
                 </div>
                 <h3>Expert Guided Tours</h3>
@@ -201,14 +175,14 @@ const Home = () => {
                   with live commentary, interactive Q&A sessions, and hands-on
                   telescope workshops.
                 </p>
-                <div className="feature-highlights">
+                <div className={styles.featureHighlights}>
                   <span>👨‍🎓 PhD Experts</span>
                   <span>💬 Live Q&A</span>
                   <span>🔭 Workshops</span>
                   <span>🏆 Certified</span>
                 </div>
-                <div className="feature-stats">
-                  <div className="stat">
+                <div className={styles.featureStats}>
+                  <div className={styles.stat}>
                     <EmojiEvents sx={{ fontSize: 16, color: "#64ffda" }} />
                     <span>15+ Years Experience</span>
                   </div>
@@ -217,23 +191,23 @@ const Home = () => {
             </motion.div>
 
             <motion.div
-              className="feature-card"
+              className={styles.featureCard}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
               whileHover={{ y: -10, transition: { duration: 0.3 } }}
             >
-              <div className="feature-image">
+              <div className={styles.featureImage}>
                 <img
                   src="https://images.unsplash.com/photo-1502136969935-8d8eef54d77b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80"
                   alt="Educational Programs"
                 />
-                <div className="feature-overlay"></div>
-                <div className="feature-badge">Educational</div>
+                <div className={styles.featureOverlay}></div>
+                <div className={styles.featureBadge}>Educational</div>
               </div>
-              <div className="feature-content">
-                <div className="feature-icon">
+              <div className={styles.featureContent}>
+                <div className={styles.featureIcon}>
                   <AutoAwesome sx={{ fontSize: 32, color: "#64ffda" }} />
                 </div>
                 <h3>Educational Programs</h3>
@@ -242,14 +216,14 @@ const Home = () => {
                   interactive activities, hands-on experiments, and certificates
                   of participation.
                 </p>
-                <div className="feature-highlights">
+                <div className={styles.featureHighlights}>
                   <span>📚 CBSE/ICSE</span>
                   <span>🎮 Interactive</span>
                   <span>🏅 Certificates</span>
                   <span>👨‍👩‍👧‍👦 Family Packages</span>
                 </div>
-                <div className="feature-stats">
-                  <div className="stat">
+                <div className={styles.featureStats}>
+                  <div className={styles.stat}>
                     <School sx={{ fontSize: 16, color: "#64ffda" }} />
                     <span>75+ School Partners</span>
                   </div>
@@ -260,23 +234,23 @@ const Home = () => {
 
           {/* Additional Features Mini Grid */}
           <motion.div
-            className="mini-features-grid"
+            className={styles.miniFeaturesGrid}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <div className="mini-feature">
+            <div className={styles.miniFeature}>
               <Language sx={{ fontSize: 40, color: "#64ffda" }} />
               <h4>Multi-language</h4>
               <p>Shows available in English, Hindi, and regional languages</p>
             </div>
-            <div className="mini-feature">
+            <div className={styles.miniFeature}>
               <Science sx={{ fontSize: 40, color: "#64ffda" }} />
               <h4>Research Grade</h4>
               <p>Access to research-grade telescopes and equipment</p>
             </div>
-            <div className="mini-feature">
+            <div className={styles.miniFeature}>
               <Explore sx={{ fontSize: 40, color: "#64ffda" }} />
               <h4>Virtual Tours</h4>
               <p>Explore planets and galaxies through VR experiences</p>
@@ -286,61 +260,61 @@ const Home = () => {
       </section>
 
       {/* Current Showcase - Enhanced */}
-      <section className="showcase-section">
-        <div className="container">
-          <div className="showcase-content">
+      <section className={styles.showcaseSection}>
+        <div className={styles.container}>
+          <div className={styles.showcaseContent}>
             <motion.div
-              className="showcase-text"
+              className={styles.showcaseText}
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <span className="show-badge">Featured Show</span>
+              <span className={styles.showBadge}>Featured Show</span>
               <h2>"Journey to the Edge of the Universe"</h2>
-              <p className="show-description">
+              <p className={styles.showDescription}>
                 Embark on an epic voyage from our solar system to the farthest
                 reaches of the observable universe. This award-winning show
                 combines breathtaking visuals with scientific accuracy to create
                 an unforgettable educational experience.
               </p>
 
-              <div className="show-meta">
-                <div className="meta-item">
+              <div className={styles.showMeta}>
+                <div className={styles.metaItem}>
                   <strong>Duration:</strong> 60 minutes
                 </div>
 
-                <div className="meta-item">
+                <div className={styles.metaItem}>
                   <strong>Language:</strong> English & Hindi
                 </div>
-                <div className="meta-item">
+                <div className={styles.metaItem}>
                   <strong>Show Times:</strong> 11AM, 2PM, 5PM, 7PM
                 </div>
               </div>
 
-              <div className="show-details">
-                <div className="detail-item">
+              <div className={styles.showDetails}>
+                <div className={styles.detailItem}>
                   <ConfirmationNumber sx={{ color: "#64ffda" }} />
                   <div>
                     <strong>60-minute immersive experience</strong>
                     <span>Full-dome digital projection</span>
                   </div>
                 </div>
-                <div className="detail-item">
+                <div className={styles.detailItem}>
                   <VolumeUp sx={{ color: "#64ffda" }} />
                   <div>
                     <strong>7.1 Surround Sound System</strong>
                     <span>Immersive audio experience</span>
                   </div>
                 </div>
-                <div className="detail-item">
+                <div className={styles.detailItem}>
                   <span>⭐</span>
                   <div>
                     <strong>Comfortable reclining seats</strong>
                     <span>Stadium-style seating</span>
                   </div>
                 </div>
-                <div className="detail-item">
+                <div className={styles.detailItem}>
                   <Groups sx={{ color: "#64ffda" }} />
                   <div>
                     <strong>Interactive Q&A session</strong>
@@ -349,22 +323,22 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className="show-actions">
-                <Link to="/shows" className="btn primary-btn large">
+              <div className={styles.showActions}>
+                <Link to="/shows" className={`${styles.btn} ${styles.primaryBtn} ${styles.large}`}>
                   <ConfirmationNumber sx={{ mr: 1 }} />
                   Book Your Seat Now
                 </Link>
-                <div className="price-tag">
-                  <div className="price-original">
-                    <span className="original-price">₹499</span>
-                    <span className="discount-badge">49% OFF</span>
+                <div className={styles.priceTag}>
+                  <div className={styles.priceOriginal}>
+                    <span className={styles.originalPrice}>₹499</span>
+                    <span className={styles.discountBadge}>49% OFF</span>
                   </div>
-                  <div className="price-discounted">
-                    <span className="price">₹249</span>
-                    <span className="price-note">per person</span>
+                  <div className={styles.priceDiscounted}>
+                    <span className={styles.price}>₹249</span>
+                    <span className={styles.priceNote}>per person</span>
                   </div>
-                  <div className="offer-timer">
-                    <div className="timer-text">
+                  <div className={styles.offerTimer}>
+                    <div className={styles.timerText}>
                       <span>⏰</span>
                       Limited time offer for first-time visitors
                     </div>
@@ -374,7 +348,7 @@ const Home = () => {
             </motion.div>
 
             <motion.div
-              className="showcase-visual"
+              className={styles.showcaseVisual}
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
@@ -383,17 +357,17 @@ const Home = () => {
               <img
                 src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&auto=format&fit=crop&w=2020&q=80"
                 alt="Journey to the Edge of the Universe Show"
-                className="show-image"
+                className={styles.showImage}
               />
-              <div className="show-overlay">
-                <div className="play-button">
+              <div className={styles.showOverlay}>
+                <div className={styles.playButton}>
                   <span>▶</span>
                 </div>
-                <div className="show-tag">Award Winning Show</div>
+                <div className={styles.showTag}>Award Winning Show</div>
               </div>
-              <div className="show-rating">
-                <div className="stars">★★★★★</div>
-                <div className="rating-text">4.9/5 (2,347 reviews)</div>
+              <div className={styles.showRating}>
+                <div className={styles.stars}>★★★★★</div>
+                <div className={styles.ratingText}>4.9/5 (2,347 reviews)</div>
               </div>
             </motion.div>
           </div>
@@ -401,20 +375,20 @@ const Home = () => {
       </section>
 
       {/* Upcoming Shows Preview */}
-      <section className="upcoming-shows-section">
-        <div className="container">
+      <section className={styles.upcomingShowsSection}>
+        <div className={styles.container}>
           <motion.div
-            className="section-header"
+            className={styles.sectionHeader}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <span className="section-badge">Coming Soon</span>
-            <h2 className="section-title">Upcoming Spectacular Shows</h2>
+            <span className={styles.sectionBadge}>Coming Soon</span>
+            <h2 className={styles.sectionTitle}>Upcoming Spectacular Shows</h2>
           </motion.div>
 
-          <div className="upcoming-shows-grid">
+          <div className={styles.upcomingShowsGrid}>
             {[
               {
                 title: "Black Holes: The Dark Mystery",
@@ -459,32 +433,32 @@ const Home = () => {
             ].map((show, index) => (
               <motion.div
                 key={index}
-                className="upcoming-show-card"
+                className={styles.upcomingShowCard}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -5 }}
               >
-                <div className="show-image-container">
+                <div className={styles.showImageContainer}>
                   <img src={show.image} alt={show.title} />
-                  <div className="show-tags">
+                  <div className={styles.showTags}>
                     {show.tags.map((tag) => (
-                      <span key={tag} className="show-tag">
+                      <span key={tag} className={styles.showTag}>
                         {tag}
                       </span>
                     ))}
                   </div>
                 </div>
-                <div className="show-info">
+                <div className={styles.showInfo}>
                   <h4>{show.title}</h4>
-                  <div className="show-meta">
+                  <div className={styles.showMeta}>
                     <Schedule sx={{ fontSize: 16, color: "#64ffda" }} />
                     <span>
                       {show.date} • {show.duration}
                     </span>
                   </div>
-                  <button className="notify-btn">Notify Me</button>
+                  <button className={styles.notifyBtn}>Notify Me</button>
                 </div>
               </motion.div>
             ))}
@@ -493,85 +467,85 @@ const Home = () => {
       </section>
 
       {/* Stats Section - Enhanced */}
-      <section className="stats-section">
-        <div className="container">
+      <section className={styles.statsSection}>
+        <div className={styles.container}>
           <motion.div
-            className="stats-grid"
+            className={styles.statsGrid}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
             <motion.div
-              className="stat-card"
+              className={styles.statCard}
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
               transition={{ duration: 0.5, delay: 0.1 }}
               viewport={{ once: true }}
               whileHover={{ scale: 1.05 }}
             >
-              <div className="stat-icon">👥</div>
-              <div className="stat-number">50,000+</div>
-              <div className="stat-label">Happy Visitors</div>
-              <div className="stat-trend">↑ 15% this year</div>
+              <div className={styles.statIcon}>👥</div>
+              <div className={styles.statNumber}>50,000+</div>
+              <div className={styles.statLabel}>Happy Visitors</div>
+              <div className={styles.statTrend}>↑ 15% this year</div>
             </motion.div>
 
             <motion.div
-              className="stat-card"
+              className={styles.statCard}
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
               whileHover={{ scale: 1.05 }}
             >
-              <div className="stat-icon">🎭</div>
-              <div className="stat-number">150+</div>
-              <div className="stat-label">Shows Conducted</div>
-              <div className="stat-trend">5 shows weekly</div>
+              <div className={styles.statIcon}>🎭</div>
+              <div className={styles.statNumber}>150+</div>
+              <div className={styles.statLabel}>Shows Conducted</div>
+              <div className={styles.statTrend}>5 shows weekly</div>
             </motion.div>
 
             <motion.div
-              className="stat-card"
+              className={styles.statCard}
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
               transition={{ duration: 0.5, delay: 0.3 }}
               viewport={{ once: true }}
               whileHover={{ scale: 1.05 }}
             >
-              <div className="stat-icon">🏫</div>
-              <div className="stat-number">75+</div>
-              <div className="stat-label">School Partners</div>
-              <div className="stat-trend">Trusted by educators</div>
+              <div className={styles.statIcon}>🏫</div>
+              <div className={styles.statNumber}>75+</div>
+              <div className={styles.statLabel}>School Partners</div>
+              <div className={styles.statTrend}>Trusted by educators</div>
             </motion.div>
 
             <motion.div
-              className="stat-card"
+              className={styles.statCard}
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
               viewport={{ once: true }}
               whileHover={{ scale: 1.05 }}
             >
-              <div className="stat-icon">⭐</div>
-              <div className="stat-number">4.9/5</div>
-              <div className="stat-label">Visitor Rating</div>
-              <div className="stat-trend">2,347 reviews</div>
+              <div className={styles.statIcon}>⭐</div>
+              <div className={styles.statNumber}>4.9/5</div>
+              <div className={styles.statLabel}>Visitor Rating</div>
+              <div className={styles.statTrend}>2,347 reviews</div>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
       {/* CTA Section - Enhanced */}
-      <section className="cta-section">
-        <div className="container">
+      <section className={styles.ctaSection}>
+        <div className={styles.container}>
           <motion.div
-            className="cta-content"
+            className={styles.ctaContent}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="cta-badge">Limited Time Offer</div>
+            <div className={styles.ctaBadge}>Limited Time Offer</div>
             <h2>Begin Your Cosmic Adventure Today</h2>
             <p>
               Join thousands of space enthusiasts who've experienced the wonders
@@ -579,33 +553,33 @@ const Home = () => {
               journey through space and time.
             </p>
 
-            <div className="cta-features">
-              <div className="cta-feature">
+            <div className={styles.ctaFeatures}>
+              <div className={styles.ctaFeature}>
                 <Security sx={{ color: "#64ffda" }} />
                 <span>Easy & Secure Booking</span>
               </div>
-              <div className="cta-feature">
+              <div className={styles.ctaFeature}>
                 <Schedule sx={{ color: "#64ffda" }} />
                 <span>Flexible Scheduling</span>
               </div>
-              <div className="cta-feature">
+              <div className={styles.ctaFeature}>
                 <Groups sx={{ color: "#64ffda" }} />
                 <span>Group Discounts Available</span>
               </div>
             </div>
 
-            <div className="cta-buttons">
-              <Link to="/shows" className="btn primary-btn large">
+            <div className={styles.ctaButtons}>
+              <Link to="/shows" className={`${styles.btn} ${styles.primaryBtn} ${styles.large}`}>
                 <ConfirmationNumber sx={{ mr: 1 }} />
                 View Show Schedule
               </Link>
-              <Link to="/register" className="btn secondary-btn large">
+              <Link to="/register" className={`${styles.btn} ${styles.secondaryBtn} ${styles.large}`}>
                 <Groups sx={{ mr: 1 }} />
                 Register Now
               </Link>
             </div>
 
-            <div className="cta-footer">
+            <div className={styles.ctaFooter}>
               <span>🎉 Special: Get 15% off on your first booking!</span>
             </div>
           </motion.div>
