@@ -2,6 +2,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
+import "./assets/scss/theme.scss";
 import "react-toastify/dist/ReactToastify.css";
 
 // Component Imports
@@ -28,6 +29,10 @@ import TermsOfService from "./pages/TermsOfService";
 import StudentRegistration from "./pages/registration/StudentRegistration";
 import SalesRegistration from "./pages/registration/SalesRegistration";
 import PromoterRegistration from "./pages/registration/PromoterRegistration";
+
+import Question from "./pages/question/Question";
+import AddQuestion from "./pages/question/AddQuestion";
+
 
 function App() {
   return (
@@ -63,6 +68,9 @@ function App() {
             <Route path="/sales/*" element={<SalesDashboard />} />
             <Route path="/promoter/*" element={<PromoterDashboard />} />
             <Route path="/admin/*" element={<AdminDashboard />} />
+
+            <Route path="/quiz/question" element={<Question />} />
+            <Route path="/quiz/add/question" element={<AddQuestion />} />
           </Routes>
         </main>
 

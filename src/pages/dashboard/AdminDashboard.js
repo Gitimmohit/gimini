@@ -23,9 +23,11 @@ import {
   Schedule,
 } from "@mui/icons-material";
 import "./AdminDashboard.css";
+import { useNavigate } from "react-router-dom";
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
+  const navigate = useNavigate();
 
   const platformStats = {
     totalStudents: 1250,
@@ -311,6 +313,10 @@ const AdminDashboard = () => {
                 <button className="action-btn primary">
                   <Add />
                   <span>Create New Quiz</span>
+                </button>
+                <button className="action-btn secondary" onClick={() => navigate("/quiz/question")}>
+                  <People />
+                  <span>Manage Question</span>
                 </button>
                 <button className="action-btn secondary">
                   <People />
