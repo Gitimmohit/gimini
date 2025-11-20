@@ -2,6 +2,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import pic2 from "../assets/pic2.jpg";
+
 import {
   Star,
   School,
@@ -28,13 +30,14 @@ const Home = () => {
     <div className="home-page">
       {/* Hero Section with Space Background - Keep as is */}
       <section className="hero-section">
-        <div className="stars-background"></div>
+        <img src={pic2} alt="Digital Dome Projection" className="hero-img" />
+        {/* <div className="stars-background"></div>
         <div className="floating-planets">
           <div className="planet earth"></div>
           <div className="planet mars"></div>
           <div className="planet saturn"></div>
           <div className="planet jupiter"></div>
-        </div>
+        </div> */}
 
         <motion.div
           className="hero-content"
@@ -48,8 +51,10 @@ const Home = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 1 }}
           >
-            Welcome to{" "}
-            <span className="gradient-text">Cosmic Vision Planetarium</span>
+            Digital Portable Planetarium:{" "}
+            <span className="gradient-text">
+              Bringing Space Science to Schools
+            </span>
           </motion.h1>
           <motion.p
             className="hero-subtitle"
@@ -72,7 +77,7 @@ const Home = () => {
             </Link>
             <Link to="/register" className="btn secondary-btn">
               <Groups sx={{ mr: 1 }} />
-              Get Started
+              Book Now
             </Link>
           </motion.div>
 
@@ -84,15 +89,15 @@ const Home = () => {
             transition={{ delay: 1.2, duration: 1 }}
           >
             <div className="trust-item">
-              <Security sx={{ color: "#64ffda", fontSize: 18 }} />
-              <span>Safe & Secure Booking</span>
+              <Security sx={{ color: "#032820ff", fontSize: 18 }} />
+              <span className="color-black">Safe & Secure Booking</span>
             </div>
             <div className="trust-item">
-              <EmojiEvents sx={{ color: "#64ffda", fontSize: 18 }} />
+              <EmojiEvents sx={{ color: "#032820ff", fontSize: 18 }} />
               <span>Award Winning Experience</span>
             </div>
             <div className="trust-item">
-              <Accessibility sx={{ color: "#64ffda", fontSize: 18 }} />
+              <Accessibility sx={{ color: "#032820ff", fontSize: 18 }} />
               <span>Wheelchair Accessible</span>
             </div>
           </motion.div>

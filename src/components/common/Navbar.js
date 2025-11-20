@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import pic3 from "../../assets/pic3.jpg";
 import {
   Menu,
   Close,
@@ -10,7 +11,7 @@ import {
   ConfirmationNumber,
   Logout,
   Dashboard,
-  Person
+  Person,
 } from "@mui/icons-material";
 import "./Navbar.css";
 
@@ -51,10 +52,10 @@ const Navbar = () => {
     setIsLoggedIn(false);
     setUserType("");
     setIsMobileMenuOpen(false);
-    
+
     // Redirect to home page
     navigate("/");
-    
+
     // Reload to reset application state
     window.location.reload();
   };
@@ -74,7 +75,9 @@ const Navbar = () => {
     { path: "/contactus", label: "Contact", icon: "📞" },
     { path: "/about", label: "About", icon: "ℹ️" },
     { path: "/quizchallenge", label: "Quiz", icon: "🎯" },
-    ...(isLoggedIn ? [] : [{ path: "/register", label: "Register", icon: "👤" }]),
+    ...(isLoggedIn
+      ? []
+      : [{ path: "/register", label: "Register", icon: "👤" }]),
   ];
 
   const isActiveLink = (path) => {
@@ -98,10 +101,12 @@ const Navbar = () => {
           >
             <Link to="/" className="brand-link">
               <div className="logo compact-logo">
-                <Star className="logo-icon compact-logo-icon" />
-                <span className="brand-text compact-brand-text">
-                  Gimini Planetarium
-                </span>
+                <img
+                  src={pic3}
+                  alt="Digital Dome Projection"
+                  // className="hero-img"
+                  style={{ width: "80px", height: "auto" }}
+                />
               </div>
             </Link>
           </motion.div>
@@ -145,7 +150,7 @@ const Navbar = () => {
                 transition={{ duration: 0.5, delay: navItems.length * 0.1 }}
               >
                 <div className="user-menu">
-                  <button 
+                  <button
                     className="nav-link compact-nav-link user-profile"
                     onClick={goToDashboard}
                   >
@@ -156,7 +161,7 @@ const Navbar = () => {
                       Dashboard
                     </span>
                   </button>
-                  
+
                   <button
                     className="nav-link compact-nav-link logout-btn"
                     onClick={handleLogout}
@@ -164,9 +169,7 @@ const Navbar = () => {
                     <span className="nav-icon compact-nav-icon">
                       <Logout />
                     </span>
-                    <span className="nav-label compact-nav-label">
-                      Logout
-                    </span>
+                    <span className="nav-label compact-nav-label">Logout</span>
                   </button>
                 </div>
               </motion.div>
@@ -189,9 +192,7 @@ const Navbar = () => {
                   <span className="nav-icon compact-nav-icon">
                     <AccountCircle />
                   </span>
-                  <span className="nav-label compact-nav-label">
-                    Login
-                  </span>
+                  <span className="nav-label compact-nav-label">Login</span>
                   {isActiveLink("/login") && (
                     <motion.div
                       className="active-indicator compact-active-indicator"
@@ -258,7 +259,7 @@ const Navbar = () => {
                   </span>
                   <span className="compact-mobile-label">Dashboard</span>
                 </button>
-                
+
                 <button
                   className="mobile-nav-link compact-mobile-link logout-btn"
                   onClick={handleLogout}

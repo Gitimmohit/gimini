@@ -1,6 +1,8 @@
 // pages/ContactUs.js
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import pic1 from "../assets/pic1.jpg";
+
 import {
   LocationOn,
   Phone,
@@ -10,7 +12,7 @@ import {
   Star,
   Public,
   SupportAgent,
-  CheckCircle
+  CheckCircle,
 } from "@mui/icons-material";
 import "./ContactUs.css";
 
@@ -20,7 +22,7 @@ const ContactUs = () => {
     email: "",
     subject: "",
     message: "",
-    inquiryType: "general"
+    inquiryType: "general",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -28,20 +30,20 @@ const ContactUs = () => {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     setIsSubmitting(false);
     setIsSubmitted(true);
-    
+
     // Reset form after 3 seconds
     setTimeout(() => {
       setIsSubmitted(false);
@@ -50,7 +52,7 @@ const ContactUs = () => {
         email: "",
         subject: "",
         message: "",
-        inquiryType: "general"
+        inquiryType: "general",
       });
     }, 3000);
   };
@@ -59,22 +61,28 @@ const ContactUs = () => {
     {
       icon: <LocationOn className="contact-icon" />,
       title: "Visit Our Planetarium",
-      details: ["Cosmic Vision Planetarium", "Space Science Road", "Galaxy City, GC 100001"],
-      description: "Located in the heart of the city with ample parking space"
+      details: [
+        "Cosmic Vision Planetarium",
+        "Space Science Road",
+        "Galaxy City, GC 100001",
+      ],
+      description: "Located in the heart of the city with ample parking space",
     },
     {
       icon: <Phone className="contact-icon" />,
       title: "Call Us",
       details: ["+91 98765 43210", "+91 98765 43211"],
-      description: "Available 9:00 AM - 9:00 PM, 7 days a week"
+      description: "Available 9:00 AM - 9:00 PM, 7 days a week",
     },
     {
       icon: <Email className="contact-icon" />,
       title: "Email Us",
-      details: ["info@Gimini Planetarium.com", "bookings@Gimini Planetarium.com"],
-      description: "We typically respond within 2-4 hours"
+      details: [
+        "info@Gimini Planetarium.com",
+        "bookings@Gimini Planetarium.com",
+      ],
+      description: "We typically respond within 2-4 hours",
     },
-   
   ];
 
   const inquiryTypes = [
@@ -83,40 +91,45 @@ const ContactUs = () => {
     { value: "school", label: "School Programs" },
     { value: "private", label: "Private Events" },
     { value: "technical", label: "Technical Support" },
-    { value: "partnership", label: "Partnership" }
+    { value: "partnership", label: "Partnership" },
   ];
 
   const faqs = [
     {
       question: "How far in advance should I book tickets?",
-      answer: "We recommend booking at least 3-5 days in advance for regular shows and 1-2 weeks for special events and weekends."
+      answer:
+        "We recommend booking at least 3-5 days in advance for regular shows and 1-2 weeks for special events and weekends.",
     },
     {
       question: "Do you offer discounts for school groups?",
-      answer: "Yes! We offer special educational rates for school groups of 20 or more students. Contact us for customized educational packages."
+      answer:
+        "Yes! We offer special educational rates for school groups of 20 or more students. Contact us for customized educational packages.",
     },
     {
       question: "Is the planetarium wheelchair accessible?",
-      answer: "Absolutely! Our facility is fully wheelchair accessible with ramps, elevators, and designated seating areas."
+      answer:
+        "Absolutely! Our facility is fully wheelchair accessible with ramps, elevators, and designated seating areas.",
     },
     {
       question: "Can I host a private event at the planetarium?",
-      answer: "Yes, we offer private event hosting for birthdays, corporate events, and special occasions. Contact us for availability and pricing."
-    }
+      answer:
+        "Yes, we offer private event hosting for birthdays, corporate events, and special occasions. Contact us for availability and pricing.",
+    },
   ];
 
   return (
     <div className="contact-us-page">
       {/* Hero Section */}
       <section className="contact-hero">
-        <div className="hero-background">
+        <img src={pic1} alt="Digital Dome Projection" className="hero-img" />
+        {/* <div className="hero-background">
           <div className="stars-overlay"></div>
           <div className="floating-planets">
             <div className="planet earth"></div>
             <div className="planet mars"></div>
             <div className="planet saturn"></div>
           </div>
-        </div>
+        </div> */}
         <div className="container">
           <motion.div
             className="hero-content"
@@ -132,7 +145,9 @@ const ContactUs = () => {
               Contact <span className="gradient-text">Cosmic Vision</span>
             </h1>
             <p className="hero-subtitle">
-              Have questions about our shows, bookings, or special events? Our cosmic support team is ready to assist you on your astronomical journey.
+              Have questions about our shows, bookings, or special events? Our
+              cosmic support team is ready to assist you on your astronomical
+              journey.
             </p>
           </motion.div>
         </div>
@@ -163,13 +178,13 @@ const ContactUs = () => {
                 viewport={{ once: true }}
                 whileHover={{ y: -5 }}
               >
-                <div className="contact-card-icon">
-                  {contact.icon}
-                </div>
+                <div className="contact-card-icon">{contact.icon}</div>
                 <h3>{contact.title}</h3>
                 <div className="contact-details">
                   {contact.details.map((detail, idx) => (
-                    <p key={idx} className="detail-item">{detail}</p>
+                    <p key={idx} className="detail-item">
+                      {detail}
+                    </p>
                   ))}
                 </div>
                 <p className="contact-description">{contact.description}</p>
@@ -191,7 +206,10 @@ const ContactUs = () => {
               viewport={{ once: true }}
             >
               <h2>Send Us a Message</h2>
-              <p>Fill out the form below and we'll get back to you within 24 hours</p>
+              <p>
+                Fill out the form below and we'll get back to you within 24
+                hours
+              </p>
 
               {isSubmitted ? (
                 <motion.div
@@ -202,7 +220,9 @@ const ContactUs = () => {
                 >
                   <CheckCircle className="success-icon" />
                   <h3>Message Sent Successfully!</h3>
-                  <p>Thank you for contacting us. We'll get back to you soon.</p>
+                  <p>
+                    Thank you for contacting us. We'll get back to you soon.
+                  </p>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="contact-form">
@@ -241,7 +261,7 @@ const ContactUs = () => {
                       value={formData.inquiryType}
                       onChange={handleChange}
                     >
-                      {inquiryTypes.map(type => (
+                      {inquiryTypes.map((type) => (
                         <option key={type.value} value={type.value}>
                           {type.label}
                         </option>
@@ -277,7 +297,7 @@ const ContactUs = () => {
 
                   <motion.button
                     type="submit"
-                    className={`submit-btn ${isSubmitting ? 'submitting' : ''}`}
+                    className={`submit-btn ${isSubmitting ? "submitting" : ""}`}
                     disabled={isSubmitting}
                     whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -326,7 +346,9 @@ const ContactUs = () => {
                   <Phone className="emergency-icon" />
                   <span>+91 98765 43212</span>
                 </div>
-                <p className="emergency-note">Available during operating hours for immediate assistance</p>
+                <p className="emergency-note">
+                  Available during operating hours for immediate assistance
+                </p>
               </div>
             </motion.div>
           </div>
@@ -392,12 +414,14 @@ const ContactUs = () => {
               <div className="address-details">
                 <LocationOn className="address-icon" />
                 <div>
-                  <p className="address-line">Space Science Road, Galaxy City</p>
+                  <p className="address-line">
+                    Space Science Road, Galaxy City
+                  </p>
                   <p className="address-line">Near Central Observatory</p>
                   <p className="address-line">GC 100001</p>
                 </div>
               </div>
-              
+
               <div className="transport-info">
                 <h4>How to Reach</h4>
                 <div className="transport-options">

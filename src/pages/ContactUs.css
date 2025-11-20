@@ -3,7 +3,7 @@
 
 .contact-us-page {
   min-height: 100vh;
-  background: #0a192f;
+  /* background: #0a192f; */
   color: #ccd6f6;
   font-family: 'Inter', sans-serif;
 }
@@ -18,17 +18,26 @@
 .contact-hero {
   position: relative;
   padding: 120px 0 80px;
-  background: linear-gradient(135deg, #0c0c2e 0%, #1a1a4a 50%, #2d1b69 100%);
+  /* background: linear-gradient(135deg, #0c0c2e 0%, #1a1a4a 50%, #2d1b69 100%); */
   overflow: hidden;
 }
+.hero-img {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;  /* optional */
+}
 
-.hero-background {
+/* .hero-background {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-}
+} */
 
 .stars-overlay {
   position: absolute;
@@ -49,7 +58,7 @@
   to { transform: translateY(-200px); }
 }
 
-.floating-planets {
+/* .floating-planets {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -102,12 +111,12 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(20deg);
-}
+} */
 
-@keyframes float {
+/* @keyframes float {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(-15px) rotate(3deg); }
-}
+} */
 
 .hero-content {
   position: relative;

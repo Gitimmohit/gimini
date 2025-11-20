@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import pic4 from "../assets/pic4.jpg";
 import {
   ConfirmationNumber,
   Schedule,
@@ -12,8 +13,8 @@ import {
   Search,
   EventAvailable,
   AccessTime,
-  Language, 
-  EmojiEvents
+  Language,
+  EmojiEvents,
 } from "@mui/icons-material";
 import "./UpcomingShows.css";
 
@@ -28,7 +29,8 @@ const UpcomingShows = () => {
       date: "2024-01-25",
       time: "6:00 PM",
       duration: "45 mins",
-      image: "https://images.unsplash.com/photo-1465101162946-4377e57745c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+      image:
+        "https://images.unsplash.com/photo-1465101162946-4377e57745c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
       category: "scientific",
       tags: ["New", "Scientific", "3D"],
       rating: 4.8,
@@ -39,9 +41,15 @@ const UpcomingShows = () => {
       seats: 15,
       ageGroup: "12+",
       language: "English",
-      description: "Explore the enigmatic world of black holes, gravitational waves, and spacetime curvature in this mind-bending journey through Einstein's universe.",
-      features: ["3D Simulation", "Expert Q&A", "Interactive Session", "Surround Sound"],
-      status: "upcoming"
+      description:
+        "Explore the enigmatic world of black holes, gravitational waves, and spacetime curvature in this mind-bending journey through Einstein's universe.",
+      features: [
+        "3D Simulation",
+        "Expert Q&A",
+        "Interactive Session",
+        "Surround Sound",
+      ],
+      status: "upcoming",
     },
     {
       id: 2,
@@ -49,20 +57,27 @@ const UpcomingShows = () => {
       date: "2024-02-02",
       time: "4:00 PM",
       duration: "50 mins",
-      image: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+      image:
+        "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
       category: "educational",
       tags: ["Educational", "Kids Friendly", "Family"],
-      rating: 4.6,
-      reviews: 89,
+      // rating: 4.6,
+      // reviews: 89,
       price: 299,
       originalPrice: 399,
       discount: 25,
       seats: 25,
       ageGroup: "8+",
       language: "English & Hindi",
-      description: "Journey to Mars and discover the secrets of the Red Planet, from ancient riverbeds to future colonization possibilities.",
-      features: ["Live Telescope", "Kids Activity", "Take-home Kit", "Educational"],
-      status: "upcoming"
+      description:
+        "Journey to Mars and discover the secrets of the Red Planet, from ancient riverbeds to future colonization possibilities.",
+      features: [
+        "Live Telescope",
+        "Kids Activity",
+        "Take-home Kit",
+        "Educational",
+      ],
+      status: "upcoming",
     },
     {
       id: 3,
@@ -70,7 +85,8 @@ const UpcomingShows = () => {
       date: "2024-02-10",
       time: "7:30 PM",
       duration: "55 mins",
-      image: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+      image:
+        "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
       category: "action",
       tags: ["Action", "3D Experience", "Thrilling"],
       rating: 4.9,
@@ -81,9 +97,15 @@ const UpcomingShows = () => {
       seats: 8,
       ageGroup: "10+",
       language: "English",
-      description: "Witness the most spectacular cosmic collisions - from asteroid impacts to galaxy mergers in stunning 3D visualization.",
-      features: ["3D Experience", "Surround Sound", "VR Elements", "Action-Packed"],
-      status: "upcoming"
+      description:
+        "Witness the most spectacular cosmic collisions - from asteroid impacts to galaxy mergers in stunning 3D visualization.",
+      features: [
+        "3D Experience",
+        "Surround Sound",
+        "VR Elements",
+        "Action-Packed",
+      ],
+      status: "upcoming",
     },
     {
       id: 4,
@@ -91,7 +113,8 @@ const UpcomingShows = () => {
       date: "2024-01-30",
       time: "3:00 PM",
       duration: "40 mins",
-      image: "https://images.unsplash.com/photo-1543722530-d2c3201371e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+      image:
+        "https://images.unsplash.com/photo-1543722530-d2c3201371e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
       category: "educational",
       tags: ["Educational", "Family", "Beginner"],
       rating: 4.7,
@@ -102,9 +125,15 @@ const UpcomingShows = () => {
       seats: 32,
       ageGroup: "6+",
       language: "Hindi & English",
-      description: "Take a guided tour through our solar system, exploring planets, moons, and the amazing phenomena that make our cosmic neighborhood unique.",
-      features: ["Planet Tour", "Interactive Quiz", "Family Friendly", "Educational"],
-      status: "upcoming"
+      description:
+        "Take a guided tour through our solar system, exploring planets, moons, and the amazing phenomena that make our cosmic neighborhood unique.",
+      features: [
+        "Planet Tour",
+        "Interactive Quiz",
+        "Family Friendly",
+        "Educational",
+      ],
+      status: "upcoming",
     },
     {
       id: 5,
@@ -112,7 +141,8 @@ const UpcomingShows = () => {
       date: "2024-02-15",
       time: "8:00 PM",
       duration: "60 mins",
-      image: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+      image:
+        "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
       category: "scientific",
       tags: ["Scientific", "Advanced", "Astronomy"],
       rating: 4.8,
@@ -123,9 +153,15 @@ const UpcomingShows = () => {
       seats: 12,
       ageGroup: "14+",
       language: "English",
-      description: "Explore the fascinating life cycle of stars, from stellar nurseries to supernova explosions and the formation of neutron stars and black holes.",
-      features: ["Scientific Depth", "Expert Commentary", "Advanced Visuals", "Q&A Session"],
-      status: "upcoming"
+      description:
+        "Explore the fascinating life cycle of stars, from stellar nurseries to supernova explosions and the formation of neutron stars and black holes.",
+      features: [
+        "Scientific Depth",
+        "Expert Commentary",
+        "Advanced Visuals",
+        "Q&A Session",
+      ],
+      status: "upcoming",
     },
     {
       id: 6,
@@ -133,7 +169,8 @@ const UpcomingShows = () => {
       date: "2024-02-08",
       time: "9:00 PM",
       duration: "35 mins",
-      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+      image:
+        "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
       category: "visual",
       tags: ["Visual", "Relaxing", "Musical"],
       rating: 4.9,
@@ -144,40 +181,68 @@ const UpcomingShows = () => {
       seats: 40,
       ageGroup: "All Ages",
       language: "Musical (No Dialogue)",
-      description: "Immerse yourself in the breathtaking beauty of auroras with this musical journey through the polar skies. A sensory experience like no other.",
+      description:
+        "Immerse yourself in the breathtaking beauty of auroras with this musical journey through the polar skies. A sensory experience like no other.",
       features: ["Musical Score", "Visual Spectacle", "Relaxing", "All Ages"],
-      status: "upcoming"
-    }
+      status: "upcoming",
+    },
   ];
 
   const categories = [
     { value: "all", label: "All Shows", count: upcomingShows.length },
-    { value: "scientific", label: "Scientific", count: upcomingShows.filter(show => show.category === "scientific").length },
-    { value: "educational", label: "Educational", count: upcomingShows.filter(show => show.category === "educational").length },
-    { value: "action", label: "Action", count: upcomingShows.filter(show => show.category === "action").length },
-    { value: "visual", label: "Visual", count: upcomingShows.filter(show => show.category === "visual").length }
+    {
+      value: "scientific",
+      label: "Scientific",
+      count: upcomingShows.filter((show) => show.category === "scientific")
+        .length,
+    },
+    {
+      value: "educational",
+      label: "Educational",
+      count: upcomingShows.filter((show) => show.category === "educational")
+        .length,
+    },
+    {
+      value: "action",
+      label: "Action",
+      count: upcomingShows.filter((show) => show.category === "action").length,
+    },
+    {
+      value: "visual",
+      label: "Visual",
+      count: upcomingShows.filter((show) => show.category === "visual").length,
+    },
   ];
 
-  const filteredShows = upcomingShows.filter(show => {
+  const filteredShows = upcomingShows.filter((show) => {
     const matchesFilter = filter === "all" || show.category === filter;
-    const matchesSearch = show.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         show.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         show.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchesSearch =
+      show.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      show.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      show.tags.some((tag) =>
+        tag.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     return matchesFilter && matchesSearch;
   });
 
   const formatDate = (dateString) => {
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('en-US', options);
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    return new Date(dateString).toLocaleDateString("en-US", options);
   };
 
   return (
     <div className="upcoming-shows-page">
       {/* Hero Section */}
       <section className="shows-hero">
-        <div className="hero-background">
+        <img src={pic4} alt="Digital Dome Projection" className="hero-img" />
+        {/* <div className="hero-background">
           <div className="stars-overlay"></div>
-        </div>
+        </div> */}
         <div className="container">
           <motion.div
             className="hero-content"
@@ -187,8 +252,9 @@ const UpcomingShows = () => {
           >
             <h1 className="hero-title">Upcoming Cosmic Shows</h1>
             <p className="hero-subtitle">
-              Embark on extraordinary journeys through space and time. Book your seat for 
-              unforgettable astronomical experiences in our state-of-the-art digital dome.
+              Embark on extraordinary journeys through space and time. Book your
+              seat for unforgettable astronomical experiences in our
+              state-of-the-art digital dome.
             </p>
             <div className="hero-stats">
               <div className="stat">
@@ -222,17 +288,19 @@ const UpcomingShows = () => {
                 className="search-input"
               />
             </div>
-            
+
             <div className="filter-tabs">
               <div className="filter-header">
                 <FilterList className="filter-icon" />
                 <span>Filter by Category</span>
               </div>
               <div className="category-filters">
-                {categories.map(category => (
+                {categories.map((category) => (
                   <button
                     key={category.value}
-                    className={`filter-btn ${filter === category.value ? 'active' : ''}`}
+                    className={`filter-btn ${
+                      filter === category.value ? "active" : ""
+                    }`}
                     onClick={() => setFilter(category.value)}
                   >
                     {category.label}
@@ -255,7 +323,8 @@ const UpcomingShows = () => {
             transition={{ duration: 0.6 }}
           >
             <h2 className="section-title">
-              {filteredShows.length} {filter === 'all' ? 'Upcoming' : filter} Shows Found
+              {filteredShows.length} {filter === "all" ? "Upcoming" : filter}{" "}
+              Shows Found
             </h2>
             <p className="section-subtitle">
               Book in advance to secure your preferred date and time
@@ -277,15 +346,17 @@ const UpcomingShows = () => {
                   <img src={show.image} alt={show.title} />
                   <div className="show-overlay">
                     <div className="show-tags">
-                      {show.tags.map(tag => (
-                        <span key={tag} className="show-tag">{tag}</span>
+                      {show.tags.map((tag) => (
+                        <span key={tag} className="show-tag">
+                          {tag}
+                        </span>
                       ))}
                     </div>
-                    <div className="discount-badge">
-                      {show.discount}% OFF
-                    </div>
+                    <div className="discount-badge">{show.discount}% OFF</div>
                     <div className="seats-indicator">
-                      <span className="seats-count">🎫 {show.seats} seats left</span>
+                      <span className="seats-count">
+                        🎫 {show.seats} seats left
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -306,7 +377,9 @@ const UpcomingShows = () => {
                   {/* Show Features */}
                   <div className="show-features">
                     {show.features.map((feature, idx) => (
-                      <span key={idx} className="feature-tag">✓ {feature}</span>
+                      <span key={idx} className="feature-tag">
+                        ✓ {feature}
+                      </span>
                     ))}
                   </div>
 
@@ -315,14 +388,18 @@ const UpcomingShows = () => {
                     <div className="meta-item">
                       <EventAvailable className="meta-icon" />
                       <div>
-                        <div className="meta-value">{formatDate(show.date)}</div>
+                        <div className="meta-value">
+                          {formatDate(show.date)}
+                        </div>
                         <div className="meta-label">Date</div>
                       </div>
                     </div>
                     <div className="meta-item">
                       <AccessTime className="meta-icon" />
                       <div>
-                        <div className="meta-value">{show.time} • {show.duration}</div>
+                        <div className="meta-value">
+                          {show.time} • {show.duration}
+                        </div>
                         <div className="meta-label">Timing</div>
                       </div>
                     </div>
@@ -345,22 +422,24 @@ const UpcomingShows = () => {
                   {/* Pricing and Action */}
                   <div className="show-actions">
                     <div className="pricing">
-                      <div className="price-original">₹{show.originalPrice}</div>
+                      <div className="price-original">
+                        ₹{show.originalPrice}
+                      </div>
                       <div className="price-current">₹{show.price}</div>
                       <div className="price-note">per person</div>
                     </div>
                     <div className="action-buttons">
-                      <Link 
-                        to={`/booking/${show.id}`} 
+                      <Link
+                        to={`/booking/${show.id}`}
                         className="btn primary-btn"
                       >
                         <ConfirmationNumber className="btn-icon" />
                         Book Now
                       </Link>
-                      <button className="btn secondary-btn">
+                      {/* <button className="btn secondary-btn">
                         <Schedule className="btn-icon" />
                         Remind Me
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 </div>
@@ -379,11 +458,11 @@ const UpcomingShows = () => {
               <EmojiEvents className="empty-icon" />
               <h3>No shows found</h3>
               <p>Try adjusting your search or filter criteria</p>
-              <button 
+              <button
                 className="btn primary-btn"
                 onClick={() => {
-                  setFilter('all');
-                  setSearchTerm('');
+                  setFilter("all");
+                  setSearchTerm("");
                 }}
               >
                 Clear Filters
@@ -404,7 +483,10 @@ const UpcomingShows = () => {
             viewport={{ once: true }}
           >
             <h2>Can't Find What You're Looking For?</h2>
-            <p>Contact us for private shows, school programs, or custom astronomical experiences</p>
+            <p>
+              Contact us for private shows, school programs, or custom
+              astronomical experiences
+            </p>
             <div className="cta-buttons">
               <Link to="/contact" className="btn primary-btn large">
                 Contact Us
