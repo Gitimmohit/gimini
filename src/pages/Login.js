@@ -113,7 +113,11 @@ const Login = () => {
         dispatch(setUserDetails(response.data.user_data));
         if (response.data.user_data) {
           if (response.data.user_data.usertype === "STUDENT") {
-            navigate("/student");
+            if (response.data.user_data.is_approved) {
+              navigate("/student");
+            } else {
+              navigate("/studentapproval");
+            }
           } else if (response.data.user_data.usertype === "SALES") {
             navigate("/sales");
           } else if (response.data.user_data.usertype === "PROMOTER") {

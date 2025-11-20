@@ -29,6 +29,8 @@ import TermsOfService from "./pages/TermsOfService";
 import StudentRegistration from "./pages/registration/StudentRegistration";
 import SalesRegistration from "./pages/registration/SalesRegistration";
 import PromoterRegistration from "./pages/registration/PromoterRegistration";
+import StudentApproval from "./pages/registration/StudentApprovals";
+import ScrollToTop from "./components/ScrollToTop";
 
 import Question from "./pages/question/Question";
 import AddQuestion from "./pages/question/AddQuestion";
@@ -37,6 +39,7 @@ import AddQuestion from "./pages/question/AddQuestion";
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div className="App">
         <Navbar />
 
@@ -71,6 +74,7 @@ function App() {
 
             <Route path="/quiz/question" element={<Question />} />
             <Route path="/quiz/add/question" element={<AddQuestion />} />
+            <Route path="/studentapproval" element={<StudentApproval />} />
           </Routes>
         </main>
 

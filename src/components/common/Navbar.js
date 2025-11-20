@@ -14,8 +14,13 @@ import {
   Person,
 } from "@mui/icons-material";
 import styles from "./Navbar.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { resetUser } from "../../redux/slices/userSlice";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const accessToken = useSelector((state) => state.user.access_token);
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,27 +33,15 @@ const Navbar = () => {
       setIsScrolled(window.scrollY > 50);
     };
 
-    // Check if user is logged in
-    checkLoginStatus();
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const checkLoginStatus = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user && user.isLoggedIn) {
-      setIsLoggedIn(true);
-      setUserType(user.userType || "student");
-    } else {
-      setIsLoggedIn(false);
-      setUserType("");
-    }
-  };
-
   const handleLogout = () => {
     // Clear user data from localStorage
-    localStorage.removeItem("user");
+    dispatch(resetUser()); // clears redux state
+    localStorage.clear();
+    sessionStorage.clear();
     setIsLoggedIn(false);
     setUserType("");
     setIsMobileMenuOpen(false);
@@ -69,15 +62,22 @@ const Navbar = () => {
   };
 
   const navItems = [
-    { path: "/", label: "Home", icon: "🏠" },
-    { path: "/shows", label: "Shows", icon: "🎭" },
-    { path: "/referral", label: "Refer & Earn", icon: "💰" },
-    { path: "/contactus", label: "Contact", icon: "📞" },
-    { path: "/about", label: "About", icon: "ℹ️" },
-    { path: "/quizchallenge", label: "Quiz", icon: "🎯" },
-    ...(isLoggedIn
-      ? []
-      : [{ path: "/registerstudent", label: "Register", icon: "👤" }]),
+    // When accessToken is available (user logged in)
+    ...(!accessToken
+      ? [
+          { path: "/", label: "Home", icon: "🏠" },
+          { path: "/shows", label: "Shows", icon: "🎭" },
+          { path: "/referral", label: "Refer & Earn", icon: "💰" },
+          { path: "/contactus", label: "Contact", icon: "📞" },
+          { path: "/about", label: "About", icon: "ℹ️" },
+          { path: "/quizchallenge", label: "Quiz", icon: "🎯" },
+        ]
+      : []),
+
+    // When NO accessToken (user NOT logged in)
+    ...(!accessToken
+      ? [{ path: "/registerstudent", label: "Register", icon: "👤" }]
+      : []),
   ];
 
   const isActiveLink = (path) => {
@@ -141,7 +141,7 @@ const Navbar = () => {
             ))}
 
             {/* User Menu for Logged-in Users */}
-            {isLoggedIn && (
+            {accessToken && (
               <motion.div
                 className={styles.navItem}
                 initial={{ opacity: 0, y: -20 }}
@@ -173,7 +173,7 @@ const Navbar = () => {
             )}
 
             {/* Login Button for Non-Logged-in Users */}
-            {!isLoggedIn && (
+            {!accessToken && (
               <motion.div
                 className={styles.navItem}
                 initial={{ opacity: 0, y: -20 }}
@@ -243,7 +243,7 @@ const Navbar = () => {
             ))}
 
             {/* Mobile User Menu */}
-            {isLoggedIn ? (
+            {accessToken ? (
               <>
                 <button
                   className={styles.mobileNavLink}

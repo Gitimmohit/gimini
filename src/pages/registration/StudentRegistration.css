@@ -33,8 +33,9 @@
 
 .student-container {
   width: 100%;
-  max-width: 440px;
+  max-width: 80%;
   margin: 0 auto;
+  text-align: left;
 }
 
 .student-registration-card {

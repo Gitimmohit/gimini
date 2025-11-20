@@ -32,6 +32,14 @@ export const userSlice = createSlice({
     setUserDetails: (state, action) => {
       state.user_details = action.payload;
     },
+
+    // ⭐ RESET ALL USER DATA
+    resetUser: (state) => {
+      state.value = 0;
+      state.access_token = "";
+      state.refresh_token = "";
+      state.user_details = {};
+    },
   },
 });
 
@@ -42,7 +50,8 @@ export const {
   incrementByAmount,
   setAccessToken,
   setRefreshToken,
-  setUserDetails
+  setUserDetails,
+  resetUser
 } = userSlice.actions;
 
 export default userSlice.reducer;

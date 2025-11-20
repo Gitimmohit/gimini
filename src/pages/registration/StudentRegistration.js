@@ -207,6 +207,8 @@ const StudentRegistration = () => {
       const response = await axios.post(`${ServerAddress}ems/verify_otp/`, {
         token: rectoken,
         email: formData.email,
+        fullname: formData.fullname,
+        mobilenumber: formData.phone,
         usertype:formData.usertype,
         dob:formData.dob,
         school_name:formData.school_name,
@@ -317,7 +319,7 @@ const StudentRegistration = () => {
               <div className="student-header-content">
                 <RocketLaunch className="student-header-icon" />
                 <div>
-                  <h1>Join Cosmic Vision</h1>
+                  <h1>Join With Gimini Planetarium</h1>
                   <p>Create your account to explore the universe</p>
                 </div>
               </div>
