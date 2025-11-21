@@ -181,23 +181,13 @@ const Home = () => {
           alt="Digital Dome Projection"
           className={styles.showImg}
         />
+
         <motion.div
           className={styles.heroContent}
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <motion.h1
-            className={styles.heroTitle}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 1 }}
-          >
-            Digital Portable Planetarium:{" "}
-            <span className={styles.gradientText}>
-              Bringing Space Science to Schools
-            </span>
-          </motion.h1>
           <motion.p
             className={styles.heroSubtitle}
             initial={{ opacity: 0 }}
@@ -210,39 +200,35 @@ const Home = () => {
 
           <div className={styles.infoContainer}>
             <div className={styles.infoItem}>
-              <img
-                src={maximize}
-                alt="Space Icon"
-                className={styles.infoIcon}
-              />
-              <h3 className={styles.infoTitle}>Space Required</h3>
-              <p className={styles.infoText}>20 x 20 x 10 ft</p>
+              <img src={maximize} className={styles.infoIcon} />
+              <div className={styles.infoTextGroup}>
+                <h3 className={styles.infoTitle}>Space Required</h3>
+                <p className={styles.infoText}>20 x 20 x 10 ft</p>
+              </div>
             </div>
 
             <div className={styles.infoItem}>
-              <img
-                src={Asset}
-                alt="Duration Icon"
-                className={styles.infoIcon}
-              />
-              <h3 className={styles.infoTitle}>Show Duration</h3>
-              <p className={styles.infoText}>30 mins (approx)</p>
+              <img src={Asset} className={styles.infoIcon} />
+              <div className={styles.infoTextGroup}>
+                <h3 className={styles.infoTitle}>Show Duration</h3>
+                <p className={styles.infoText}>30 mins (approx)</p>
+              </div>
             </div>
 
             <div className={styles.infoItem}>
-              <img src={Asse} alt="Capacity Icon" className={styles.infoIcon} />
-              <h3 className={styles.infoTitle}>Capacity Per Show</h3>
-              <p className={styles.infoText}>60–70 Students</p>
+              <img src={Asse} className={styles.infoIcon} />
+              <div className={styles.infoTextGroup}>
+                <h3 className={styles.infoTitle}>Capacity Per Show</h3>
+                <p className={styles.infoText}>60–70 Students</p>
+              </div>
             </div>
 
             <div className={styles.infoItem}>
-              <img
-                src={Assets}
-                alt="Daily Shows Icon"
-                className={styles.infoIcon}
-              />
-              <h3 className={styles.infoTitle}>Shows Per Day</h3>
-              <p className={styles.infoText}>12–16 Shows</p>
+              <img src={Assets} className={styles.infoIcon} />
+              <div className={styles.infoTextGroup}>
+                <h3 className={styles.infoTitle}>Shows Per Day</h3>
+                <p className={styles.infoText}>12–16 Shows</p>
+              </div>
             </div>
           </div>
         </motion.div>

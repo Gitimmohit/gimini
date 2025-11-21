@@ -327,34 +327,38 @@
 .imgSectionShow {
   position: relative;
   width: 100%;
-  height: 100vh;               
+  height: 80vh;               
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0 40px;
+    background: #0a192f;
 }
 
-/* Background image */
 .showImg {
-  width: 100%;
-  height: 100vh;
+  width: auto;
+  max-width: 90%;
+  height: 80vh;
   object-fit: contain; /* keeps entire image visible */
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -2;
+  position: relative; /* in front of gradient */
+  z-index: 1;
 }
+
+.heroContent {
+  position: relative;
+  z-index: 2; /* ensures text and info sit above image */
+  text-align: center;
+  color: #ffffff;
+}
+
 .infoContainer {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  gap: 40px;
+  gap: 10px;
   flex-wrap: wrap;
-  padding: 20px 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
+  margin-top: 30px;
 }
 
 .infoItem {
@@ -362,27 +366,30 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  width: 200px;
-  color: white;
+  /* background: rgba(255, 255, 255, 0.05); */
+  
 }
 
 .infoIcon {
   width: 60px;
   height: 60px;
-  margin-bottom: 15px;
-  filter: invert(74%) sepia(56%) saturate(460%) hue-rotate(2deg) brightness(96%) contrast(92%);
+  margin-bottom: 10px;
 }
 
 .infoTitle {
-  font-size: 1.3rem;
+  font-size: 16px;
   font-weight: 600;
-  margin-bottom: 8px;
+  color: #ffffff;
+  margin-bottom: 5px;
 }
 
 .infoText {
-  font-size: 1.1rem;
-  color: #d7d7d7;
+  font-size: 14px;
+  color: #d1d1f0;
 }
+
+
+
 
 /* Optional: Dark overlay for better text visibility */
 .imgSectionShow::before {
