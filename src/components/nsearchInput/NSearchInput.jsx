@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Input } from "reactstrap";
 import { MdOutlineKeyboardArrowDown, MdErrorOutline } from "react-icons/md";
 import { IconContext } from "react-icons";
+import { AiOutlinePlus } from "react-icons/ai";
 
 const NSearchInput = ({
   data_list,
@@ -9,12 +9,14 @@ const NSearchInput = ({
   set_data_item_s,
   error_message = null,
   set_id,
+  set_temp,
   error_s = false,
   show_search = true,
   disable_me = false,
   current_width = "100%",
-  child_width = "90%",
+  child_width = "95%",
   show_error = true,
+  add_nav = "",
 }) => {
   const [showfilter, setshowfilter] = useState(false);
   const [data_list_s, setdata_list_s] = useState(data_list);
@@ -26,8 +28,12 @@ const NSearchInput = ({
   // For UP and Down Key
   const [highlightedIndex, setHighlightedIndex] = useState(null);
   const dropdownRef = useRef(null);
+  const spanRef = useRef(null);
 
   const toggleDropdown = () => {
+    if(!disable_me){
+      setshowfilter(true);
+    }
     setHighlightedIndex(null);
   };
 
@@ -37,26 +43,49 @@ const NSearchInput = ({
       setHighlightedIndex((prevIndex) =>
         prevIndex === null || prevIndex === filterList.length - 1
           ? 0
-          : prevIndex + 1,
+          : prevIndex + 1
       );
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
       setHighlightedIndex((prevIndex) =>
         prevIndex === null || prevIndex === 0
           ? filterList.length - 1
-          : prevIndex - 1,
+          : prevIndex - 1
       );
     } else if (e.key === "Enter") {
+      e.preventDefault();
       if (highlightedIndex !== null) {
         if (typeof filterList[highlightedIndex] === "string") {
           set_data_item_s(filterList[highlightedIndex]);
         } else {
           set_data_item_s(filterList[highlightedIndex][1]);
           set_id(filterList[highlightedIndex][0]);
+          set_temp && set_temp(filterList[highlightedIndex][2]);
         }
         setshowfilter(false);
         setfocused(false);
         setsearchWord("");
+      }
+    } else if (e.key === "Tab" && e.shiftKey) {
+      e.preventDefault(); // Prevent default Tab behavior
+      setshowfilter(false);
+      setfocused(false); 
+      // Select focusable elements, excluding disabled ones
+      const focusableElements = document.querySelectorAll('button:not([disabled]), [href]:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]):not([disabled])');
+      const currentElement = e.target;
+      const currentIndex = Array.from(focusableElements).indexOf(currentElement); 
+      if (currentIndex > 0) {
+        // Focus the previous enabled element
+        focusableElements[currentIndex - 1].focus();
+      } else if (currentIndex === -1) {
+        // Handle case where current element is not in focusableElements Find the closest previous focusable element in the DOM
+        const form = currentElement.closest('form') || document;
+        const allFocusable = Array.from(form.querySelectorAll('button:not([disabled]), [href]:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]):not([disabled])'));
+        const currentElementIndex = Array.from(form.querySelectorAll('*')).indexOf(currentElement);
+        const previousFocusable = allFocusable.filter((el) => Array.from(form.querySelectorAll('*')).indexOf(el) < currentElementIndex).pop(); // Get the last focusable element before the current one
+        if (previousFocusable) {
+          previousFocusable.focus();
+        }
       }
     }
   };
@@ -95,16 +124,25 @@ const NSearchInput = ({
     }
   }, [showfilter]);
 
-
   const [is_focused, setis_focused] = useState(false);
   const [refresh, setrefresh] = useState(false);
-  const search_ref = useRef("")
+  const search_ref = useRef("");
 
   useEffect(() => {
     if (showfilter && show_search && data_list_s?.length > 0) {
       search_ref.current.focus();
     }
-  }, [showfilter, show_search, data_list_s])
+  }, [showfilter, show_search, data_list_s]);
+
+  useEffect(() => {
+      if (highlightedIndex !== null && showfilter) {
+        const highlightedOption =
+          dropdownRef.current.querySelector(".highlighted");
+        if (highlightedOption) {
+          highlightedOption.scrollIntoView({ block: "nearest" });
+        }
+      }
+    }, [highlightedIndex, showfilter]);
 
   return (
     <>
@@ -118,13 +156,12 @@ const NSearchInput = ({
         onFocus={() => setfocused(true)}
         onMouseLeave={() => {
           if (disable_me === false) {
-            setshowfilter(false)
+            setshowfilter(false);
           }
-        }
-        }
+        }}
         onBlur={() => {
           if (!show_search && searching === false) {
-          setshowfilter(false);
+            setshowfilter(false);
           }
           if (searching === false && show_error) {
             if (!data_item_s) {
@@ -135,15 +172,8 @@ const NSearchInput = ({
           }
         }}
       >
-        <button
-          type="button"
+        <div
           style={{
-            // border: error ? "1px solid #F46A6A" : "1px solid #d3d3d3",
-            border: is_focused
-              ? "3px solid #4fa8e4"
-              : error
-                ? "1px solid #F46A6A"
-                : "1px solid #d3d3d3",
             height: "30.5px",
             display: "flex",
             width: current_width,
@@ -151,55 +181,123 @@ const NSearchInput = ({
             position: "",
             background: disable_me ? "#EFF2F7" : "white",
           }}
-          onFocus={() => {
-            if (disable_me === false) {
-            setshowfilter(true)
-            setis_focused(true);
-            setrefresh(!refresh);
-            }
-          }}
-          onBlur={() => {
-            setis_focused(false);
-            setrefresh(!refresh);
-          }}
-          className="form-control-sm"
-          onClick={() => {
-            toggleDropdown();
-            // if (disable_me === false) {
-            //   setshowfilter(!showfilter);
-            // }
-          }}
-          onKeyDown={handleKeyDown}
-          tabIndex={0}
         >
-          <div
-            style={{ paddingTop: "2.5px", fontSize: "10.7px", color: "#545454" }}
+          <button
+            type="button"
+            style={{
+              border: is_focused
+                ? "3px solid #4fa8e4"
+                : error
+                  ? "1px solid #F46A6A"
+                  : "1px solid #d3d3d3",
+              height: "30.5px",
+              display: "flex",
+              // width: current_width,
+              width: add_nav !== "" ? "90%" : current_width,
+              justifyContent: "space-between",
+              position: "",
+              background: disable_me ? "#EFF2F7" : "white",
+            }}
+            onFocus={() => {
+              if (disable_me === false) {
+                setshowfilter(true);
+                setis_focused(true);
+                setrefresh(!refresh);
+              }
+            }}
+            onBlur={() => {
+              setis_focused(false);
+              setrefresh(!refresh);
+            }}
+            className="form-control-sm"
+            onClick={() => {
+              toggleDropdown();
+              if (disable_me === false && !show_search) {
+                setshowfilter(true);
+                setis_focused(true);
+              }
+            }}
+            onKeyDown={handleKeyDown}
+            // tabIndex={0}
+            tabIndex={disable_me ? -1 : 0}
           >
-            {data_item_s}
-          </div>
-          <div style={{ display: "flex" }}>
-            <div style={{ borderLeft: "1px solid #d3d3d3" }}>
-              {error ? (
-                <IconContext.Provider
-                  value={{
-                    className: "error-circle",
-                  }}
-                >
-                  <MdErrorOutline />
-                </IconContext.Provider>
-              ) : (
-                <IconContext.Provider
-                  // style={{borderBottom:"1px solid red"}}
-                  value={{
-                    className: "select-icon",
-                  }}
-                >
-                  <MdOutlineKeyboardArrowDown />
-                </IconContext.Provider>
-              )}
+            <div
+              style={{
+                fontSize: "10.7px",
+                color: "#545454",
+                overflowX: "hidden",
+                overflowY: "hidden",
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center",
+                padding: 0,
+                margin: 0,
+              }}
+            >
+              <span
+                className="same-socket"
+                ref={spanRef}
+                style={{
+                  display: "inline-block",
+                  whiteSpace: "nowrap",
+                  overflowX: "auto",
+                  scrollbarWidth: "none",
+                  msOverflowStyle: "none",
+                }}
+                onMouseEnter={() => {
+                  spanRef.current.style.overflowX = "auto";
+                }}
+                onMouseLeave={() => {
+                  spanRef.current.style.overflowX = "hidden";
+                }}
+              >
+                {data_item_s}
+              </span>
             </div>
-          </div>
-        </button>
+            <div style={{ display: "flex" }}>
+              <div style={{ borderLeft: "1px solid #d3d3d3" }}>
+                {error ? (
+                  <IconContext.Provider
+                    value={{
+                      className: "error-circle",
+                    }}
+                  >
+                    <MdErrorOutline />
+                  </IconContext.Provider>
+                ) : (
+                  <IconContext.Provider
+                    // style={{borderBottom:"1px solid red"}}
+                    value={{
+                      className: "select-icon",
+                    }}
+                  >
+                    <MdOutlineKeyboardArrowDown />
+                  </IconContext.Provider>
+                )}
+              </div>
+            </div>
+          </button>
+          {(add_nav !== "") && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: 10,
+                border: "1px solid #d3d3d3",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                window.open(add_nav, "_blank");
+              }}
+            >
+              <AiOutlinePlus />
+            </div>
+          )}
+
+        </div>
         <div className="error-text" color="danger">
           {error ? error_message : null}
         </div>
@@ -243,14 +341,16 @@ const NSearchInput = ({
                   value={searchWord}
                   onChange={handleFilter2}
                   placeholder="Search....."
-                  onBlur={() => { setshowfilter(false); }}
+                  onBlur={() => {
+                    setshowfilter(false);
+                  }}
                   onKeyDown={handleKeyDown}
                 />
               </div>
             ) : (
               <div></div>
             )}
-            
+
             {showfilter ? (
               <>
                 {filterList.length > 0 ? (
@@ -264,6 +364,7 @@ const NSearchInput = ({
                             } else {
                               set_data_item_s(value[1]);
                               set_id(value[0]);
+                              set_temp && set_temp(value[2]);
                             }
 
                             // set_data_item_s(value)

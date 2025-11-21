@@ -1,13 +1,14 @@
 const QuestionDataTitle = [
-    "SL",
+    // "SL",
     "Question", 
     "Option 1", 
     "Option 2", 
     "Option 3", 
     "Option 4", 
     "Answare", 
+    "Time", 
     "Age", 
-    "created At", 
+    "Created At", 
     "Created By", 
 ];
 export default QuestionDataTitle

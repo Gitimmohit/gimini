@@ -6,9 +6,11 @@ import paginationReducer from "./pagination/Pagination";
 import parentFilterReducer from "./parentFilter/ParentFilter";
 import permissionsReducer from "./permissions/Permissions";
 import searchBarReducer from "./searchBar/SearchBar";
+import alertReducer from "./alert/Alert";
 
 const rootReducer = combineReducers({
   user: userReducer,
+  alert: alertReducer,
   datalist: dataListReducer,
   filtervalue: filterValueReducer, 
   pagination: paginationReducer,

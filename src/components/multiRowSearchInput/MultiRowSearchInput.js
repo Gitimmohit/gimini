@@ -1,59 +1,56 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Input } from "reactstrap";
 import { MdOutlineKeyboardArrowDown, MdErrorOutline } from "react-icons/md";
-import { AiOutlinePlus } from "react-icons/ai";
 import { IconContext } from "react-icons";
-import toTitleCase from "../toTitleCase/toTitleCase";
+import toTitleCase from "../../../lib/titleCase/TitleCase";
+import { AiOutlinePlus } from "react-icons/ai";
 
-const SearchInput = ({
+const MultiRowSearchInput = ({
   data_list,
   data_item_s,
-  set_data_item_s,
-  error_s = false,
   error_message = null,
-  set_id,
   show_search = true,
   disable_me = false,
   current_width = "100%",
-  child_width = "95%",
   page = 1,
   setpage,
-  setsearch_item,
-  set_temp,
-  set_temp2,
-  set_temp3,
-  set_temp4,
-  set_temp5,
+  setsearch_txt,
+  refresh = false,
+  setrefresh,
   with_add = 0,
-  add_nav = "",
+  idx = 0,
   loaded = false,
   bottom = 103,
   setbottom,
+  add_nav = "",
   count = 1,
-  show_error = true,
+  position = "absolute",
+  call_onchnage = false,
+  getData,
 }) => {
-  // for the auto scrolling 
-  const spanRef = useRef(null);
-  const containerRef = useRef(null);
-  //  Dropdown Handle
+
+  // const is_search = useSelector((state) => state.searchbar.is_search);
   const [showfilter, setshowfilter] = useState(false);
   const [data_list_s, setdata_list_s] = useState(data_list);
   const [filterList, setfilterList] = useState(data_list);
-
+  const [is_focused, setis_focused] = useState(false);
   // Pagination
   const ref = useRef();
+  // const [bottom, setbottom] = useState(103);
   const [search, setsearch] = useState("");
   const [error, seterror] = useState(false);
   const [searching, setsearching] = useState(false);
   const [focused, setfocused] = useState(false);
+
+  // Postion
+  const [list_top, setlist_top] = useState(0);
   // For UP and Down Key
   const [highlightedIndex, setHighlightedIndex] = useState(null);
   const dropdownRef = useRef(null);
 
   const toggleDropdown = () => {
-    if(!disable_me){
-      setshowfilter(true);
-    }
     setHighlightedIndex(null);
+    setpage(1);
   };
 
   const handleKeyDown = (e) => {
@@ -72,68 +69,48 @@ const SearchInput = ({
           : prevIndex - 1,
       );
     } else if (e.key === "Enter") {
-      e.preventDefault();
       if (highlightedIndex !== null) {
         if (typeof filterList[highlightedIndex] === "string") {
-          set_data_item_s(filterList[highlightedIndex]);
+          data_item_s = filterList[highlightedIndex];
         } else {
-          set_data_item_s(filterList[highlightedIndex][1]);
-          set_id(filterList[highlightedIndex][0]);
-          set_temp && set_temp(filterList[highlightedIndex][2]);
-          set_temp2 && set_temp2(filterList[highlightedIndex][3]);
-          set_temp3 && set_temp3(filterList[highlightedIndex][4]);
-          set_temp4 && set_temp4(filterList[highlightedIndex][5]);
-          set_temp5 && set_temp5(filterList[highlightedIndex][6]);
+          // if (data_item_s.length === 3) {
+          if (data_item_s.length === 3) {
+            data_item_s[0] = filterList[highlightedIndex][0];
+            data_item_s[1] = filterList[highlightedIndex][1];
+            data_item_s[2] = filterList[highlightedIndex][2];
+          } else if (data_item_s.length === 4) {
+            data_item_s[0] = filterList[highlightedIndex][0];
+            data_item_s[1] = filterList[highlightedIndex][1];
+            data_item_s[2] = filterList[highlightedIndex][2];
+            data_item_s[3] = filterList[highlightedIndex][3];
+          } else if (data_item_s.length === 5) {
+            data_item_s[0] = filterList[highlightedIndex][0];
+            data_item_s[1] = filterList[highlightedIndex][1];
+            data_item_s[2] = filterList[highlightedIndex][2];
+            data_item_s[3] = filterList[highlightedIndex][3];
+            data_item_s[4] = filterList[highlightedIndex][4];
+          } else if (data_item_s.length === 6) {
+            data_item_s[0] = filterList[highlightedIndex][0];
+            data_item_s[1] = filterList[highlightedIndex][1];
+            data_item_s[2] = filterList[highlightedIndex][2];
+            data_item_s[3] = filterList[highlightedIndex][3];
+            data_item_s[4] = filterList[highlightedIndex][4];
+            data_item_s[5] = filterList[highlightedIndex][5];
+          } else {
+            data_item_s[0] = filterList[highlightedIndex][0];
+            data_item_s[1] = filterList[highlightedIndex][1];
+          }
         }
-        setshowfilter(false);
-        setfocused(false);
-      }
-    } else if (e.key === "Tab" && e.shiftKey) {
-      e.preventDefault(); // Prevent default Tab behavior
-      setshowfilter(false);
-      setfocused(false); 
-      // Select focusable elements, excluding disabled ones
-      const focusableElements = document.querySelectorAll('button:not([disabled]), [href]:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]):not([disabled])');
-      const currentElement = e.target;
-      const currentIndex = Array.from(focusableElements).indexOf(currentElement); 
-      if (currentIndex > 0) {
-        // alert("ww")
-        // Focus the previous enabled element
-        focusableElements[currentIndex - 1].focus();
-      } else if (currentIndex === -1) {
-        // alert("kk")
-        // Handle case where current element is not in focusableElements Find the closest previous focusable element in the DOM
-        const form = currentElement.closest('form') || document;
-        const allFocusable = Array.from(form.querySelectorAll('button:not([disabled]), [href]:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]):not([disabled])'));
-        const currentElementIndex = Array.from(form.querySelectorAll('*')).indexOf(currentElement);
-        const previousFocusable = allFocusable.filter((el) => Array.from(form.querySelectorAll('*')).indexOf(el) < currentElementIndex).pop(); // Get the last focusable element before the current one
-        if (previousFocusable) {
-          previousFocusable.focus();
-        }
+        setrefresh(!refresh);
+        setshowfilter(true);
       }
     }
-    
   };
 
   useLayoutEffect(() => {
     setdata_list_s(data_list);
     setfilterList(data_list);
   }, [data_list]);
-
-  useEffect(() => {
-    if (!showfilter) {
-      setsearch("");
-      if (!data_item_s && error_message && focused && show_error) {
-        seterror(true);
-      } else {
-        seterror(false);
-      }
-    }
-  }, [showfilter]);
-
-  useEffect(() => {
-    seterror(error_s);
-  }, [error_s]);
 
   useEffect(() => {
     if (highlightedIndex !== null && showfilter) {
@@ -144,17 +121,6 @@ const SearchInput = ({
       }
     }
   }, [highlightedIndex, showfilter]);
-
-  const [is_focused, setis_focused] = useState(false);
-  const [refresh, setrefresh] = useState(false);
-
-  const search_ref = useRef("")
-
-  useEffect(() => {
-    if (showfilter && data_list_s?.length > 0) {
-      search_ref.current.focus();
-    }
-  }, [showfilter, data_list_s])
 
   const debouncefun = (fn, delay) => {
     let timer;
@@ -177,33 +143,31 @@ const SearchInput = ({
   const betterfun = debouncefun(getDatas, 500);
 
   useEffect(() => {
-    setsearch_item(toTitleCase(search).toUpperCase());
+    setsearch_txt(toTitleCase(search).toUpperCase());
   }, [search]);
-  
+
   return (
     <div
+      // style={{ position: "relative" }}
       ref={dropdownRef}
-      // onMouseEnter={() => {
-      //   if (disable_me === false) {
-      //     setshowfilter(true)
-      //   }
-      // }}
-      onMouseLeave={() => {
-        if (disable_me === false) {
-          setshowfilter(false)
-        }
-      }
-      }
       onFocus={() => setfocused(true)}
       onBlur={() => {
-        if (searching === false && show_error) {
-          // setshowfilter(false);
+        setsearching(false);
+        if (searching === false) {
+          setshowfilter(false);
           if (!data_item_s) {
             seterror(true);
           } else {
             seterror(false);
           }
         }
+      }}
+      id={`tab${idx}`}
+      onClick={() => {
+        const el = document.getElementById(`tab${idx}`);
+        var rect = el.getBoundingClientRect();
+
+        setlist_top(rect.top);
       }}
     >
       <div
@@ -219,7 +183,7 @@ const SearchInput = ({
         <button
           type="button"
           style={{
-            // border: error ? "1px solid #F46A6A" : (is_focused ? "3px solid #4fa8e4" : "1px solid #d3d3d3"),
+            // border: error ? "1px solid #F46A6A" : "1px solid #d3d3d3",
             border: is_focused
               ? "3px solid #4fa8e4"
               : error
@@ -227,72 +191,38 @@ const SearchInput = ({
                 : "1px solid #d3d3d3",
             height: "30.5px",
             display: "flex",
-            // width: current_width,
             width: add_nav !== "" ? "90%" : current_width,
             justifyContent: "space-between",
-            position: "",
             background: disable_me ? "#EFF2F7" : "white",
-            padding: '4px',
-            margin: 0
-            
+            margin: "0px",
           }}
           onFocus={() => {
-            if (disable_me === false) {
-              setshowfilter(true)
-              setis_focused(true);
-              setrefresh(!refresh);
-            }
+            setis_focused(true);
           }}
           onBlur={() => {
             setis_focused(false);
-            setrefresh(!refresh);
           }}
           className="form-control-sm"
           onClick={() => {
             toggleDropdown();
-            // if (disable_me === false) {
-            //   setshowfilter(!showfilter);
-            // }
+            if (disable_me === false) {
+              setshowfilter(!showfilter);
+            }
           }}
           onKeyDown={handleKeyDown}
-          // tabIndex={0}
-          tabIndex={disable_me ? -1 : 0} // Make non-focusable when disabled
+          tabIndex={0}
         >
           <div
-            ref={containerRef}
             style={{
+              paddingTop: "1.5px",
               fontSize: "10.7px",
               color: "#545454",
-              overflowX: "hidden",
-              overflowY: "hidden",
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              justifyContent: "flex-start",
-              alignItems: "center",
-              padding: 0,
-              margin: 0,
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
             }}
           >
-            <span className="same-socket"
-              ref={spanRef}
-              style={{
-                display: "inline-block",
-                whiteSpace: "nowrap",
-                overflowX: "auto",
-                scrollbarWidth: "none",
-                msOverflowStyle: "none",
-              }}
-              onMouseEnter={() => {
-                spanRef.current.style.overflowX = "auto";
-              }}
-              onMouseLeave={() => {
-                spanRef.current.style.overflowX = "hidden";
-              }}
-            >
-              {data_item_s}
-            </span>
-
+            {typeof data_item_s === "string" ? data_item_s : data_item_s[1]}
           </div>
 
           <div style={{ display: "flex" }}>
@@ -317,8 +247,7 @@ const SearchInput = ({
             </div>
           </div>
         </button>
-
-        {(add_nav !== "") && (
+        {(add_nav !== "" && !disable_me) && (
           <div
             style={{
               display: "flex",
@@ -336,7 +265,6 @@ const SearchInput = ({
           </div>
         )}
       </div>
-
       <div className="error-text" color="danger">
         {error ? error_message : null}
       </div>
@@ -347,16 +275,32 @@ const SearchInput = ({
           className="dataResult custom-select"
           id="chk"
           onScroll={() => {
-            if (ref.current.scrollTop > bottom - count && loaded) {
-              setpage(page + 1);
-              setbottom(bottom + 262 - with_add);
+            for (let i = 1; i <= count; i += 3) {
+              // alert("2")
+              console.log("Current" , ref.current.scrollTop)
+              console.log("bottom" ,  bottom)
+              console.log("count" ,   count)
+              console.log("loaded" ,    loaded)
+              console.log("condition1" ,ref.current.scrollTop )
+              console.log("condition2" ,bottom - count )
+              // setpage(page + 1);
+              if (ref.current.scrollTop > bottom - count && loaded) {
+                setpage(page + 1);
+                alert("1")
+                setbottom(bottom + 262 - with_add);
+
+                break;
+              }
             }
           }}
+
+
           style={{
-            // width: "95%",
-            width: child_width,
-            zIndex: "1",
-            // border: is_focused ? "1px solid #d3d3d3" : null
+            width: position === "fixed" ? "270px" : current_width,
+            zIndex: "100000",
+            border: showfilter ? "1px solid #d3d3d3" : null,
+            position: position,
+            top: `${list_top + 30}`,
           }}
         >
           {showfilter && show_search ? (
@@ -370,31 +314,44 @@ const SearchInput = ({
                 top: 0,
               }}
             >
-              <input
-                ref={search_ref}
+              <Input
                 autoComplete="off"
-                style={{ width: "100%", borderRadius: "5px" }}
                 className="form-control-md"
                 id="input"
                 // value={search}
-                // onMouseDown={() => {setsearching(true)}}
-                onMouseDown={() => {
-                  setsearching(true);
-                }}
-                onBlur={() => { setshowfilter(false); }}
+                onMouseDown={() => setsearching(true)}
                 // onChange={(val) => {
                 //   setpage(1);
                 //   setbottom(103);
                 //   setsearch(val.target.value);
-
+                //   // dispatch(setIsSearch(false));
                 // }}
                 onChange={(val) => {
                   betterfun(val.target.value);
-                }
-                }
+                }}
                 placeholder="Search....."
-                onKeyDown={handleKeyDown}
               />
+              {/* <i
+                onMouseDown={() => {
+                  if (search != "") {
+                    setsearching(true);
+                  }
+                }}
+                onClick={() => {
+                  if (!is_search) {
+                    setdata_list([]);
+                  }
+                  // dispatch(setFilterToggle(true));
+                  // dispatch(setIsSearch(true));
+                  setis_search(true);
+                  // dispatch(setSearchItem(search));
+                  setsearch_txt(search);
+                  dispatch(setPageNumber(1));
+                  setpage(1);
+                  setbottom(103);
+                }}
+                className="bx bx-search-alt search-icon"
+              ></i> */}
             </div>
           ) : (
             <div></div>
@@ -409,26 +366,57 @@ const SearchInput = ({
                       <span
                         onMouseDown={() => {
                           if (typeof value === "string") {
-                            set_data_item_s(value);
+                            data_item_s = value;
                           } else {
-                            set_data_item_s(value[1]);
-                            set_id(value[0]);
-                            set_temp && set_temp(value[2]);
-                            set_temp2 && set_temp2(value[3]);
-                            set_temp3 && set_temp3(value[4]);
-                            set_temp4 && set_temp4(value[5]);
-                            set_temp5 && set_temp5(value[6]);
+
+                            if (call_onchnage) {
+                              getData(value[0]);
+                            }
+
+                            if (data_item_s.length === 3) {
+                              data_item_s[0] = value[0];
+                              data_item_s[1] = value[1];
+                              data_item_s[2] = value[2];
+                            } else if (data_item_s.length === 4) {
+                              data_item_s[0] = value[0];
+                              data_item_s[1] = value[1];
+                              data_item_s[2] = value[2];
+                              data_item_s[3] = value[3];
+                            } else if (data_item_s.length === 5) {
+                              data_item_s[0] = value[0];
+                              data_item_s[1] = value[1];
+                              data_item_s[2] = value[2];
+                              data_item_s[3] = value[3];
+                              data_item_s[4] = value[4];
+                            } else if (data_item_s.length === 6) {
+                              data_item_s[0] = value[0];
+                              data_item_s[1] = value[1];
+                              data_item_s[2] = value[2];
+                              data_item_s[3] = value[3];
+                              data_item_s[4] = value[4];
+                              data_item_s[5] = value[5];
+                            } else {
+                              data_item_s[0] = value[0];
+                              data_item_s[1] = value[1];
+                            }
                           }
+                          setrefresh(!refresh);
                           setshowfilter(false);
                         }}
+                        key={key}
                       >
                         <div
                           style={{
                             padding: "5px 7px",
                             cursor: "default",
                             fontSize: "10.7px",
+                            whiteSpace: "normal",
+                            wordBreak: "break-word",
+                            lineHeight: "1.2em",
+                            minHeight: "1.2em",
+                            textAlign: "left",
+                            transition: "background 0.2s",
                           }}
-                          key={key}
                           className={
                             highlightedIndex === key ? "highlighted" : ""
                           }
@@ -440,9 +428,7 @@ const SearchInput = ({
                   );
                 })
               ) : (
-                <div style={{ marginLeft: "6px", fontSize: "12px" }}>
-                  No Data Found
-                </div>
+                <div>No Data Found</div>
               )}
             </>
           ) : null}
@@ -452,4 +438,4 @@ const SearchInput = ({
   );
 };
 
-export default SearchInput;
+export default MultiRowSearchInput;
