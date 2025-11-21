@@ -301,7 +301,7 @@ const AddQuiz = () => {
                         type='date'
                         placeholder='Enter Quiz Date'
                       />
-                      {quiz_date_error && <FormFeedback type='invalid'>quiz_date is required</FormFeedback>}
+                      {quiz_date_error && <FormFeedback type='invalid'>Quiz Date is required</FormFeedback>}
                     </div>
                   </Col>
                   <Label className='header-child' id='premises'>
