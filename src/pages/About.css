@@ -1,14 +1,14 @@
 /* pages/About.css */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-.about-us-page {
+.abt-about-us-page {
   min-height: 100vh;
   background: #0a192f;
   color: #ccd6f6;
   font-family: 'Inter', sans-serif;
 }
 
-.container {
+.abt-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
@@ -16,7 +16,7 @@
 }
 
 /* ===== HERO SECTION ===== */
-.about-hero {
+.abt-hero {
   position: relative;
   padding: 120px 0 80px;
   background: linear-gradient(135deg, #0c0c2e 0%, #1a1a4a 50%, #2d1b69 100%);
@@ -26,7 +26,7 @@
   align-items: center;
 }
 
-.hero-background {
+.abt-hero-background {
   position: absolute;
   top: 0;
   left: 0;
@@ -34,7 +34,7 @@
   bottom: 0;
 }
 
-.stars-overlay {
+.abt-stars-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -45,27 +45,27 @@
     radial-gradient(1px 1px at 40px 70px, #fff, transparent),
     radial-gradient(0.5px 0.5px at 90px 40px, #fff, transparent);
   background-size: 150px 150px;
-  animation: stars 20s linear infinite;
+  animation: abt-stars 20s linear infinite;
 }
 
-@keyframes stars {
+@keyframes abt-stars {
   from { transform: translateY(0); }
   to { transform: translateY(-150px); }
 }
 
-.floating-planets {
+.abt-floating-planets {
   position: absolute;
   width: 100%;
   height: 100%;
 }
 
-.planet {
+.abt-planet {
   position: absolute;
   border-radius: 50%;
-  animation: float 6s ease-in-out infinite;
+  animation: abt-float 6s ease-in-out infinite;
 }
 
-.planet.earth {
+.abt-planet.abt-earth {
   width: 60px;
   height: 60px;
   background: linear-gradient(45deg, #1e90ff, #00bfff);
@@ -75,7 +75,7 @@
   animation-delay: 0s;
 }
 
-.planet.mars {
+.abt-planet.abt-mars {
   width: 45px;
   height: 45px;
   background: linear-gradient(45deg, #ff4500, #ff6347);
@@ -85,7 +85,7 @@
   animation-delay: 2s;
 }
 
-.planet.jupiter {
+.abt-planet.abt-jupiter {
   width: 80px;
   height: 80px;
   background: linear-gradient(45deg, #ffa500, #ff8c00);
@@ -95,7 +95,7 @@
   animation-delay: 1s;
 }
 
-.planet.saturn {
+.abt-planet.abt-saturn {
   width: 70px;
   height: 70px;
   background: linear-gradient(45deg, #ffa500, #ffd700);
@@ -105,7 +105,7 @@
   animation-delay: 3s;
 }
 
-.planet.saturn::after {
+.abt-planet.abt-saturn::after {
   content: '';
   position: absolute;
   width: 100px;
@@ -118,12 +118,12 @@
   transform: translate(-50%, -50%) rotate(20deg);
 }
 
-@keyframes float {
+@keyframes abt-float {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(-10px) rotate(2deg); }
 }
 
-.hero-content {
+.abt-hero-content {
   position: relative;
   z-index: 2;
   text-align: center;
@@ -132,7 +132,7 @@
   width: 100%;
 }
 
-.hero-badge {
+.abt-hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -149,11 +149,11 @@
   backdrop-filter: blur(10px);
 }
 
-.badge-icon {
+.abt-badge-icon {
   font-size: 1rem !important;
 }
 
-.hero-title {
+.abt-hero-title {
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 700;
   margin-bottom: 1.5rem;
@@ -161,15 +161,15 @@
   line-height: 1.2;
 }
 
-.gradient-text {
-  background: linear-gradient(45deg, #64ffda, #00bcd4);
+.abt-gradient-text {
+  background: linear-gradient(45deg, #64ffda, #00bcd4, #4dabf7);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-shadow: 0 0 30px rgba(100, 255, 218, 0.3);
 }
 
-.hero-subtitle {
+.abt-hero-subtitle {
   font-size: clamp(1rem, 2.5vw, 1.2rem);
   color: #b8b8ff;
   line-height: 1.6;
@@ -179,8 +179,8 @@
   margin-right: auto;
 }
 
-/* ===== HERO STATS - FIXED RESPONSIVE STYLES ===== */
-.hero-stats {
+/* ===== HERO STATS ===== */
+.abt-hero-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
@@ -190,7 +190,7 @@
   margin-right: auto;
 }
 
-.stat-card {
+.abt-stat-card {
   background: rgba(100, 255, 218, 0.05);
   padding: 1.5rem 1rem;
   border-radius: 15px;
@@ -204,19 +204,19 @@
   justify-content: center;
 }
 
-.stat-card:hover {
+.abt-stat-card:hover {
   border-color: #64ffda;
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(100, 255, 218, 0.2);
 }
 
-.stat-icon {
+.abt-stat-icon {
   font-size: 2rem;
   margin-bottom: 0.8rem;
   display: block;
 }
 
-.stat-number {
+.abt-stat-number {
   font-size: clamp(1.3rem, 2.5vw, 1.8rem);
   font-weight: 700;
   color: #64ffda;
@@ -225,7 +225,7 @@
   display: block;
 }
 
-.stat-label {
+.abt-stat-label {
   color: #8892b0;
   font-size: clamp(0.65rem, 1.2vw, 0.8rem);
   text-transform: uppercase;
@@ -235,32 +235,48 @@
 }
 
 /* ===== MISSION SECTION ===== */
-.mission-section {
-  padding: 4rem 0;
+.abt-mission-section {
+  padding: 6rem 0;
   background: #0a192f;
 }
 
-.mission-content {
+.abt-mission-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   align-items: center;
 }
 
-.mission-text h2 {
+.abt-section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(100, 255, 218, 0.1);
+  color: #64ffda;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(100, 255, 218, 0.2);
+}
+
+.abt-section-title {
   font-size: 2.5rem;
   color: #ccd6f6;
   margin-bottom: 2rem;
   font-weight: 700;
 }
 
-.mission-cards {
+.abt-mission-cards {
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
 
-.mission-card {
+.abt-mission-card {
   background: #112240;
   padding: 2rem;
   border-radius: 15px;
@@ -268,35 +284,43 @@
   transition: all 0.3s ease;
 }
 
-.mission-card:hover {
+.abt-mission-card:hover {
   border-color: #64ffda;
   transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(100, 255, 218, 0.1);
 }
 
-.mission-icon {
-  color: #64ffda;
-  font-size: 2.5rem !important;
+.abt-mission-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   margin-bottom: 1rem;
 }
 
-.mission-card h3 {
+.abt-mission-icon {
+  color: #64ffda;
+  font-size: 2rem !important;
+}
+
+.abt-mission-card h3 {
   color: #ccd6f6;
   font-size: 1.4rem;
-  margin-bottom: 1rem;
+  margin: 0;
 }
 
-.mission-card p {
+.abt-mission-card p {
   color: #8892b0;
   line-height: 1.6;
+  margin: 0;
 }
 
-.mission-visual {
+.abt-mission-visual {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.visual-container {
+.abt-visual-container {
   position: relative;
   width: 300px;
   height: 300px;
@@ -305,103 +329,155 @@
   justify-content: center;
 }
 
-.orbit-ring {
+.abt-orbit-ring {
   position: absolute;
   border: 2px solid rgba(100, 255, 218, 0.3);
   border-radius: 50%;
-  animation: orbit 20s linear infinite;
+  animation: abt-orbit 20s linear infinite;
 }
 
-.ring-1 {
+.abt-ring-1 {
   width: 200px;
   height: 200px;
   animation-duration: 15s;
 }
 
-.ring-2 {
+.abt-ring-2 {
   width: 250px;
   height: 250px;
   animation-duration: 20s;
   animation-direction: reverse;
 }
 
-.ring-3 {
+.abt-ring-3 {
   width: 300px;
   height: 300px;
   animation-duration: 25s;
 }
 
-@keyframes orbit {
+@keyframes abt-orbit {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
-.central-star {
+.abt-central-star {
   color: #64ffda;
   font-size: 3rem;
-  animation: pulse 2s ease-in-out infinite;
+  animation: abt-pulse 2s ease-in-out infinite;
 }
 
-@keyframes pulse {
+@keyframes abt-pulse {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.1); }
 }
 
-.orbiting-planet {
+.abt-orbiting-planet {
   position: absolute;
   font-size: 1.5rem;
-  animation: orbit 10s linear infinite;
+  animation: abt-orbit 10s linear infinite;
 }
 
-.planet-1 {
+.abt-planet-1 {
   animation-duration: 12s;
   top: 20%;
   left: 20%;
 }
 
-.planet-2 {
+.abt-planet-2 {
   animation-duration: 18s;
   animation-direction: reverse;
   bottom: 25%;
   right: 25%;
 }
 
-.planet-3 {
+.abt-planet-3 {
   animation-duration: 15s;
   top: 60%;
   left: 15%;
 }
 
-/* ===== TIMELINE SECTION ===== */
-.timeline-section {
+/* ===== ACHIEVEMENTS SECTION ===== */
+.abt-achievements-section {
   padding: 4rem 0;
   background: #112240;
 }
 
-.section-header {
+.abt-section-header {
   text-align: center;
   margin-bottom: 3rem;
 }
 
-.section-header h2 {
+.abt-section-header h2 {
   font-size: 2.5rem;
   color: #ccd6f6;
   margin-bottom: 1rem;
   font-weight: 700;
 }
 
-.section-header p {
+.abt-section-header p {
   color: #8892b0;
   font-size: 1.1rem;
 }
 
-.timeline {
-  position: relative;
-  max-width: 800px;
+.abt-achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
-.timeline::before {
+.abt-achievement-card {
+  background: rgba(10, 25, 47, 0.8);
+  padding: 2rem 1.5rem;
+  border-radius: 15px;
+  text-align: center;
+  border: 1px solid rgba(100, 255, 218, 0.1);
+  transition: all 0.3s ease;
+}
+
+.abt-achievement-card:hover {
+  border-color: #64ffda;
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.abt-achievement-icon-wrapper {
+  color: #64ffda;
+  font-size: 2.5rem !important;
+  margin-bottom: 1rem;
+}
+
+.abt-achievement-number {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #64ffda;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+}
+
+.abt-achievement-label {
+  color: #8892b0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ===== TIMELINE SECTION ===== */
+.abt-timeline-section {
+  padding: 6rem 0;
+  background: #0a192f;
+}
+
+.abt-timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.abt-timeline::before {
   content: '';
   position: absolute;
   left: 50%;
@@ -412,54 +488,62 @@
   transform: translateX(-50%);
 }
 
-.timeline-item {
+.abt-timeline-item {
   position: relative;
   margin-bottom: 3rem;
   width: 45%;
 }
 
-.timeline-item.left {
+.abt-timeline-item:nth-child(odd) {
   left: 0;
 }
 
-.timeline-item.right {
+.abt-timeline-item:nth-child(even) {
   left: 55%;
 }
 
-.timeline-content {
+.abt-timeline-content {
   background: rgba(10, 25, 47, 0.8);
-  padding: 1.5rem;
-  border-radius: 12px;
+  padding: 2rem;
+  border-radius: 15px;
   border: 1px solid rgba(100, 255, 218, 0.1);
   position: relative;
+  text-align: center;
 }
 
-.timeline-year {
+.abt-timeline-year {
   background: #64ffda;
   color: #0a192f;
-  padding: 0.3rem 1rem;
-  border-radius: 15px;
+  padding: 0.4rem 1.2rem;
+  border-radius: 20px;
   font-size: 0.9rem;
   font-weight: 700;
   display: inline-block;
   margin-bottom: 1rem;
 }
 
-.timeline-content h3 {
-  color: #ccd6f6;
-  font-size: 1.2rem;
-  margin-bottom: 0.8rem;
+.abt-timeline-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  display: block;
 }
 
-.timeline-content p {
+.abt-timeline-content h3 {
+  color: #ccd6f6;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.abt-timeline-content p {
   color: #8892b0;
   line-height: 1.5;
   font-size: 0.9rem;
+  margin: 0;
 }
 
-.timeline-dot {
+.abt-timeline-connector {
   position: absolute;
-  top: 1.5rem;
+  top: 2rem;
   width: 12px;
   height: 12px;
   background: #64ffda;
@@ -467,239 +551,339 @@
   box-shadow: 0 0 10px #64ffda;
 }
 
-.timeline-item.left .timeline-dot {
+.abt-timeline-item:nth-child(odd) .abt-timeline-connector {
   right: -56px;
 }
 
-.timeline-item.right .timeline-dot {
+.abt-timeline-item:nth-child(even) .abt-timeline-connector {
   left: -56px;
 }
 
 /* ===== VALUES SECTION ===== */
-.values-section {
-  padding: 4rem 0;
-  background: #0a192f;
+.abt-values-section {
+  padding: 6rem 0;
+  background: #112240;
 }
 
-.values-grid {
+.abt-values-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
 }
 
-.value-card {
+.abt-value-card {
   background: #112240;
-  padding: 2rem;
+  padding: 2.5rem 2rem;
   border-radius: 15px;
   text-align: center;
-  border: 1px solid #233554;
+  border: 2px solid transparent;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.value-card:hover {
-  border-color: #64ffda;
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+.abt-value-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: currentColor;
+  opacity: 0.8;
 }
 
-.value-icon-container {
-  color: #64ffda;
+.abt-value-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.abt-value-icon-container {
   font-size: 3rem !important;
   margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
 }
 
-.value-card h3 {
+.abt-value-card h3 {
   color: #ccd6f6;
   font-size: 1.3rem;
   margin-bottom: 1rem;
 }
 
-.value-card p {
+.abt-value-card p {
   color: #8892b0;
   line-height: 1.5;
+  margin: 0;
 }
 
 /* ===== TEAM SECTION ===== */
-.team-section {
-  padding: 4rem 0;
-  background: #112240;
+.abt-team-section {
+  padding: 6rem 0;
+  background: #0a192f;
 }
 
-.team-grid {
+.abt-team-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
 }
 
-.team-card {
+.abt-team-card {
   background: rgba(10, 25, 47, 0.8);
-  border-radius: 15px;
+  border-radius: 20px;
   overflow: hidden;
   border: 1px solid rgba(100, 255, 218, 0.1);
   transition: all 0.3s ease;
-}
-
-.team-card:hover {
-  border-color: #64ffda;
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-}
-
-.member-image {
   position: relative;
-  height: 250px;
+}
+
+.abt-team-card:hover {
+  border-color: #64ffda;
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.abt-member-image {
+  position: relative;
+  height: 280px;
   overflow: hidden;
 }
 
-.member-image img {
+.abt-member-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
 
-.team-card:hover .member-image img {
+.abt-team-card:hover .abt-member-image img {
   transform: scale(1.05);
 }
 
-.image-overlay {
+.abt-image-overlay {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to bottom, transparent, rgba(10, 25, 47, 0.8));
-}
-
-.member-info {
+  background: linear-gradient(to bottom, transparent, rgba(10, 25, 47, 0.9));
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
   padding: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.member-info h3 {
-  color: #ccd6f6;
-  font-size: 1.3rem;
-  margin-bottom: 0.5rem;
+.abt-team-card:hover .abt-image-overlay {
+  opacity: 1;
 }
 
-.member-role {
-  color: #64ffda;
-  font-size: 0.9rem;
+.abt-member-specialty {
+  background: rgba(100, 255, 218, 0.9);
+  color: #0a192f;
+  padding: 0.5rem 1rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
   font-weight: 600;
-  margin-bottom: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.member-details {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+.abt-member-info {
+  padding: 2rem;
 }
 
-.detail-item {
+.abt-member-info h3 {
+  color: #ccd6f6;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.abt-member-role {
+  color: #64ffda;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.abt-member-details {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.abt-detail-item {
+  display: flex;
   align-items: center;
-  padding: 0.3rem 0;
+  gap: 0.8rem;
+  padding: 0.5rem 0;
   border-bottom: 1px solid rgba(100, 255, 218, 0.1);
 }
 
-.detail-label {
-  color: #8892b0;
-  font-size: 0.8rem;
+.abt-detail-icon {
+  color: #64ffda;
+  font-size: 1rem !important;
+  flex-shrink: 0;
+}
+
+.abt-detail-item span {
+  color: #ccd6f6;
+  font-size: 0.9rem;
   font-weight: 500;
 }
 
-.detail-value {
-  color: #ccd6f6;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-align: right;
-}
-
 /* ===== FACILITIES SECTION ===== */
-.facilities-section {
-  padding: 4rem 0;
-  background: #0a192f;
-}
-
-.facilities-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-}
-
-.facility-card {
+.abt-facilities-section {
+  padding: 6rem 0;
   background: #112240;
-  padding: 2rem 1.5rem;
+}
+
+.abt-facilities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.abt-facility-card {
+  background: rgba(10, 25, 47, 0.8);
+  padding: 2.5rem 2rem;
   border-radius: 15px;
   text-align: center;
-  border: 1px solid #233554;
+  border: 1px solid rgba(100, 255, 218, 0.1);
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.facility-card:hover {
+.abt-facility-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(100, 255, 218, 0.05), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.abt-facility-card:hover::before {
+  opacity: 1;
+}
+
+.abt-facility-card:hover {
   border-color: #64ffda;
   transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
 }
 
-.facility-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+.abt-facility-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  display: block;
 }
 
-.facility-card h3 {
+.abt-facility-card h3 {
   color: #ccd6f6;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   margin-bottom: 1rem;
+  font-weight: 600;
 }
 
-.facility-card p {
+.abt-facility-card p {
   color: #8892b0;
   line-height: 1.5;
   font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.abt-facility-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.abt-feature-tag {
+  background: rgba(100, 255, 218, 0.1);
+  color: #64ffda;
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border: 1px solid rgba(100, 255, 218, 0.2);
 }
 
 /* ===== CTA SECTION ===== */
-.about-cta {
-  padding: 4rem 0;
-  background: linear-gradient(135deg, #112240 0%, #0a192f 100%);
+.abt-cta-section {
+  padding: 6rem 0;
+  background: linear-gradient(135deg, #0c0c2e 0%, #1a1a4a 100%);
+  position: relative;
+  overflow: hidden;
 }
 
-.cta-content {
+.abt-cta-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.abt-cta-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 40px 70px, rgba(255,255,255,0.2), transparent);
+  background-size: 100px 100px;
+  animation: abt-stars 15s linear infinite;
+}
+
+.abt-cta-content {
   text-align: center;
   max-width: 600px;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
-.cta-icon {
+.abt-cta-icon {
   color: #64ffda;
   font-size: 4rem !important;
   margin-bottom: 1.5rem;
 }
 
-.cta-content h2 {
+.abt-cta-content h2 {
   font-size: 2.5rem;
   color: #ccd6f6;
   margin-bottom: 1rem;
   font-weight: 700;
 }
 
-.cta-content p {
+.abt-cta-content p {
   color: #8892b0;
   font-size: 1.1rem;
   margin-bottom: 2.5rem;
   line-height: 1.6;
 }
 
-.cta-buttons {
+.abt-cta-buttons {
   display: flex;
   gap: 1.5rem;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.btn {
+.abt-btn {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -714,29 +898,32 @@
   white-space: nowrap;
 }
 
-.primary-btn {
+.abt-primary-btn {
   background: #64ffda;
   color: #0a192f;
+  border: 2px solid #64ffda;
 }
 
-.primary-btn:hover {
-  background: #4fd3c4;
+.abt-primary-btn:hover {
+  background: transparent;
+  color: #64ffda;
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(100, 255, 218, 0.3);
 }
 
-.secondary-btn {
+.abt-secondary-btn {
   background: transparent;
   color: #64ffda;
-  border: 1px solid #64ffda;
+  border: 2px solid #64ffda;
 }
 
-.secondary-btn:hover {
+.abt-secondary-btn:hover {
   background: rgba(100, 255, 218, 0.1);
   transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(100, 255, 218, 0.2);
 }
 
-.btn.large {
+.abt-btn.abt-large {
   padding: 1.2rem 2.5rem;
   font-size: 1.1rem;
 }
@@ -745,58 +932,59 @@
 
 /* Tablet Styles */
 @media (max-width: 1024px) {
-  .about-hero {
+  .abt-hero {
     padding: 100px 0 60px;
     min-height: 80vh;
   }
   
-  .container {
+  .abt-container {
     padding: 0 1.5rem;
   }
   
-  .hero-stats {
+  .abt-hero-stats,
+  .abt-achievements-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
   
-  .mission-content {
+  .abt-mission-content {
     grid-template-columns: 1fr;
     gap: 3rem;
   }
   
-  .mission-visual {
+  .abt-mission-visual {
     order: -1;
   }
   
-  .planet.earth {
+  .abt-planet.abt-earth {
     width: 50px;
     height: 50px;
     top: 10%;
     left: 5%;
   }
   
-  .planet.mars {
+  .abt-planet.abt-mars {
     width: 35px;
     height: 35px;
     top: 70%;
     right: 8%;
   }
   
-  .planet.jupiter {
+  .abt-planet.abt-jupiter {
     width: 65px;
     height: 65px;
     bottom: 10%;
     left: 3%;
   }
   
-  .planet.saturn {
+  .abt-planet.abt-saturn {
     width: 55px;
     height: 55px;
     top: 8%;
     right: 3%;
   }
   
-  .planet.saturn::after {
+  .abt-planet.abt-saturn::after {
     width: 80px;
     height: 10px;
   }
@@ -804,93 +992,95 @@
 
 /* Mobile Styles */
 @media (max-width: 768px) {
-  .about-hero {
+  .abt-hero {
     padding: 80px 0 40px;
     min-height: 70vh;
   }
   
-  .container {
+  .abt-container {
     padding: 0 1rem;
   }
   
-  .hero-badge {
+  .abt-hero-badge,
+  .abt-section-badge {
     padding: 0.4rem 1rem;
     font-size: 0.7rem;
     margin-bottom: 1.5rem;
   }
   
-  .hero-title {
+  .abt-hero-title {
     margin-bottom: 1rem;
   }
   
-  .hero-subtitle {
+  .abt-hero-subtitle {
     margin-bottom: 2rem;
   }
   
-  .hero-stats {
-    grid-template-columns: repeat(2, 1fr);
+  .abt-hero-stats,
+  .abt-achievements-grid {
+    grid-template-columns: 1fr;
     gap: 0.8rem;
     margin-top: 2rem;
   }
   
-  .stat-card {
+  .abt-stat-card,
+  .abt-achievement-card {
     padding: 1rem 0.5rem;
   }
   
-  .stat-icon {
+  .abt-stat-icon {
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
   }
   
-  .stat-number {
+  .abt-stat-number {
     margin-bottom: 0.3rem;
   }
   
-  .timeline::before {
+  .abt-timeline::before {
     left: 30px;
   }
 
-  .timeline-item {
+  .abt-timeline-item {
     width: calc(100% - 60px);
     left: 60px !important;
   }
 
-  .timeline-item.left .timeline-dot,
-  .timeline-item.right .timeline-dot {
-    left: -46px;
+  .abt-timeline-item .abt-timeline-connector {
+    left: -46px !important;
   }
 
-  .values-grid,
-  .team-grid,
-  .facilities-grid {
+  .abt-values-grid,
+  .abt-team-grid,
+  .abt-facilities-grid {
     grid-template-columns: 1fr;
   }
 
-  .cta-buttons {
+  .abt-cta-buttons {
     flex-direction: column;
     align-items: center;
   }
 
-  .btn.large {
+  .abt-btn.abt-large {
     width: 100%;
     max-width: 300px;
     justify-content: center;
   }
   
   /* Hide some planets on mobile for better performance */
-  .planet.jupiter,
-  .planet.saturn {
+  .abt-planet.abt-jupiter,
+  .abt-planet.abt-saturn {
     display: none;
   }
   
-  .planet.earth {
+  .abt-planet.abt-earth {
     width: 40px;
     height: 40px;
     top: 15%;
     left: 5%;
   }
   
-  .planet.mars {
+  .abt-planet.abt-mars {
     width: 30px;
     height: 30px;
     top: 75%;
@@ -900,33 +1090,35 @@
 
 /* Small Mobile Styles */
 @media (max-width: 480px) {
-  .about-hero {
+  .abt-hero {
     padding: 60px 0 30px;
     min-height: 60vh;
   }
   
-  .hero-badge {
+  .abt-hero-badge,
+  .abt-section-badge {
     padding: 0.3rem 0.8rem;
     font-size: 0.65rem;
     margin-bottom: 1rem;
   }
   
-  .hero-title {
+  .abt-hero-title {
     margin-bottom: 0.8rem;
   }
   
-  .hero-subtitle {
+  .abt-hero-subtitle {
     margin-bottom: 1.5rem;
     font-size: 0.9rem;
   }
   
-  .hero-stats {
-    grid-template-columns: 1fr;
+  .abt-hero-stats,
+  .abt-achievements-grid {
     gap: 0.8rem;
     margin-top: 1.5rem;
   }
   
-  .stat-card {
+  .abt-stat-card,
+  .abt-achievement-card {
     padding: 1rem;
     display: flex;
     flex-direction: row;
@@ -935,53 +1127,52 @@
     text-align: left;
   }
   
-  .stat-icon {
-    font-size: 1.8rem;
+  .abt-stat-icon,
+  .abt-achievement-icon-wrapper {
+    font-size: 1.8rem !important;
     margin-bottom: 0;
     flex-shrink: 0;
   }
   
-  .stat-content {
-    flex: 1;
-  }
-  
-  .stat-number {
+  .abt-stat-number,
+  .abt-achievement-number {
     font-size: 1.3rem;
     margin-bottom: 0.2rem;
   }
   
-  .stat-label {
+  .abt-stat-label,
+  .abt-achievement-label {
     font-size: 0.7rem;
   }
   
-  .hero-title {
+  .abt-hero-title {
     font-size: 2rem;
   }
 
-  .section-header h2 {
+  .abt-section-header h2 {
     font-size: 2rem;
   }
 
-  .mission-card {
+  .abt-mission-card {
     padding: 1.5rem;
   }
 
-  .visual-container {
+  .abt-visual-container {
     width: 250px;
     height: 250px;
   }
 
-  .ring-1 { width: 150px; height: 150px; }
-  .ring-2 { width: 200px; height: 200px; }
-  .ring-3 { width: 250px; height: 250px; }
+  .abt-ring-1 { width: 150px; height: 150px; }
+  .abt-ring-2 { width: 200px; height: 200px; }
+  .abt-ring-3 { width: 250px; height: 250px; }
   
   /* Further reduce planet sizes for very small screens */
-  .planet.earth {
+  .abt-planet.abt-earth {
     width: 30px;
     height: 30px;
   }
   
-  .planet.mars {
+  .abt-planet.abt-mars {
     width: 25px;
     height: 25px;
   }
@@ -989,40 +1180,41 @@
 
 /* Large Desktop Styles */
 @media (min-width: 1440px) {
-  .about-hero {
+  .abt-hero {
     padding: 140px 0 100px;
   }
   
-  .container {
+  .abt-container {
     max-width: 1400px;
   }
   
-  .hero-stats {
+  .abt-hero-stats,
+  .abt-achievements-grid {
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
   }
   
-  .planet.earth {
+  .abt-planet.abt-earth {
     width: 80px;
     height: 80px;
   }
   
-  .planet.mars {
+  .abt-planet.abt-mars {
     width: 60px;
     height: 60px;
   }
   
-  .planet.jupiter {
+  .abt-planet.abt-jupiter {
     width: 120px;
     height: 120px;
   }
   
-  .planet.saturn {
+  .abt-planet.abt-saturn {
     width: 100px;
     height: 100px;
   }
   
-  .planet.saturn::after {
+  .abt-planet.abt-saturn::after {
     width: 140px;
     height: 15px;
   }
@@ -1030,35 +1222,38 @@
 
 /* Ultra-wide screens */
 @media (min-width: 2000px) {
-  .container {
+  .abt-container {
     max-width: 1800px;
   }
   
-  .hero-content {
+  .abt-hero-content {
     max-width: 1000px;
   }
 }
 
 /* Reduced motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
-  .stars-overlay,
-  .planet,
-  .stat-card,
-  .orbit-ring,
-  .central-star,
-  .orbiting-planet {
+  .abt-stars-overlay,
+  .abt-planet,
+  .abt-stat-card,
+  .abt-orbit-ring,
+  .abt-central-star,
+  .abt-orbiting-planet,
+  .abt-cta-stars {
     animation: none;
   }
 }
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
-  .hero-badge {
+  .abt-hero-badge,
+  .abt-section-badge {
     background: #64ffda;
     color: #0a192f;
   }
   
-  .stat-card {
+  .abt-stat-card,
+  .abt-achievement-card {
     border: 2px solid #64ffda;
   }
 }

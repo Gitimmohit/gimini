@@ -111,51 +111,51 @@ const Referral = () => {
   };
 
   return (
-    <div className="refer-earn-page">
+    <div className="ref-refer-earn-page">
       {/* Hero Section */}
-      <section className="refer-hero">
-        <div className="hero-background">
-          <div className="stars-overlay"></div>
+      <section className="ref-refer-hero">
+        <div className="ref-hero-background">
+          <div className="ref-stars-overlay"></div>
         </div>
-        <div className="container">
+        <div className="ref-container">
           <motion.div
-            className="hero-content"
+            className="ref-hero-content"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="hero-badge">
-              <Celebration className="badge-icon" />
+            <div className="ref-hero-badge">
+              <Celebration className="ref-badge-icon" />
               Earn Unlimited Rewards
             </div>
-            <h1 className="hero-title">
-              Refer Friends & <span className="gradient-text">Earn ₹20 Each</span>
+            <h1 className="ref-hero-title">
+              Refer Friends & <span className="ref-gradient-text">Earn ₹20 Each</span>
             </h1>
-            <p className="hero-subtitle">
+            <p className="ref-hero-subtitle">
               Share the cosmic experience with your friends and earn ₹20 for every successful referral. 
               The more you share, the more you earn!
             </p>
             
-            <div className="hero-stats">
-              <div className="stat-card">
-                <AccountBalanceWallet className="stat-icon" />
-                <div className="stat-content">
-                  <div className="stat-number">₹{earnings.totalEarned}</div>
-                  <div className="stat-label">Total Earned</div>
+            <div className="ref-hero-stats">
+              <div className="ref-stat-card">
+                <AccountBalanceWallet className="ref-stat-icon" />
+                <div className="ref-stat-content">
+                  <div className="ref-stat-number">₹{earnings.totalEarned}</div>
+                  <div className="ref-stat-label">Total Earned</div>
                 </div>
               </div>
-              <div className="stat-card">
-                <TrendingUp className="stat-icon" />
-                <div className="stat-content">
-                  <div className="stat-number">{earnings.totalReferrals}</div>
-                  <div className="stat-label">Total Referrals</div>
+              <div className="ref-stat-card">
+                <TrendingUp className="ref-stat-icon" />
+                <div className="ref-stat-content">
+                  <div className="ref-stat-number">{earnings.totalReferrals}</div>
+                  <div className="ref-stat-label">Total Referrals</div>
                 </div>
               </div>
-              <div className="stat-card">
-                <Groups className="stat-icon" />
-                <div className="stat-content">
-                  <div className="stat-number">{earnings.successfulReferrals}</div>
-                  <div className="stat-label">Successful</div>
+              <div className="ref-stat-card">
+                <Groups className="ref-stat-icon" />
+                <div className="ref-stat-content">
+                  <div className="ref-stat-number">{earnings.successfulReferrals}</div>
+                  <div className="ref-stat-label">Successful</div>
                 </div>
               </div>
             </div>
@@ -164,23 +164,23 @@ const Referral = () => {
       </section>
 
       {/* Quick Referral Section */}
-      <section className="quick-referral">
-        <div className="container">
+      <section className="ref-quick-referral">
+        <div className="ref-container">
           <motion.div
-            className="referral-box"
+            className="ref-referral-box"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <div className="referral-header">
+            <div className="ref-referral-header">
               <h2>Your Referral Code</h2>
-              <div className="code-badge">Active</div>
+              <div className="ref-code-badge">Active</div>
             </div>
             
-            <div className="referral-code-display">
-              <div className="code-value">{referralCode}</div>
+            <div className="ref-referral-code-display">
+              <div className="ref-code-value">{referralCode}</div>
               <button 
-                className={`copy-btn ${copied ? 'copied' : ''}`}
+                className={`ref-copy-btn ${copied ? 'ref-copied' : ''}`}
                 onClick={copyToClipboard}
               >
                 {copied ? <CheckCircle /> : <ContentCopy />}
@@ -188,28 +188,28 @@ const Referral = () => {
               </button>
             </div>
 
-            <div className="referral-link-section">
-              <p className="link-label">Your referral link:</p>
-              <div className="link-display">
+            <div className="ref-referral-link-section">
+              <p className="ref-link-label">Your referral link:</p>
+              <div className="ref-link-display">
                 <input 
                   type="text" 
                   value={referralLink} 
                   readOnly 
-                  className="link-input"
+                  className="ref-link-input"
                 />
-                <button className="share-btn" onClick={shareReferral}>
-                  <Share className="share-icon" />
+                <button className="ref-share-btn" onClick={shareReferral}>
+                  <Share className="ref-share-icon" />
                   Share
                 </button>
               </div>
             </div>
 
-            <div className="referral-actions">
-              <button className="action-btn primary">
+            <div className="ref-referral-actions">
+              <button className="ref-action-btn ref-primary">
                 <Share />
                 Share via WhatsApp
               </button>
-              <button className="action-btn secondary">
+              <button className="ref-action-btn ref-secondary">
                 <Groups />
                 Share on Social Media
               </button>
@@ -219,10 +219,10 @@ const Referral = () => {
       </section>
 
       {/* How It Works Section */}
-      <section className="how-it-works">
-        <div className="container">
+      <section className="ref-how-it-works">
+        <div className="ref-container">
           <motion.div
-            className="section-header"
+            className="ref-section-header"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -232,19 +232,19 @@ const Referral = () => {
             <p>Earn rewards in three simple steps</p>
           </motion.div>
 
-          <div className="steps-grid">
+          <div className="ref-steps-grid">
             {referralSteps.map((step, index) => (
               <motion.div
                 key={step.step}
-                className="step-card"
+                className="ref-step-card"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -5 }}
               >
-                <div className="step-number">{step.step}</div>
-                <div className="step-icon">{step.icon}</div>
+                <div className="ref-step-number">{step.step}</div>
+                <div className="ref-step-icon">{step.icon}</div>
                 <h3>{step.title}</h3>
                 <p>{step.description}</p>
               </motion.div>
@@ -254,10 +254,10 @@ const Referral = () => {
       </section>
 
       {/* Rewards Tiers Section */}
-      <section className="rewards-section">
-        <div className="container">
+      <section className="ref-rewards-section">
+        <div className="ref-container">
           <motion.div
-            className="section-header"
+            className="ref-section-header"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -267,26 +267,26 @@ const Referral = () => {
             <p>Earn more as you refer more friends</p>
           </motion.div>
 
-          <div className="rewards-grid">
+          <div className="ref-rewards-grid">
             {rewards.map((reward, index) => (
               <motion.div
                 key={reward.level}
-                className={`reward-card ${reward.level.toLowerCase()}`}
+                className={`ref-reward-card ref-${reward.level.toLowerCase()}`}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 whileHover={{ scale: 1.05 }}
               >
-                <div className="reward-icon">{reward.icon}</div>
-                <div className="reward-level">{reward.level}</div>
-                <div className="reward-referrals">{reward.referrals} referrals</div>
-                <div className="reward-amount">{reward.reward}</div>
-                <div className="reward-bonus">{reward.bonus}</div>
-                <div className="reward-progress">
-                  <div className="progress-bar">
+                <div className="ref-reward-icon">{reward.icon}</div>
+                <div className="ref-reward-level">{reward.level}</div>
+                <div className="ref-reward-referrals">{reward.referrals} referrals</div>
+                <div className="ref-reward-amount">{reward.reward}</div>
+                <div className="ref-reward-bonus">{reward.bonus}</div>
+                <div className="ref-reward-progress">
+                  <div className="ref-progress-bar">
                     <div 
-                      className="progress-fill" 
+                      className="ref-progress-fill" 
                       style={{ 
                         width: `${(index + 1) * 25}%` 
                       }}
@@ -300,10 +300,10 @@ const Referral = () => {
       </section>
 
       {/* Features & Benefits */}
-      <section className="benefits-section">
-        <div className="container">
+      <section className="ref-benefits-section">
+        <div className="ref-container">
           <motion.div
-            className="section-header"
+            className="ref-section-header"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -312,39 +312,39 @@ const Referral = () => {
             <h2>Why Refer with Cosmic Vision?</h2>
           </motion.div>
 
-          <div className="benefits-grid">
+          <div className="ref-benefits-grid">
             <motion.div
-              className="benefit-card"
+              className="ref-benefit-card"
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              <Security className="benefit-icon" />
+              <Security className="ref-benefit-icon" />
               <h3>Instant Payouts</h3>
               <p>Get your earnings transferred directly to your wallet within 24 hours of successful referral</p>
             </motion.div>
 
             <motion.div
-              className="benefit-card"
+              className="ref-benefit-card"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <EmojiEvents className="benefit-icon" />
+              <EmojiEvents className="ref-benefit-icon" />
               <h3>Bonus Rewards</h3>
               <p>Earn additional bonuses when you reach referral milestones and unlock exclusive perks</p>
             </motion.div>
 
             <motion.div
-              className="benefit-card"
+              className="ref-benefit-card"
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <TrendingUp className="benefit-icon" />
+              <TrendingUp className="ref-benefit-icon" />
               <h3>No Limits</h3>
               <p>Refer as many friends as you want. There's no upper limit to how much you can earn</p>
             </motion.div>
@@ -353,10 +353,10 @@ const Referral = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="faq-section">
-        <div className="container">
+      <section className="ref-faq-section">
+        <div className="ref-container">
           <motion.div
-            className="section-header"
+            className="ref-section-header"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -365,9 +365,9 @@ const Referral = () => {
             <h2>Frequently Asked Questions</h2>
           </motion.div>
 
-          <div className="faq-grid">
+          <div className="ref-faq-grid">
             <motion.div
-              className="faq-item"
+              className="ref-faq-item"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -378,7 +378,7 @@ const Referral = () => {
             </motion.div>
 
             <motion.div
-              className="faq-item"
+              className="ref-faq-item"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
@@ -389,7 +389,7 @@ const Referral = () => {
             </motion.div>
 
             <motion.div
-              className="faq-item"
+              className="ref-faq-item"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -400,7 +400,7 @@ const Referral = () => {
             </motion.div>
 
             <motion.div
-              className="faq-item"
+              className="ref-faq-item"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
@@ -414,24 +414,24 @@ const Referral = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="refer-cta">
-        <div className="container">
+      <section className="ref-refer-cta">
+        <div className="ref-container">
           <motion.div
-            className="cta-content"
+            className="ref-cta-content"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <RocketLaunch className="cta-icon" />
+            <RocketLaunch className="ref-cta-icon" />
             <h2>Start Earning Today!</h2>
             <p>Share your referral link and start earning ₹20 for every friend who joins Cosmic Vision</p>
-            <div className="cta-buttons">
-              <button className="btn primary-btn large" onClick={shareReferral}>
+            <div className="ref-cta-buttons">
+              <button className="ref-btn ref-primary-btn ref-large" onClick={shareReferral}>
                 <Share />
                 Share Referral Link
               </button>
-              <Link to="/dashboard" className="btn secondary-btn large">
+              <Link to="/dashboard" className="ref-btn ref-secondary-btn ref-large">
                 <TrendingUp />
                 View Dashboard
               </Link>

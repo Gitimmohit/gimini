@@ -86,7 +86,7 @@ const Home = () => {
             <>
               {/* Book Now Button */}
               <button
-                className={`${styles.btn} ${styles.primaryBtn} ${styles.glowEffect}`}
+                className={`${styles.btn} ${styles.glowEffect}`}
                 onClick={() => setIsModalOpen(true)}
               >
                 <Groups sx={{ mr: 1 }} />
@@ -740,7 +740,7 @@ const Home = () => {
                 View Show Schedule
               </Link>
               <Link
-                to="/register"
+                to="/registerstudent"
                 className={`${styles.btn} ${styles.secondaryBtn} ${styles.large}`}
               >
                 <Groups sx={{ mr: 1 }} />

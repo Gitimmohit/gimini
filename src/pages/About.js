@@ -15,6 +15,9 @@ import {
   Diversity3,
   Explore,
   Lightbulb,
+  LocationOn,
+  Schedule,
+  VerifiedUser,
 } from "@mui/icons-material";
 import "./About.css";
 
@@ -36,7 +39,6 @@ const About = () => {
       experience: "15+ years",
       specialty: "Black Holes & Cosmology",
     },
-
     {
       name: "Rahul Verma",
       role: "Digital Dome Specialist",
@@ -61,65 +63,65 @@ const About = () => {
     {
       year: "2010",
       title: "Foundation",
-      description:
-        "Cosmic Vision Planetarium established with a mission to make astronomy accessible to everyone.",
+      description: "Cosmic Vision Planetarium established with a mission to make astronomy accessible to everyone.",
+      icon: "🚀"
     },
     {
       year: "2013",
       title: "Digital Upgrade",
-      description:
-        "Upgraded to state-of-the-art digital dome projection system, one of the first in the country.",
+      description: "Upgraded to state-of-the-art digital dome projection system, one of the first in the country.",
+      icon: "💫"
     },
     {
       year: "2016",
       title: "Educational Outreach",
-      description:
-        "Launched comprehensive educational programs for schools and colleges across the region.",
+      description: "Launched comprehensive educational programs for schools and colleges across the region.",
+      icon: "🎓"
     },
     {
       year: "2019",
       title: "8K Revolution",
-      description:
-        "Became the first planetarium in the country to implement 8K resolution projection.",
+      description: "Became the first planetarium in the country to implement 8K resolution projection.",
+      icon: "🌟"
     },
     {
       year: "2022",
       title: "Award Recognition",
-      description:
-        "Received National Excellence Award for Science Communication and Education.",
+      description: "Received National Excellence Award for Science Communication and Education.",
+      icon: "🏆"
     },
     {
       year: "2024",
       title: "Future Vision",
-      description:
-        "Expanding to virtual reality experiences and interplanetary simulation programs.",
+      description: "Expanding to virtual reality experiences and interplanetary simulation programs.",
+      icon: "🔮"
     },
   ];
 
   const values = [
     {
-      icon: <Science className="value-icon" />,
+      icon: <Science className="abt-value-icon" />,
       title: "Scientific Accuracy",
-      description:
-        "All our shows and content are rigorously reviewed by astrophysicists to ensure scientific accuracy.",
+      description: "All our shows and content are rigorously reviewed by astrophysicists to ensure scientific accuracy.",
+      color: "#64FFDA"
     },
     {
-      icon: <School className="value-icon" />,
+      icon: <School className="abt-value-icon" />,
       title: "Education First",
-      description:
-        "We believe in making complex astronomical concepts accessible and engaging for all age groups.",
+      description: "We believe in making complex astronomical concepts accessible and engaging for all age groups.",
+      color: "#4DABF7"
     },
     {
-      icon: <AutoAwesome className="value-icon" />,
+      icon: <AutoAwesome className="abt-value-icon" />,
       title: "Innovation",
-      description:
-        "Constantly pushing boundaries with cutting-edge technology and immersive experiences.",
+      description: "Constantly pushing boundaries with cutting-edge technology and immersive experiences.",
+      color: "#FFA94D"
     },
     {
-      icon: <Diversity3 className="value-icon" />,
+      icon: <Diversity3 className="abt-value-icon" />,
       title: "Community",
-      description:
-        "Building a community of space enthusiasts through workshops, star parties, and public events.",
+      description: "Building a community of space enthusiasts through workshops, star parties, and public events.",
+      color: "#9775FA"
     },
   ];
 
@@ -127,83 +129,101 @@ const About = () => {
     {
       icon: "🌌",
       title: "8K Digital Dome",
-      description:
-        "One of the largest digital domes in the country with 8K resolution projection",
+      description: "One of the largest digital domes in the country with 8K resolution projection",
+      features: ["8K Resolution", "180° Dome", "4K Laser Projection"]
     },
     {
       icon: "🔊",
       title: "15.1 Surround Sound",
-      description:
-        "Immersive audio experience that transports you to the depths of space",
+      description: "Immersive audio experience that transports you to the depths of space",
+      features: ["15.1 Channels", "Spatial Audio", "Dolby Atmos"]
     },
     {
       icon: "💺",
       title: "Reclining Seats",
-      description:
-        "Comfortable stadium-style seating for optimal viewing experience",
+      description: "Comfortable stadium-style seating for optimal viewing experience",
+      features: ["Ergonomic Design", "360° View", "Premium Comfort"]
     },
     {
       icon: "🔭",
       title: "Observatory",
       description: "Research-grade telescopes for live celestial observations",
+      features: ["Research Grade", "Live Viewing", "Expert Guided"]
     },
     {
       icon: "🎮",
       title: "Interactive Zones",
       description: "Hands-on exhibits and interactive learning stations",
+      features: ["Touch Screens", "VR Experiences", "Educational Games"]
     },
     {
       icon: "☕",
       title: "Space Café",
       description: "Themed café serving cosmic-inspired snacks and beverages",
+      features: ["Space Theme", "Premium Coffee", "Cosmic Snacks"]
     },
   ];
 
+  const achievements = [
+    { number: "12", label: "National Awards", icon: <EmojiEvents className="abt-achievement-icon" /> },
+    { number: "50K+", label: "Students Educated", icon: <School className="abt-achievement-icon" /> },
+    { number: "98%", label: "Visitor Satisfaction", icon: <VerifiedUser className="abt-achievement-icon" /> },
+    { number: "24/7", label: "Support Available", icon: <Schedule className="abt-achievement-icon" /> },
+  ];
+
   return (
-    <div className="about-us-page">
+    <div className="abt-about-us-page">
       {/* Hero Section */}
-      <section className="about-hero">
-        <div className="hero-background">
-          <div className="stars-overlay"></div>
-          <div className="floating-planets">
-            <div className="planet earth"></div>
-            <div className="planet mars"></div>
-            <div className="planet jupiter"></div>
-            <div className="planet saturn"></div>
+      <section className="abt-hero">
+        <div className="abt-hero-background">
+          <div className="abt-stars-overlay"></div>
+          <div className="abt-floating-planets">
+            <div className="abt-planet abt-earth"></div>
+            <div className="abt-planet abt-mars"></div>
+            <div className="abt-planet abt-jupiter"></div>
+            <div className="abt-planet abt-saturn"></div>
           </div>
         </div>
-        <div className="container">
+        <div className="abt-container">
           <motion.div
-            className="hero-content"
+            className="abt-hero-content"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="hero-badge">
-              <RocketLaunch className="badge-icon" />
+            <motion.div
+              className="abt-hero-badge"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+            >
+              <RocketLaunch className="abt-badge-icon" />
               Exploring the Universe Since 2010
-            </div>
-            <h1 className="hero-title">
-              About <span className="gradient-text">Cosmic Vision</span>
+            </motion.div>
+            
+            <h1 className="abt-hero-title">
+              Journey Through the <span className="abt-gradient-text">Cosmos</span> With Us
             </h1>
-            <p className="hero-subtitle">
-              Where the wonders of the universe come alive. We're passionate
-              about sharing the beauty and science of astronomy through
-              unforgettable immersive experiences.
+            
+            <p className="abt-hero-subtitle">
+              Where the wonders of the universe come alive through cutting-edge technology 
+              and passionate storytelling. We're dedicated to making astronomy accessible, 
+              engaging, and unforgettable for everyone.
             </p>
 
-            <div className="hero-stats">
+            <div className="abt-hero-stats">
               {stats.map((stat, index) => (
                 <motion.div
                   key={stat.label}
-                  className="stat-card"
+                  className="abt-stat-card"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
+                  whileHover={{ y: -5 }}
                 >
-                  <div className="stat-icon">{stat.icon}</div>
-                  <div className="stat-number">{stat.number}</div>
-                  <div className="stat-label">{stat.label}</div>
+                  <div className="abt-stat-icon">{stat.icon}</div>
+                  <div className="abt-stat-number">{stat.number}</div>
+                  <div className="abt-stat-label">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
@@ -212,131 +232,189 @@ const About = () => {
       </section>
 
       {/* Mission & Vision Section */}
-      <section className="mission-section">
-        <div className="container">
-          <div className="mission-content">
+      <section className="abt-mission-section">
+        <div className="abt-container">
+          <div className="abt-mission-content">
             <motion.div
-              className="mission-text"
+              className="abt-mission-text"
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <h2>Our Mission & Vision</h2>
-              <div className="mission-cards">
-                <div className="mission-card">
-                  <Lightbulb className="mission-icon" />
-                  <h3>Our Mission</h3>
+              <div className="abt-section-badge">
+                <Lightbulb className="abt-badge-icon" />
+                Our Purpose
+              </div>
+              <h2 className="abt-section-title">Inspiring Cosmic Curiosity</h2>
+              
+              <div className="abt-mission-cards">
+                <motion.div
+                  className="abt-mission-card"
+                  whileHover={{ y: -5 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="abt-mission-header">
+                    <Lightbulb className="abt-mission-icon" />
+                    <h3>Our Mission</h3>
+                  </div>
                   <p>
-                    To inspire wonder and curiosity about the universe by making
-                    astronomy accessible, engaging, and educational for people
-                    of all ages through state-of-the-art technology and expert
-                    guidance.
+                    To ignite wonder and curiosity about the universe by making astronomy 
+                    accessible through state-of-the-art technology, expert guidance, and 
+                    immersive experiences that inspire lifelong learning.
                   </p>
-                </div>
-                <div className="mission-card">
-                  <Explore className="mission-icon" />
-                  <h3>Our Vision</h3>
+                </motion.div>
+                
+                <motion.div
+                  className="abt-mission-card"
+                  whileHover={{ y: -5 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="abt-mission-header">
+                    <Explore className="abt-mission-icon" />
+                    <h3>Our Vision</h3>
+                  </div>
                   <p>
-                    To become the leading center for astronomical education and
-                    public outreach, fostering a society that appreciates
-                    science and looks to the stars with curiosity and
-                    inspiration.
+                    To become the leading center for astronomical education, fostering a 
+                    society that looks to the stars with curiosity, understands science, 
+                    and embraces the wonders of our cosmic neighborhood.
                   </p>
-                </div>
+                </motion.div>
               </div>
             </motion.div>
 
             <motion.div
-              className="mission-visual"
+              className="abt-mission-visual"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <div className="visual-container">
-                <div className="orbit-ring ring-1"></div>
-                <div className="orbit-ring ring-2"></div>
-                <div className="orbit-ring ring-3"></div>
-                <div className="central-star">
-                  <Star className="star-icon" />
+              <div className="abt-visual-container">
+                <div className="abt-orbit-ring abt-ring-1"></div>
+                <div className="abt-orbit-ring abt-ring-2"></div>
+                <div className="abt-orbit-ring abt-ring-3"></div>
+                <div className="abt-central-star">
+                  <Star className="abt-star-icon" />
                 </div>
-                <div className="orbiting-planet planet-1">🌍</div>
-                <div className="orbiting-planet planet-2">🪐</div>
-                <div className="orbiting-planet planet-3">🔴</div>
+                <div className="abt-orbiting-planet abt-planet-1">🌍</div>
+                <div className="abt-orbiting-planet abt-planet-2">🪐</div>
+                <div className="abt-orbiting-planet abt-planet-3">🔴</div>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Our Story Timeline */}
-      <section className="timeline-section">
-        <div className="container">
+      {/* Achievements Section */}
+      <section className="abt-achievements-section">
+        <div className="abt-container">
           <motion.div
-            className="section-header"
+            className="abt-section-header"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2>Our Cosmic Journey</h2>
-            <p>
-              From humble beginnings to becoming a premier astronomical
-              destination
-            </p>
+            <h2>Our Cosmic Impact</h2>
+            <p>Making a difference in science education and public outreach</p>
           </motion.div>
 
-          <div className="timeline">
-            {milestones.map((milestone, index) => (
+          <div className="abt-achievements-grid">
+            {achievements.map((achievement, index) => (
               <motion.div
-                key={milestone.year}
-                className={`timeline-item ${
-                  index % 2 === 0 ? "left" : "right"
-                }`}
+                key={achievement.label}
+                className="abt-achievement-card"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
+                whileHover={{ scale: 1.05 }}
               >
-                <div className="timeline-content">
-                  <div className="timeline-year">{milestone.year}</div>
-                  <h3>{milestone.title}</h3>
-                  <p>{milestone.description}</p>
+                <div className="abt-achievement-icon-wrapper">
+                  {achievement.icon}
                 </div>
-                <div className="timeline-dot"></div>
+                <div className="abt-achievement-number">{achievement.number}</div>
+                <div className="abt-achievement-label">{achievement.label}</div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Our Values */}
-      <section className="values-section">
-        <div className="container">
+      {/* Timeline Section */}
+      <section className="abt-timeline-section">
+        <div className="abt-container">
           <motion.div
-            className="section-header"
+            className="abt-section-header"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2>Our Core Values</h2>
-            <p>The principles that guide our cosmic mission</p>
+            <div className="abt-section-badge">
+              <TrendingUp className="abt-badge-icon" />
+              Our Journey
+            </div>
+            <h2>Milestones in Cosmic Exploration</h2>
+            <p>From humble beginnings to becoming a premier astronomical destination</p>
           </motion.div>
 
-          <div className="values-grid">
-            {values.map((value, index) => (
+          <div className="abt-timeline">
+            {milestones.map((milestone, index) => (
               <motion.div
-                key={value.title}
-                className="value-card"
+                key={milestone.year}
+                className="abt-timeline-item"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -5 }}
               >
-                <div className="value-icon-container">{value.icon}</div>
+                <div className="abt-timeline-content">
+                  <div className="abt-timeline-year">{milestone.year}</div>
+                  <div className="abt-timeline-icon">{milestone.icon}</div>
+                  <h3>{milestone.title}</h3>
+                  <p>{milestone.description}</p>
+                </div>
+                <div className="abt-timeline-connector"></div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Values Section */}
+      <section className="abt-values-section">
+        <div className="abt-container">
+          <motion.div
+            className="abt-section-header"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2>Our Guiding Principles</h2>
+            <p>The core values that drive our mission to explore and educate</p>
+          </motion.div>
+
+          <div className="abt-values-grid">
+            {values.map((value, index) => (
+              <motion.div
+                key={value.title}
+                className="abt-value-card"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -8 }}
+                style={{ borderColor: value.color }}
+              >
+                <div 
+                  className="abt-value-icon-container"
+                  style={{ color: value.color }}
+                >
+                  {value.icon}
+                </div>
                 <h3>{value.title}</h3>
                 <p>{value.description}</p>
               </motion.div>
@@ -345,55 +423,52 @@ const About = () => {
         </div>
       </section>
 
-      {/* Our Team */}
-      <section className="team-section">
-        <div className="container">
+      {/* Team Section */}
+      <section className="abt-team-section">
+        <div className="abt-container">
           <motion.div
-            className="section-header"
+            className="abt-section-header"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2>Meet Our Cosmic Team</h2>
-            <p>
-              Passionate astronomers, educators, and technologists dedicated to
-              your cosmic journey
-            </p>
+            <div className="abt-section-badge">
+              <Groups className="abt-badge-icon" />
+              Meet the Experts
+            </div>
+            <h2>Our Cosmic Guides</h2>
+            <p>Passionate astronomers, educators, and technologists dedicated to your journey through the stars</p>
           </motion.div>
 
-          <div className="team-grid">
+          <div className="abt-team-grid">
             {teamMembers.map((member, index) => (
               <motion.div
                 key={member.name}
-                className="team-card"
+                className="abt-team-card"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -5 }}
+                whileHover={{ y: -8 }}
               >
-                <div className="member-image">
+                <div className="abt-member-image">
                   <img src={member.image} alt={member.name} />
-                  <div className="image-overlay"></div>
+                  <div className="abt-image-overlay">
+                    <div className="abt-member-specialty">{member.specialty}</div>
+                  </div>
                 </div>
-                <div className="member-info">
+                <div className="abt-member-info">
                   <h3>{member.name}</h3>
-                  <div className="member-role">{member.role}</div>
-                  <div className="member-details">
-                    <div className="detail-item">
-                      <span className="detail-label">Qualification:</span>
-                      <span className="detail-value">
-                        {member.qualification}
-                      </span>
+                  <div className="abt-member-role">{member.role}</div>
+                  <div className="abt-member-details">
+                    <div className="abt-detail-item">
+                      <VerifiedUser className="abt-detail-icon" />
+                      <span>{member.qualification}</span>
                     </div>
-                    <div className="detail-item">
-                      <span className="detail-label">Experience:</span>
-                      <span className="detail-value">{member.experience}</span>
-                    </div>
-                    <div className="detail-item">
-                      <span className="detail-label">Specialty:</span>
-                      <span className="detail-value">{member.specialty}</span>
+                    <div className="abt-detail-item">
+                      <Schedule className="abt-detail-icon" />
+                      <span>{member.experience}</span>
                     </div>
                   </div>
                 </div>
@@ -404,36 +479,38 @@ const About = () => {
       </section>
 
       {/* Facilities Section */}
-      <section className="facilities-section">
-        <div className="container">
+      <section className="abt-facilities-section">
+        <div className="abt-container">
           <motion.div
-            className="section-header"
+            className="abt-section-header"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2>World-Class Facilities</h2>
-            <p>
-              Experience astronomy like never before in our state-of-the-art
-              planetarium
-            </p>
+            <h2>State-of-the-Art Facilities</h2>
+            <p>Experience astronomy like never before in our cutting-edge planetarium</p>
           </motion.div>
 
-          <div className="facilities-grid">
+          <div className="abt-facilities-grid">
             {facilities.map((facility, index) => (
               <motion.div
                 key={facility.title}
-                className="facility-card"
+                className="abt-facility-card"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -5 }}
               >
-                <div className="facility-icon">{facility.icon}</div>
+                <div className="abt-facility-icon">{facility.icon}</div>
                 <h3>{facility.title}</h3>
                 <p>{facility.description}</p>
+                <div className="abt-facility-features">
+                  {facility.features.map((feature, idx) => (
+                    <span key={idx} className="abt-feature-tag">{feature}</span>
+                  ))}
+                </div>
               </motion.div>
             ))}
           </div>
@@ -441,29 +518,32 @@ const About = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="about-cta">
-        <div className="container">
+      <section className="abt-cta-section">
+        <div className="abt-container">
           <motion.div
-            className="cta-content"
+            className="abt-cta-content"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <Public className="cta-icon" />
-            <h2>Ready for Your Cosmic Adventure?</h2>
+            <div className="abt-cta-background">
+              <div className="abt-cta-stars"></div>
+            </div>
+            <RocketLaunch className="abt-cta-icon" />
+            <h2>Begin Your Cosmic Journey</h2>
             <p>
-              Join thousands of space enthusiasts who've experienced the wonders
-              of the universe with us
+              Join thousands of space enthusiasts who've experienced the wonders of the universe with us. 
+              Your adventure among the stars awaits!
             </p>
-            <div className="cta-buttons">
-              <Link to="/shows" className="btn primary-btn large">
+            <div className="abt-cta-buttons">
+              <Link to="/shows" className="abt-btn abt-primary-btn abt-large">
                 <RocketLaunch />
                 Explore Shows
               </Link>
-              <Link to="/contactus" className="btn secondary-btn large">
-                <Groups />
-                Contact Us
+              <Link to="/contactus" className="abt-btn abt-secondary-btn abt-large">
+                <LocationOn />
+                Visit Us
               </Link>
             </div>
           </motion.div>

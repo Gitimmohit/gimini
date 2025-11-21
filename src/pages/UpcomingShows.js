@@ -1,27 +1,23 @@
 // pages/UpcomingShows.js
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import pic4 from "../assets/pic4.jpg";
 import {
   ConfirmationNumber,
+  CalendarToday,
   Schedule,
   Groups,
-  VolumeUp,
   Star,
-  FilterList,
-  Search,
-  EventAvailable,
-  AccessTime,
+  LocationOn,
   Language,
   EmojiEvents,
+  TrendingUp,
+  NewReleases,
 } from "@mui/icons-material";
 import "./UpcomingShows.css";
 
 const UpcomingShows = () => {
-  const [filter, setFilter] = useState("all");
-  const [searchTerm, setSearchTerm] = useState("");
-
   const upcomingShows = [
     {
       id: 1,
@@ -49,7 +45,8 @@ const UpcomingShows = () => {
         "Interactive Session",
         "Surround Sound",
       ],
-      status: "upcoming",
+      status: "featured",
+      venue: "Main Dome",
     },
     {
       id: 2,
@@ -61,8 +58,8 @@ const UpcomingShows = () => {
         "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
       category: "educational",
       tags: ["Educational", "Kids Friendly", "Family"],
-      // rating: 4.6,
-      // reviews: 89,
+      rating: 4.6,
+      reviews: 89,
       price: 299,
       originalPrice: 399,
       discount: 25,
@@ -77,7 +74,8 @@ const UpcomingShows = () => {
         "Take-home Kit",
         "Educational",
       ],
-      status: "upcoming",
+      status: "popular",
+      venue: "Main Dome",
     },
     {
       id: 3,
@@ -105,7 +103,8 @@ const UpcomingShows = () => {
         "VR Elements",
         "Action-Packed",
       ],
-      status: "upcoming",
+      status: "trending",
+      venue: "VR Theater",
     },
     {
       id: 4,
@@ -133,7 +132,8 @@ const UpcomingShows = () => {
         "Family Friendly",
         "Educational",
       ],
-      status: "upcoming",
+      status: "family",
+      venue: "Main Dome",
     },
     {
       id: 5,
@@ -161,7 +161,8 @@ const UpcomingShows = () => {
         "Advanced Visuals",
         "Q&A Session",
       ],
-      status: "upcoming",
+      status: "premium",
+      venue: "Observatory",
     },
     {
       id: 6,
@@ -184,46 +185,10 @@ const UpcomingShows = () => {
       description:
         "Immerse yourself in the breathtaking beauty of auroras with this musical journey through the polar skies. A sensory experience like no other.",
       features: ["Musical Score", "Visual Spectacle", "Relaxing", "All Ages"],
-      status: "upcoming",
+      status: "immersive",
+      venue: "Main Dome",
     },
   ];
-
-  const categories = [
-    { value: "all", label: "All Shows", count: upcomingShows.length },
-    {
-      value: "scientific",
-      label: "Scientific",
-      count: upcomingShows.filter((show) => show.category === "scientific")
-        .length,
-    },
-    {
-      value: "educational",
-      label: "Educational",
-      count: upcomingShows.filter((show) => show.category === "educational")
-        .length,
-    },
-    {
-      value: "action",
-      label: "Action",
-      count: upcomingShows.filter((show) => show.category === "action").length,
-    },
-    {
-      value: "visual",
-      label: "Visual",
-      count: upcomingShows.filter((show) => show.category === "visual").length,
-    },
-  ];
-
-  const filteredShows = upcomingShows.filter((show) => {
-    const matchesFilter = filter === "all" || show.category === filter;
-    const matchesSearch =
-      show.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      show.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      show.tags.some((tag) =>
-        tag.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    return matchesFilter && matchesSearch;
-  });
 
   const formatDate = (dateString) => {
     const options = {
@@ -235,264 +200,285 @@ const UpcomingShows = () => {
     return new Date(dateString).toLocaleDateString("en-US", options);
   };
 
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case "featured":
+        return <NewReleases className="up-status-icon" />;
+      case "trending":
+        return <TrendingUp className="up-status-icon" />;
+      case "popular":
+        return <Star className="up-status-icon" />;
+      default:
+        return <Star className="up-status-icon" />;
+    }
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "featured":
+        return "#FF6B6B";
+      case "trending":
+        return "#64FFDA";
+      case "popular":
+        return "#FFD700";
+      case "family":
+        return "#4DABF7";
+      case "premium":
+        return "#FFA94D";
+      case "immersive":
+        return "#9775FA";
+      default:
+        return "#64FFDA";
+    }
+  };
+
   return (
-    <div className="upcoming-shows-page">
+    <div className="up-upcoming-shows-page">
       {/* Hero Section */}
-      <section className="shows-hero">
-        <img src={pic4} alt="Digital Dome Projection" className="hero-img" />
-        {/* <div className="hero-background">
-          <div className="stars-overlay"></div>
-        </div> */}
-        <div className="container">
+      <section className="up-shows-hero">
+        <img src={pic4} alt="Digital Dome Projection" className="up-hero-img" />
+        <div className="up-hero-overlay"></div>
+        <div className="up-container">
           <motion.div
-            className="hero-content"
+            className="up-hero-content"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="hero-title">Upcoming Cosmic Shows</h1>
-            <p className="hero-subtitle">
-              Embark on extraordinary journeys through space and time. Book your
-              seat for unforgettable astronomical experiences in our
-              state-of-the-art digital dome.
+            <motion.div
+              className="up-hero-badge"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+            >
+              <NewReleases className="up-badge-icon" />
+              Explore the Universe
+            </motion.div>
+            <h1 className="up-hero-title">
+              Journey Through the <span className="up-gradient-text">Cosmos</span>
+            </h1>
+            <p className="up-hero-subtitle">
+              Experience breathtaking astronomical adventures in our state-of-the-art 
+              digital planetarium. From black holes to distant galaxies, embark on 
+              unforgettable cosmic journeys.
             </p>
-            <div className="hero-stats">
-              <div className="stat">
-                <div className="stat-number">{upcomingShows.length}</div>
-                <div className="stat-label">Upcoming Shows</div>
+            <div className="up-hero-features">
+              <div className="up-feature">
+                <div className="up-feature-icon">🌌</div>
+                <span>8K Digital Dome</span>
               </div>
-              <div className="stat">
-                <div className="stat-number">98%</div>
-                <div className="stat-label">Visitor Satisfaction</div>
+              <div className="up-feature">
+                <div className="up-feature-icon">🔊</div>
+                <span>15.1 Surround Sound</span>
               </div>
-              <div className="stat">
-                <div className="stat-number">4.8/5</div>
-                <div className="stat-label">Average Rating</div>
+              <div className="up-feature">
+                <div className="up-feature-icon">👨‍🏫</div>
+                <span>Expert Guides</span>
               </div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Filters and Search Section */}
-      <section className="filters-section">
-        <div className="container">
-          <div className="filters-content">
-            <div className="search-box">
-              <Search className="search-icon" />
-              <input
-                type="text"
-                placeholder="Search shows by title, description, or tags..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="search-input"
-              />
-            </div>
-
-            <div className="filter-tabs">
-              <div className="filter-header">
-                <FilterList className="filter-icon" />
-                <span>Filter by Category</span>
-              </div>
-              <div className="category-filters">
-                {categories.map((category) => (
-                  <button
-                    key={category.value}
-                    className={`filter-btn ${
-                      filter === category.value ? "active" : ""
-                    }`}
-                    onClick={() => setFilter(category.value)}
-                  >
-                    {category.label}
-                    <span className="filter-count">{category.count}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Shows Grid Section */}
-      <section className="shows-grid-section">
-        <div className="container">
+      {/* Featured Shows Section */}
+      <section className="up-featured-section">
+        <div className="up-container">
           <motion.div
-            className="results-header"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            className="up-section-header"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
           >
-            <h2 className="section-title">
-              {filteredShows.length} {filter === "all" ? "Upcoming" : filter}{" "}
-              Shows Found
-            </h2>
-            <p className="section-subtitle">
-              Book in advance to secure your preferred date and time
-            </p>
+            <h2>Featured Cosmic Experiences</h2>
+            <p>Handpicked shows that will transport you across the universe</p>
           </motion.div>
 
-          <div className="shows-grid">
-            {filteredShows.map((show, index) => (
+          <div className="up-featured-grid">
+            {upcomingShows.map((show, index) => (
               <motion.div
                 key={show.id}
-                className="show-card"
+                className="up-show-card"
                 initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -8, transition: { duration: 0.3 } }}
               >
-                {/* Show Image with Overlay */}
-                <div className="show-image-container">
+                {/* Status Badge */}
+                <div 
+                  className="up-status-badge"
+                  style={{ backgroundColor: getStatusColor(show.status) }}
+                >
+                  {getStatusIcon(show.status)}
+                  <span>{show.status.charAt(0).toUpperCase() + show.status.slice(1)}</span>
+                </div>
+
+                {/* Show Image */}
+                <div className="up-show-image-container">
                   <img src={show.image} alt={show.title} />
-                  <div className="show-overlay">
-                    <div className="show-tags">
-                      {show.tags.map((tag) => (
-                        <span key={tag} className="show-tag">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="discount-badge">{show.discount}% OFF</div>
-                    <div className="seats-indicator">
-                      <span className="seats-count">
-                        🎫 {show.seats} seats left
-                      </span>
+                  <div className="up-image-overlay">
+                    <div className="up-venue-tag">
+                      <LocationOn className="up-venue-icon" />
+                      {show.venue}
                     </div>
                   </div>
                 </div>
 
                 {/* Show Content */}
-                <div className="show-content">
-                  <div className="show-header">
-                    <h3 className="show-title">{show.title}</h3>
-                    <div className="show-rating">
-                      <Star className="star-icon" />
-                      <span className="rating">{show.rating}</span>
-                      <span className="reviews">({show.reviews})</span>
+                <div className="up-show-content">
+                  <div className="up-show-header">
+                    <h3 className="up-show-title">{show.title}</h3>
+                    <div className="up-show-rating">
+                      <Star className="up-star-icon" />
+                      <span className="up-rating">{show.rating}</span>
+                      <span className="up-reviews">({show.reviews})</span>
                     </div>
                   </div>
 
-                  <p className="show-description">{show.description}</p>
+                  <p className="up-show-description">{show.description}</p>
 
-                  {/* Show Features */}
-                  <div className="show-features">
+                  {/* Quick Info */}
+                  <div className="up-quick-info">
+                    <div className="up-info-item">
+                      <CalendarToday className="up-info-icon" />
+                      <span>{formatDate(show.date)}</span>
+                    </div>
+                    <div className="up-info-item">
+                      <Schedule className="up-info-icon" />
+                      <span>{show.time} • {show.duration}</span>
+                    </div>
+                    <div className="up-info-item">
+                      <Groups className="up-info-icon" />
+                      <span>{show.ageGroup}</span>
+                    </div>
+                    <div className="up-info-item">
+                      <Language className="up-info-icon" />
+                      <span>{show.language}</span>
+                    </div>
+                  </div>
+
+                  {/* Features */}
+                  <div className="up-features-grid">
                     {show.features.map((feature, idx) => (
-                      <span key={idx} className="feature-tag">
-                        ✓ {feature}
-                      </span>
+                      <div key={idx} className="up-feature-item">
+                        <div className="up-feature-dot"></div>
+                        <span>{feature}</span>
+                      </div>
                     ))}
                   </div>
 
-                  {/* Show Meta Information */}
-                  <div className="show-meta">
-                    <div className="meta-item">
-                      <EventAvailable className="meta-icon" />
-                      <div>
-                        <div className="meta-value">
-                          {formatDate(show.date)}
-                        </div>
-                        <div className="meta-label">Date</div>
+                  {/* Pricing & Action */}
+                  <div className="up-show-footer">
+                    <div className="up-pricing-section">
+                      <div className="up-price-container">
+                        <div className="up-price-original">₹{show.originalPrice}</div>
+                        <div className="up-price-current">₹{show.price}</div>
+                        <div className="up-discount-tag">Save {show.discount}%</div>
+                      </div>
+                      <div className="up-seats-available">
+                        🎫 Only {show.seats} seats left
                       </div>
                     </div>
-                    <div className="meta-item">
-                      <AccessTime className="meta-icon" />
-                      <div>
-                        <div className="meta-value">
-                          {show.time} • {show.duration}
-                        </div>
-                        <div className="meta-label">Timing</div>
-                      </div>
-                    </div>
-                    <div className="meta-item">
-                      <Groups className="meta-icon" />
-                      <div>
-                        <div className="meta-value">{show.ageGroup}</div>
-                        <div className="meta-label">Age Group</div>
-                      </div>
-                    </div>
-                    <div className="meta-item">
-                      <Language className="meta-icon" />
-                      <div>
-                        <div className="meta-value">{show.language}</div>
-                        <div className="meta-label">Language</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Pricing and Action */}
-                  <div className="show-actions">
-                    <div className="pricing">
-                      <div className="price-original">
-                        ₹{show.originalPrice}
-                      </div>
-                      <div className="price-current">₹{show.price}</div>
-                      <div className="price-note">per person</div>
-                    </div>
-                    <div className="action-buttons">
+                    
+                    <div className="up-action-section">
                       <Link
                         to={`/booking/${show.id}`}
-                        className="btn primary-btn"
+                        className="up-book-btn"
                       >
-                        <ConfirmationNumber className="btn-icon" />
-                        Book Now
+                        <ConfirmationNumber className="up-btn-icon" />
+                        Book Your Journey
                       </Link>
-                      {/* <button className="btn secondary-btn">
-                        <Schedule className="btn-icon" />
-                        Remind Me
-                      </button> */}
+                      <div className="up-urgency-tag">
+                        ⚡ Selling Fast
+                      </div>
                     </div>
                   </div>
                 </div>
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
 
-          {/* Empty State */}
-          {filteredShows.length === 0 && (
+      {/* Stats Section */}
+      <section className="up-stats-section">
+        <div className="up-container">
+          <div className="up-stats-grid">
             <motion.div
-              className="empty-state"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              className="up-stat-card"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
             >
-              <EmojiEvents className="empty-icon" />
-              <h3>No shows found</h3>
-              <p>Try adjusting your search or filter criteria</p>
-              <button
-                className="btn primary-btn"
-                onClick={() => {
-                  setFilter("all");
-                  setSearchTerm("");
-                }}
-              >
-                Clear Filters
-              </button>
+              <div className="up-stat-number">10K+</div>
+              <div className="up-stat-label">Cosmic Explorers</div>
+              <div className="up-stat-desc">Joined our space adventures</div>
             </motion.div>
-          )}
+            
+            <motion.div
+              className="up-stat-card"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+            >
+              <div className="up-stat-number">98%</div>
+              <div className="up-stat-label">Satisfaction Rate</div>
+              <div className="up-stat-desc">Visitor experience rating</div>
+            </motion.div>
+            
+            <motion.div
+              className="up-stat-card"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <div className="up-stat-number">4.8/5</div>
+              <div className="up-stat-label">Average Rating</div>
+              <div className="up-stat-desc">Across all shows</div>
+            </motion.div>
+            
+            <motion.div
+              className="up-stat-card"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+            >
+              <div className="up-stat-number">50+</div>
+              <div className="up-stat-label">Cosmic Shows</div>
+              <div className="up-stat-desc">Unique experiences available</div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="shows-cta">
-        <div className="container">
+      <section className="up-cta-section">
+        <div className="up-container">
           <motion.div
-            className="cta-content"
+            className="up-cta-content"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2>Can't Find What You're Looking For?</h2>
-            <p>
-              Contact us for private shows, school programs, or custom
-              astronomical experiences
-            </p>
-            <div className="cta-buttons">
-              <Link to="/contact" className="btn primary-btn large">
-                Contact Us
+            <div className="up-cta-text">
+              <h2>Ready for Your Cosmic Adventure?</h2>
+              <p>
+                Don't miss out on these extraordinary journeys through space and time. 
+                Book your tickets now and secure your spot among the stars.
+              </p>
+            </div>
+            <div className="up-cta-actions">
+              <Link to="/shows/all" className="up-cta-btn up-primary">
+                View All Shows
               </Link>
-              <Link to="/register" className="btn secondary-btn large">
-                Create Account
+              <Link to="/membership" className="up-cta-btn up-secondary">
+                Become a Member
               </Link>
             </div>
           </motion.div>
