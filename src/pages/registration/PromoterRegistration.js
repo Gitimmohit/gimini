@@ -140,7 +140,7 @@ const PromoterRegistration = () => {
     axios
       .post(ServerAddress + "ems/signup/", {
         email: formData.email,
-        fullname:formData.fullname,
+        fullname: formData.fullname,
         password: formData.password,
         mobilenumber: formData.phone,
       })
@@ -250,7 +250,7 @@ const PromoterRegistration = () => {
       <div className="compact-promoter-registration">
         <Loader show={show} setshow={setshow} />
         <ToastContainer />
-        
+
         {/* OTP Modal */}
         <Modal
           show={show}
@@ -447,14 +447,18 @@ const PromoterRegistration = () => {
                     />
                   </div>
                   {errors.confirmPassword && (
-                    <span className="compact-error">{errors.confirmPassword}</span>
+                    <span className="compact-error">
+                      {errors.confirmPassword}
+                    </span>
                   )}
                 </div>
               </div>
 
               {/* Referral Code */}
               <div className="compact-form-group">
-                <label>Referral Code <span className="optional">(Optional)</span></label>
+                <label>
+                  Referral Code <span className="optional">(Optional)</span>
+                </label>
                 <div className="compact-input-wrapper">
                   <Campaign className="compact-input-icon" />
                   <input
@@ -470,7 +474,9 @@ const PromoterRegistration = () => {
               {/* Submit Button */}
               <motion.button
                 type="submit"
-                className={`compact-submit-btn ${isSubmitting ? "submitting" : ""}`}
+                className={`compact-submit-btn ${
+                  isSubmitting ? "submitting" : ""
+                }`}
                 disabled={isSubmitting}
                 whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                 whileTap={{ scale: 0.98 }}

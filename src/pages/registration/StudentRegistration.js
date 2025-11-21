@@ -143,6 +143,7 @@ const StudentRegistration = () => {
     axios
       .post(ServerAddress + "ems/signup/", {
         email: formData.email,
+        fullname: formData.fullname,
         password: formData.password,
         mobilenumber: formData.phone,
       })
@@ -209,10 +210,10 @@ const StudentRegistration = () => {
         email: formData.email,
         fullname: formData.fullname,
         mobilenumber: formData.phone,
-        usertype:formData.usertype,
-        dob:formData.dob,
-        school_name:formData.school_name,
-        referralCode:formData.referralCode,
+        usertype: formData.usertype,
+        dob: formData.dob,
+        school_name: formData.school_name,
+        referralCode: formData.referralCode,
         otp: otp,
         password: formData.password,
       });
