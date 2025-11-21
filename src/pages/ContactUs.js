@@ -78,8 +78,8 @@ const ContactUs = () => {
       icon: <Email className="con-contact-icon" />,
       title: "Email Us",
       details: [
-        "info@Gimini Planetarium.com",
-        "bookings@Gimini Planetarium.com",
+        "info@gemini Planetarium.com",
+        "bookings@gemini Planetarium.com",
       ],
       description: "We typically respond within 2-4 hours",
     },

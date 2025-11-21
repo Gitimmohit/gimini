@@ -217,3 +217,179 @@
     height: 10rem;
   }
 }
+
+
+/* Student OTP Modal Styles */
+.student-otp-modal .modal-content {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.student-modal-header-custom {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  padding: 1.5rem 1.5rem 1rem;
+}
+
+.student-modal-header-custom .btn-close {
+  filter: invert(1);
+  opacity: 0.8;
+}
+
+.student-modal-header-custom .btn-close:hover {
+  opacity: 1;
+}
+
+.student-modal-header-custom .modal-title {
+  color: white;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.student-modal-body-custom {
+  padding: 1.5rem;
+  background: transparent;
+}
+
+.student-otp-main {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.student-otp-description {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.student-otp-input-container {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.student-otp-input {
+  width: 50px;
+  height: 50px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white !important;
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.student-otp-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.student-otp-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.student-otp-submit {
+  margin-bottom: 1.5rem;
+}
+
+.student-otp-submit-btn {
+  width: 100%;
+  padding: 0.75rem 2rem;
+  background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+.student-otp-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+  background: linear-gradient(45deg, #ff8e8e, #ff7b3a);
+}
+
+.student-otp-submit-btn:active {
+  transform: translateY(0);
+}
+
+.student-otp-submit-btn:disabled {
+  background: rgba(255, 255, 255, 0.3);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.student-otp-resend {
+  text-align: center;
+}
+
+.student-otp-resend-btn {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.5rem 1.5rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.student-otp-resend-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Loader customization for modal */
+.student-modal-body-custom .loader-container {
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 576px) {
+  .student-otp-modal .modal-dialog {
+    margin: 1rem;
+  }
+  
+  .student-otp-input {
+    width: 45px;
+    height: 45px;
+    font-size: 1.1rem;
+  }
+  
+  .student-otp-input-container {
+    gap: 0.5rem;
+  }
+  
+  .student-modal-header-custom,
+  .student-modal-body-custom {
+    padding: 1rem;
+  }
+}
+
+/* Animation for OTP inputs */
+@keyframes studOtpPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.student-otp-input:focus {
+  animation: studOtpPulse 0.3s ease;
+}

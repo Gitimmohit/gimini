@@ -38,6 +38,7 @@ import Quiz from "./pages/quiz/Quiz";
 import AddQuiz from "./pages/quiz/AddQuiz";
 import User from "./pages/user/User";
 import AddUser from "./pages/user/AddUser";
+import RequestApproval from "./pages/registration/RequestApproval";
 
 
 function App() {
@@ -83,6 +84,7 @@ function App() {
             <Route path="/user/list" element={<User />} />
             <Route path="/add/user" element={<AddUser />} />
             <Route path="/studentapproval" element={<StudentApproval />} />
+            <Route path="/requestapproval" element={<RequestApproval />} />
           </Routes>
         </main>
 

@@ -27,7 +27,7 @@ const Footer = () => {
           <div className="footer-brand">
             <div className="brand-logo">
               <Star className="logo-icon" />
-              <span className="brand-name">Gimini Planetarium</span>
+              <span className="brand-name">gemini Planetarium</span>
             </div>
             <p className="brand-description">
               Where the universe comes alive. Experience breathtaking
@@ -124,7 +124,7 @@ const Footer = () => {
                 <Email className="contact-icon" />
                 <div>
                   <div className="contact-text">
-                    info@Gimini Planetarium.com
+                    info@gemini Planetarium.com
                   </div>
                   <div className="contact-subtext">
                     Quick response guaranteed

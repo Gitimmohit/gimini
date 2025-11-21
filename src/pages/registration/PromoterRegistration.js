@@ -12,7 +12,7 @@ import {
   RocketLaunch,
 } from "@mui/icons-material";
 
-import "./PromoterRegistration.css";
+import "./PromoterRegistration.css"; // Regular CSS import
 import { Modal } from "react-bootstrap";
 import Loader from "../../components/common/Loader";
 import { ToastContainer, toast } from "react-toastify";
@@ -39,6 +39,7 @@ const PromoterRegistration = () => {
   const [show, setshow] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [rectoken, setrectoken] = useState(0);
+
   const [otpp, setOtpp] = useState(false);
   const [otpDigits, setOtpDigits] = useState(["", "", "", "", "", ""]);
 
@@ -52,6 +53,7 @@ const PromoterRegistration = () => {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  console.log("setErrors---", errors);
 
   // ========================
   // VALIDATION
@@ -98,21 +100,88 @@ const PromoterRegistration = () => {
     return newErrors;
   };
 
+  // for the keyboard control by keyboard
+  const handleOtpKeyDown = (e, index) => {
+    const key = e.key;
+
+    // Move Left (ArrowLeft)
+    if (key === "ArrowLeft") {
+      if (index > 0) {
+        inputRefs.current[index - 1].focus();
+      }
+      return;
+    }
+
+    // Move Right (ArrowRight)
+    if (key === "ArrowRight") {
+      if (index < otpDigits.length - 1) {
+        inputRefs.current[index + 1].focus();
+      }
+      return;
+    }
+
+    // Backspace Logic
+    if (key === "Backspace") {
+      // If current box has value → clear it
+      if (otpDigits[index] !== "") {
+        handleOtpChange(index, "");
+        return;
+      }
+
+      // If empty → go to previous
+      if (index > 0) {
+        handleOtpChange(index - 1, "");
+        inputRefs.current[index - 1].focus();
+      }
+      return;
+    }
+
+    // Allow ONLY numbers
+    if (!/^[0-9]$/.test(key)) {
+      e.preventDefault();
+      return;
+    }
+
+    // When number typed → set & move next
+    handleOtpChange(index, key);
+
+    setTimeout(() => {
+      if (index < otpDigits.length - 1) {
+        inputRefs.current[index + 1].focus();
+      }
+    }, 50);
+  };
+
   // ===========================
   // SUBMIT HANDLER
   // ===========================
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newErrors = validateForm();
 
-    if (Object.keys(newErrors).length === 0) {
-      setIsSubmitting(true);
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      console.log("Registration Data:", formData);
-      sign_up();
-    } else {
-      setErrors(newErrors);
+    const newErrors = validateForm();
+    setErrors(newErrors);
+
+    // STEP 1 → Check form validation
+    if (Object.keys(newErrors).length > 0) {
+      return; // stop here if validation failed
     }
+
+    // STEP 2 → Check duplicate email from API
+    const isDuplicate = await check_duplicate_email();
+    if (isDuplicate) {
+      // add error to state
+      setErrors((prev) => ({
+        ...prev,
+        email: "Email already exists",
+      }));
+      return; // stop here if duplicate found
+    }
+
+    // STEP 3 → If everything OK → call signup
+    setIsSubmitting(true);
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    sign_up();
   };
 
   // ===========================
@@ -127,10 +196,48 @@ const PromoterRegistration = () => {
     }));
 
     if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: "",
-      }));
+      const updatedErrors = { ...errors };
+      delete updatedErrors[name];
+      setErrors(updatedErrors);
+    }
+  };
+
+  // for checking the duplicate email
+  const check_duplicate_email = async () => {
+    try {
+      setIsLoading(true);
+
+      const resp = await axios.post(
+        ServerAddress + "ems/check-duplicate-email/",
+        { email: formData.email }
+      );
+
+      setIsLoading(false);
+
+      if (resp.data.message === "Email already exists") {
+        toast.error("Email already exists. Please try another", {
+          position: "bottom-right",
+          autoClose: 5000,
+        });
+
+        setErrors((prev) => ({
+          ...prev,
+          email: "Email already exists",
+        }));
+
+        return true; // duplicate found
+      }
+
+      return false; // no duplicate
+    } catch (err) {
+      setIsLoading(false);
+
+      toast.error(`Error checking email: ${err}`, {
+        position: "bottom-right",
+        autoClose: 5000,
+      });
+
+      return true; // treat as duplicate to avoid wrong signup
     }
   };
 
@@ -158,12 +265,14 @@ const PromoterRegistration = () => {
           setshow(false);
           setIsLoading(false);
         } else if (response.data.message === "OTP sent successfully!") {
+          showSuccess("OTP sent successfully!");
           setrectoken(response.data.token);
           setIsLoading(false);
           setOtpp(true);
         }
       })
       .catch(function (error) {
+        setIsSubmitting(false);
         toast.error("Signup failed. Please try again.");
         console.log("errr", error);
         setshow(false);
@@ -196,8 +305,22 @@ const PromoterRegistration = () => {
     navigate("/login");
   };
 
+  const showSuccess = (message) => {
+    toast.success(message, {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+
   const handleOtp = async () => {
-    setshow(true);
+    setshow(true); // show loader
+    setIsLoading(true);
     const otp = otpDigits.join("");
 
     try {
@@ -216,42 +339,54 @@ const PromoterRegistration = () => {
 
       console.log("OTP Verified", response);
 
+      // ----------- SUCCESS RESPONSE HANDLING -----------
       if (response.data?.message === "User created successfully!") {
+        setIsLoading(false);
         toast.success("User Created Successfully!");
         setOtpp(false);
         showSuccessMessage("User created successfully!");
       } else {
+        setIsLoading(false);
         toast.error(response.data?.error || "Invalid OTP!");
         setErr(true);
       }
     } catch (error) {
+      // ----------- PROPER ERROR HANDLING -----------
+      setIsLoading(false);
       if (error.response) {
+        // Server responded with 4xx or 5xx error
         console.error("SERVER ERROR:", error.response.data);
+
         const msg =
           error.response.data?.error ||
           error.response.data?.message ||
           "Something went wrong!";
+
         toast.error(msg);
       } else if (error.request) {
+        // Request sent but no response
         console.error("NO RESPONSE FROM SERVER");
         toast.error("No response from server. Please try again.");
       } else {
+        // Something else happened
         console.error("ERROR:", error.message);
         toast.error("Unexpected error occurred!");
       }
+
       setErr(true);
     } finally {
+      // -------- ALWAYS STOP LOADER --------
       setshow(false);
+      setIsLoading(false);
     }
   };
 
   return (
     <>
-      <div className="compact-promoter-registration">
+      {/* OTP Modal */}
+      <div className="student-registration-page">
         <Loader show={show} setshow={setshow} />
         <ToastContainer />
-
-        {/* OTP Modal */}
         <Modal
           show={show}
           onHide={handleClose}
@@ -259,67 +394,79 @@ const PromoterRegistration = () => {
           keyboard={false}
           size="md"
           centered
-          className="compact-otp-modal"
+          className="student-otp-modal"
         >
-          <Modal.Header closeButton className="compact-modal-header">
+          <Modal.Header closeButton className="student-modal-header-custom">
             <Modal.Title>Verify OTP</Modal.Title>
           </Modal.Header>
-          <Modal.Body className="compact-modal-body">
-            <div className="compact-otp-main">
-              <p className="compact-otp-description">
-                6-digit OTP sent to your email
+
+          <Modal.Body className="student-modal-body-custom">
+            <Loader show={isLoading} setshow={setIsLoading} />
+            <div className="student-otp-main">
+              <p className="student-otp-description">
+                6-digit OTP has been sent to your email
               </p>
-              <div className="compact-otp-inputs">
+
+              <div className="student-otp-input-container">
                 {otpDigits.map((digit, index) => (
                   <input
+                    name="otp"
                     key={index}
                     type="text"
                     maxLength={1}
                     value={digit}
                     onChange={(e) => handleOtpChange(index, e.target.value)}
-                    className="compact-otp-input"
+                    onKeyDown={(e) => handleOtpKeyDown(e, index)}
+                    className="student-otp-input"
                     ref={(input) => (inputRefs.current[index] = input)}
                   />
                 ))}
               </div>
-              <button className="compact-otp-btn" onClick={handleOtp}>
-                Verify OTP
-              </button>
+
+              <div className="student-otp-submit">
+                <button className="student-otp-submit-btn" onClick={handleOtp}>
+                  Verify OTP
+                </button>
+              </div>
+
+              <div className="student-otp-resend">
+                <button className="student-otp-resend-btn" onClick={sign_up}>
+                  Resend OTP
+                </button>
+              </div>
             </div>
           </Modal.Body>
         </Modal>
 
-        <div className="compact-space-bg"></div>
+        <div className="student-space-bg"></div>
 
-        <div className="compact-container">
+        <div className="student-container">
           <motion.div
-            className="compact-registration-card"
+            className="student-registration-card"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            {/* Compact Header */}
-            <div className="compact-header">
-              <div className="compact-header-content">
-                <div className="compact-icon-badge">
-                  <RocketLaunch className="compact-header-icon" />
-                  <span className="compact-badge">Promoter</span>
-                </div>
-                <div className="compact-header-text">
-                  <h1>Join Gimini Planetarium</h1>
-                  <p>Start earning as a promoter</p>
+            {/* Header */}
+            <div className="student-card-header">
+              <div className="student-header-content">
+                <RocketLaunch className="student-header-icon" />
+                <div>
+                  <h1>Join With gemini Planetarium</h1>
+                  <p>Create your account to explore the universe</p>
                 </div>
               </div>
             </div>
 
-            {/* Compact Form */}
-            <form onSubmit={handleSubmit} className="compact-form">
-              <div className="compact-form-grid">
-                {/* Full Name */}
-                <div className="compact-form-group">
+            {/* FORM START */}
+            <form onSubmit={handleSubmit} className="student-compact-form">
+              {/* FULLNAME + PHONE */}
+              <div className="student-form-grid">
+                {/* FULLNAME */}
+                <div className="student-form-group compact">
                   <label>Full Name *</label>
-                  <div className="compact-input-wrapper">
-                    <Person className="compact-input-icon" />
+                  <div className="student-input-wrapper">
+                    <Person className="student-input-icon" />
                     <input
                       type="text"
                       name="fullname"
@@ -330,15 +477,15 @@ const PromoterRegistration = () => {
                     />
                   </div>
                   {errors.fullname && (
-                    <span className="compact-error">{errors.fullname}</span>
+                    <span className="student-error-msg">{errors.fullname}</span>
                   )}
                 </div>
 
-                {/* Phone */}
-                <div className="compact-form-group">
-                  <label>Phone *</label>
-                  <div className="compact-input-wrapper">
-                    <Phone className="compact-input-icon" />
+                {/* PHONE */}
+                <div className="student-form-group compact">
+                  <label>Phone Number *</label>
+                  <div className="student-input-wrapper">
+                    <Phone className="student-input-icon" />
                     <input
                       type="tel"
                       name="phone"
@@ -350,74 +497,77 @@ const PromoterRegistration = () => {
                     />
                   </div>
                   {errors.phone && (
-                    <span className="compact-error">{errors.phone}</span>
+                    <span className="student-error-msg">{errors.phone}</span>
                   )}
                 </div>
               </div>
 
-              {/* Email */}
-              <div className="compact-form-group">
-                <label>Email *</label>
-                <div className="compact-input-wrapper">
-                  <Email className="compact-input-icon" />
+              {/* EMAIL */}
+              <div className="student-form-group compact">
+                <label>Email Address *</label>
+                <div className="student-input-wrapper">
+                  <Email className="student-input-icon" />
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
+                    onBlur={() => {
+                      check_duplicate_email();
+                    }}
                     className={errors.email ? "error" : ""}
                     placeholder="your@email.com"
                   />
                 </div>
                 {errors.email && (
-                  <span className="compact-error">{errors.email}</span>
+                  <span className="student-error-msg">{errors.email}</span>
                 )}
               </div>
 
-              <div className="compact-form-grid">
-                {/* DOB */}
-                <div className="compact-form-group">
-                  <label>Date of Birth *</label>
-                  <div className="compact-input-wrapper">
-                    <input
-                      type="date"
-                      name="dob"
-                      value={formData.dob}
-                      onChange={handleChange}
-                      className={errors.dob ? "error" : ""}
-                    />
-                  </div>
-                  {errors.dob && (
-                    <span className="compact-error">{errors.dob}</span>
-                  )}
+              {/* DOB */}
+              <div className="student-form-group compact">
+                <label>Date of Birth *</label>
+                <div className="student-input-wrapper">
+                  <input
+                    type="date"
+                    name="dob"
+                    value={formData.dob}
+                    onChange={handleChange}
+                    className={errors.dob ? "error" : ""}
+                  />
                 </div>
-
-                {/* School */}
-                <div className="compact-form-group">
-                  <label>School/College *</label>
-                  <div className="compact-input-wrapper">
-                    <School className="compact-input-icon" />
-                    <input
-                      type="text"
-                      name="school_name"
-                      value={formData.school_name}
-                      onChange={handleChange}
-                      className={errors.school_name ? "error" : ""}
-                      placeholder="School name"
-                    />
-                  </div>
-                  {errors.school_name && (
-                    <span className="compact-error">{errors.school_name}</span>
-                  )}
-                </div>
+                {errors.dob && (
+                  <span className="student-error-msg">{errors.dob}</span>
+                )}
               </div>
 
-              <div className="compact-form-grid">
-                {/* Password */}
-                <div className="compact-form-group">
+              {/* SCHOOL NAME */}
+              <div className="student-form-group compact">
+                <label>School / College Name *</label>
+                <div className="student-input-wrapper">
+                  <School className="student-input-icon" />
+                  <input
+                    type="text"
+                    name="school_name"
+                    value={formData.school_name}
+                    onChange={handleChange}
+                    className={errors.school_name ? "error" : ""}
+                    placeholder="Enter your school name"
+                  />
+                </div>
+                {errors.school_name && (
+                  <span className="student-error-msg">
+                    {errors.school_name}
+                  </span>
+                )}
+              </div>
+
+              {/* PASSWORD + CONFIRM */}
+              <div className="student-form-grid">
+                <div className="student-form-group compact">
                   <label>Password *</label>
-                  <div className="compact-input-wrapper">
-                    <Lock className="compact-input-icon" />
+                  <div className="student-input-wrapper">
+                    <Lock className="student-input-icon" />
                     <input
                       type="password"
                       name="password"
@@ -428,15 +578,14 @@ const PromoterRegistration = () => {
                     />
                   </div>
                   {errors.password && (
-                    <span className="compact-error">{errors.password}</span>
+                    <span className="student-error-msg">{errors.password}</span>
                   )}
                 </div>
 
-                {/* Confirm Password */}
-                <div className="compact-form-group">
+                <div className="student-form-group compact">
                   <label>Confirm Password *</label>
-                  <div className="compact-input-wrapper">
-                    <Lock className="compact-input-icon" />
+                  <div className="student-input-wrapper">
+                    <Lock className="student-input-icon" />
                     <input
                       type="password"
                       name="confirmPassword"
@@ -447,20 +596,21 @@ const PromoterRegistration = () => {
                     />
                   </div>
                   {errors.confirmPassword && (
-                    <span className="compact-error">
+                    <span className="student-error-msg">
                       {errors.confirmPassword}
                     </span>
                   )}
                 </div>
               </div>
 
-              {/* Referral Code */}
-              <div className="compact-form-group">
+              {/* REFERRAL CODE */}
+              <div className="student-form-group compact">
                 <label>
-                  Referral Code <span className="optional">(Optional)</span>
+                  Referral Code{" "}
+                  <span className="student-optional">(Optional)</span>
                 </label>
-                <div className="compact-input-wrapper">
-                  <Campaign className="compact-input-icon" />
+                <div className="student-input-wrapper">
+                  <Campaign className="student-input-icon" />
                   <input
                     type="text"
                     name="referralCode"
@@ -471,10 +621,10 @@ const PromoterRegistration = () => {
                 </div>
               </div>
 
-              {/* Submit Button */}
+              {/* SUBMIT BUTTON */}
               <motion.button
                 type="submit"
-                className={`compact-submit-btn ${
+                className={`student-submit-btn compact ${
                   isSubmitting ? "submitting" : ""
                 }`}
                 disabled={isSubmitting}
@@ -483,27 +633,27 @@ const PromoterRegistration = () => {
               >
                 {isSubmitting ? (
                   <>
-                    <div className="compact-spinner"></div>
+                    <div className="student-spinner"></div>
                     Creating Account...
                   </>
                 ) : (
                   <>
-                    <RocketLaunch className="compact-btn-icon" />
-                    Create Promoter Account
+                    <RocketLaunch className="student-btn-icon" />
+                    Create Account
                   </>
                 )}
               </motion.button>
             </form>
 
-            {/* Compact Footer */}
-            <div className="compact-footer">
+            {/* FOOTER */}
+            <div className="student-card-footer">
               <p>
                 Already have an account?{" "}
-                <Link to="/login" className="compact-footer-link">
+                <Link to="/login" className="student-footer-link">
                   Sign In
                 </Link>
               </p>
-              <p className="compact-terms">
+              <p className="student-terms-text">
                 By creating an account, you agree to our{" "}
                 <Link to="/terms">Terms</Link> and{" "}
                 <Link to="/privacy">Privacy Policy</Link>

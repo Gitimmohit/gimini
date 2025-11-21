@@ -24,7 +24,7 @@ const Referral = () => {
 
   // Sample referral data
   const referralCode = "COSMIC250";
-  const referralLink = "https://Gimini Planetarium.com/register?ref=COSMIC250";
+  const referralLink = "https://gemini Planetarium.com/register?ref=COSMIC250";
   
   const earnings = {
     totalEarned: 1250,

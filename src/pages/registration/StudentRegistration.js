@@ -53,6 +53,7 @@ const StudentRegistration = () => {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  console.log("setErrors---", errors);
 
   // ========================
   // VALIDATION
@@ -99,23 +100,88 @@ const StudentRegistration = () => {
     return newErrors;
   };
 
+  // for the keyboard control by keyboard
+  const handleOtpKeyDown = (e, index) => {
+    const key = e.key;
+
+    // Move Left (ArrowLeft)
+    if (key === "ArrowLeft") {
+      if (index > 0) {
+        inputRefs.current[index - 1].focus();
+      }
+      return;
+    }
+
+    // Move Right (ArrowRight)
+    if (key === "ArrowRight") {
+      if (index < otpDigits.length - 1) {
+        inputRefs.current[index + 1].focus();
+      }
+      return;
+    }
+
+    // Backspace Logic
+    if (key === "Backspace") {
+      // If current box has value → clear it
+      if (otpDigits[index] !== "") {
+        handleOtpChange(index, "");
+        return;
+      }
+
+      // If empty → go to previous
+      if (index > 0) {
+        handleOtpChange(index - 1, "");
+        inputRefs.current[index - 1].focus();
+      }
+      return;
+    }
+
+    // Allow ONLY numbers
+    if (!/^[0-9]$/.test(key)) {
+      e.preventDefault();
+      return;
+    }
+
+    // When number typed → set & move next
+    handleOtpChange(index, key);
+
+    setTimeout(() => {
+      if (index < otpDigits.length - 1) {
+        inputRefs.current[index + 1].focus();
+      }
+    }, 50);
+  };
+
   // ===========================
   // SUBMIT HANDLER
   // ===========================
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const newErrors = validateForm();
+    setErrors(newErrors);
 
-    if (Object.keys(newErrors).length === 0) {
-      setIsSubmitting(true);
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      console.log("Registration Data:", formData);
-
-      // add the post functoin here bro
-      sign_up();
-    } else {
-      setErrors(newErrors);
+    // STEP 1 → Check form validation
+    if (Object.keys(newErrors).length > 0) {
+      return; // stop here if validation failed
     }
+
+    // STEP 2 → Check duplicate email from API
+    const isDuplicate = await check_duplicate_email();
+    if (isDuplicate) {
+      // add error to state
+      setErrors((prev) => ({
+        ...prev,
+        email: "Email already exists",
+      }));
+      return; // stop here if duplicate found
+    }
+
+    // STEP 3 → If everything OK → call signup
+    setIsSubmitting(true);
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    sign_up();
   };
 
   // ===========================
@@ -130,10 +196,48 @@ const StudentRegistration = () => {
     }));
 
     if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: "",
-      }));
+      const updatedErrors = { ...errors };
+      delete updatedErrors[name];
+      setErrors(updatedErrors);
+    }
+  };
+
+  // for checking the duplicate email
+  const check_duplicate_email = async () => {
+    try {
+      setIsLoading(true);
+
+      const resp = await axios.post(
+        ServerAddress + "ems/check-duplicate-email/",
+        { email: formData.email }
+      );
+
+      setIsLoading(false);
+
+      if (resp.data.message === "Email already exists") {
+        toast.error("Email already exists. Please try another", {
+          position: "bottom-right",
+          autoClose: 5000,
+        });
+
+        setErrors((prev) => ({
+          ...prev,
+          email: "Email already exists",
+        }));
+
+        return true; // duplicate found
+      }
+
+      return false; // no duplicate
+    } catch (err) {
+      setIsLoading(false);
+
+      toast.error(`Error checking email: ${err}`, {
+        position: "bottom-right",
+        autoClose: 5000,
+      });
+
+      return true; // treat as duplicate to avoid wrong signup
     }
   };
 
@@ -161,12 +265,14 @@ const StudentRegistration = () => {
           setshow(false);
           setIsLoading(false);
         } else if (response.data.message === "OTP sent successfully!") {
+          showSuccess("OTP sent successfully!");
           setrectoken(response.data.token);
           setIsLoading(false);
           setOtpp(true);
         }
       })
       .catch(function (error) {
+        setIsSubmitting(false);
         toast.error("Signup failed. Please try again.");
         console.log("errr", error);
         setshow(false);
@@ -199,9 +305,22 @@ const StudentRegistration = () => {
     navigate("/login");
   };
 
+  const showSuccess = (message) => {
+    toast.success(message, {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+
   const handleOtp = async () => {
     setshow(true); // show loader
-
+    setIsLoading(true);
     const otp = otpDigits.join("");
 
     try {
@@ -222,16 +341,18 @@ const StudentRegistration = () => {
 
       // ----------- SUCCESS RESPONSE HANDLING -----------
       if (response.data?.message === "User created successfully!") {
+        setIsLoading(false);
         toast.success("User Created Successfully!");
         setOtpp(false);
         showSuccessMessage("User created successfully!");
       } else {
+        setIsLoading(false);
         toast.error(response.data?.error || "Invalid OTP!");
         setErr(true);
       }
     } catch (error) {
       // ----------- PROPER ERROR HANDLING -----------
-
+      setIsLoading(false);
       if (error.response) {
         // Server responded with 4xx or 5xx error
         console.error("SERVER ERROR:", error.response.data);
@@ -256,6 +377,7 @@ const StudentRegistration = () => {
     } finally {
       // -------- ALWAYS STOP LOADER --------
       setshow(false);
+      setIsLoading(false);
     }
   };
 
@@ -266,23 +388,25 @@ const StudentRegistration = () => {
         <Loader show={show} setshow={setshow} />
         <ToastContainer />
         <Modal
-          show={show} // Changed from true to otpp
+          show={show}
           onHide={handleClose}
           backdrop="static"
           keyboard={false}
           size="md"
-          aria-labelledby="contained-modal-title-vcenter"
           centered
           className="student-otp-modal"
         >
           <Modal.Header closeButton className="student-modal-header-custom">
             <Modal.Title>Verify OTP</Modal.Title>
           </Modal.Header>
+
           <Modal.Body className="student-modal-body-custom">
+            <Loader show={isLoading} setshow={setIsLoading} />
             <div className="student-otp-main">
               <p className="student-otp-description">
                 6-digit OTP has been sent to your email
               </p>
+
               <div className="student-otp-input-container">
                 {otpDigits.map((digit, index) => (
                   <input
@@ -292,20 +416,28 @@ const StudentRegistration = () => {
                     maxLength={1}
                     value={digit}
                     onChange={(e) => handleOtpChange(index, e.target.value)}
+                    onKeyDown={(e) => handleOtpKeyDown(e, index)}
                     className="student-otp-input"
-                    style={{ color: "white" }}
                     ref={(input) => (inputRefs.current[index] = input)}
                   />
                 ))}
               </div>
+
               <div className="student-otp-submit">
                 <button className="student-otp-submit-btn" onClick={handleOtp}>
                   Verify OTP
                 </button>
               </div>
+
+              <div className="student-otp-resend">
+                <button className="student-otp-resend-btn" onClick={sign_up}>
+                  Resend OTP
+                </button>
+              </div>
             </div>
           </Modal.Body>
         </Modal>
+
         <div className="student-space-bg"></div>
 
         <div className="student-container">
@@ -320,7 +452,7 @@ const StudentRegistration = () => {
               <div className="student-header-content">
                 <RocketLaunch className="student-header-icon" />
                 <div>
-                  <h1>Join With Gimini Planetarium</h1>
+                  <h1>Join With gemini Planetarium</h1>
                   <p>Create your account to explore the universe</p>
                 </div>
               </div>
@@ -380,6 +512,9 @@ const StudentRegistration = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
+                    onBlur={() => {
+                      check_duplicate_email();
+                    }}
                     className={errors.email ? "error" : ""}
                     placeholder="your@email.com"
                   />

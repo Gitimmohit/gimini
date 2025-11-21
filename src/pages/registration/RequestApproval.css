@@ -1,0 +1,177 @@
+
+/* Main Container */
+.stud-approval-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.stud-approval-card {
+  background: white;
+  border-radius: 20px;
+  padding: 3rem;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+  animation: stud-card-appear 0.6s ease-out;
+}
+
+/* Icon Section */
+.stud-approval-icon {
+  margin-bottom: 2rem;
+}
+
+.stud-icon-circle {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  margin: 0 auto;
+  animation: stud-pulse 2s infinite;
+}
+
+/* Content Section */
+.stud-approval-content {
+  margin-bottom: 2rem;
+}
+
+.stud-approval-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2d3436;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.stud-approval-description {
+  font-size: 1.1rem;
+  color: #636e72;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+/* Status Badge */
+.stud-status-badge {
+  background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+  color: #2d3436;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  display: inline-block;
+  margin-bottom: 2rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Additional Info */
+.stud-additional-info {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 1.5rem;
+  text-align: left;
+}
+
+.stud-info-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+}
+
+.stud-info-item:last-child {
+  margin-bottom: 0;
+}
+
+.stud-info-icon {
+  font-size: 1.2rem;
+  margin-right: 1rem;
+  width: 30px;
+  text-align: center;
+}
+
+.stud-info-item span:last-child {
+  color: #636e72;
+  font-size: 0.95rem;
+}
+
+/* Animations */
+@keyframes stud-card-appear {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes stud-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .stud-approval-container {
+    padding: 1rem;
+  }
+  
+  .stud-approval-card {
+    padding: 2rem;
+    margin: 1rem;
+  }
+  
+  .stud-approval-title {
+    font-size: 1.5rem;
+  }
+  
+  .stud-approval-description {
+    font-size: 1rem;
+  }
+  
+  .stud-icon-circle {
+    width: 80px;
+    height: 80px;
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stud-approval-card {
+    padding: 1.5rem;
+  }
+  
+  .stud-approval-title {
+    font-size: 1.3rem;
+  }
+  
+  .stud-additional-info {
+    padding: 1rem;
+  }
+  
+  .stud-info-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .stud-info-icon {
+    margin-right: 0;
+  }
+}

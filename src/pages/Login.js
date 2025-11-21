@@ -119,9 +119,17 @@ const Login = () => {
               navigate("/studentapproval");
             }
           } else if (response.data.user_data.usertype === "SALES") {
-            navigate("/sales");
+            if (response.data.user_data.is_approved) {
+              navigate("/sales");
+            } else {
+              navigate("/requestapproval");
+            }
           } else if (response.data.user_data.usertype === "PROMOTER") {
-            navigate("/promoter");
+            if (response.data.user_data.is_approved) {
+              navigate("/promoter");
+            } else {
+              navigate("/requestapproval");
+            }
           } else {
             navigate("/admin");
           }
@@ -321,7 +329,7 @@ const Login = () => {
                   <RocketLaunch className="log-header-icon" />
                 </motion.div>
                 <div>
-                  <h1>Welcome to Gimini planetarium</h1>
+                  <h1>Welcome to gemini planetarium</h1>
                   <p>Sign in to explore the universe of possibilities</p>
                 </div>
               </motion.div>
