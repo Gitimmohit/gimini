@@ -307,8 +307,8 @@ const QuestionDataFormat = ({ data, data1, can_delete }) => {
       <ToastContainer />
       {currentData?.length === 0 ? (
         <tr>
-          <td colSpan='11' style={{ textAlign: 'center', padding: '40px', color: '#888' }}>
-            No Questions Found
+          <td>
+            No Data Found
           </td>
         </tr>
       ) : (

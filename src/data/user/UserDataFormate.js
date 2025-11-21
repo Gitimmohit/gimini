@@ -13,7 +13,7 @@ import DateTimeConvertor from '../../components/dateConvertor/DateTimeConvertor'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import DateConvertor from '../../components/dateConvertor/DateConvertor';
 
-const QuizDataFormate = ({ data, data1, can_delete }) => {
+const UserDataFormate = ({ data, data1, can_delete }) => {
   const dispatch = useDispatch();
   const user_detail = useSelector((state) => state.user.userdetails);
   const accessToken = useSelector((state) => state.user.access_token);
@@ -56,14 +56,14 @@ const QuizDataFormate = ({ data, data1, can_delete }) => {
   // Delete selected items
   const delete_item_row = (idList) => {
     axios
-      .post(ServerAddress + 'cards/delete_quiz_details/', { data: idList })
+      .post(ServerAddress + 'ems/delete_user_details/', { data: idList })
       .then((response) => {
         if (response.statusText === 'OK' || response.status === 200) {
           dispatch(setDeleteId(false));
           dispatch(setIds([]));
           dispatch(setSelect(false));
           setSelected([]);
-          toast.success(`Quiz Deleted successfully !`, { position: 'top-center', autoClose: 2000 });
+          toast.success(`User Deleted successfully !`, { position: 'top-center', autoClose: 2000 });
           setRefresh(!refresh);
           dispatch(setIsDeleted(!is_deleted));
         }
@@ -140,12 +140,19 @@ const QuizDataFormate = ({ data, data1, can_delete }) => {
               </td>
             )}
             <td>
-              <Link to='/quiz/add' state={{ data: quiz }}>
-                {renderCell(quiz.quiz_name, 60)}
+              <Link to='/add/user' state={{ data: quiz }}>
+                {renderCell(quiz.fullname, 60)}
               </Link>
             </td> 
-            <td>{quiz.quiz_date ? <DateConvertor inputDate={quiz.quiz_date} /> : '-'}</td>
-            <td>{quiz.age_grup ? toTitleCase(quiz.age_grup) : '-'}</td>
+            <td>{quiz.usertype ? toTitleCase(quiz.usertype) : '-'}</td>
+            <td>{quiz.email ? (quiz.email) : '-'}</td>
+            <td>{quiz.mobilenumber ? (quiz.mobilenumber) : '-'}</td>
+            <td>{quiz.school_name ? toTitleCase(quiz.school_name) : '-'}</td>
+            <td>{quiz.dob ? <DateConvertor inputDate={(quiz.dob)} /> : '-'}</td>
+            <td>{quiz.is_active ? "Yes" : 'No'}</td>
+            <td>{quiz.is_approved ? "Yes" : 'No'}</td>
+            <td>{quiz.is_first_quiz ? "Yes" : 'No'}</td>
+            <td>{quiz.is_first_show ? "Yes" : 'No'}</td>
             <td>{quiz.created_at ? <DateTimeConvertor inputDateTime={quiz.created_at} /> : '-'}</td>
             <td>{renderCell(quiz.created_by, 25)}</td>
           </tr>
@@ -153,6 +160,6 @@ const QuizDataFormate = ({ data, data1, can_delete }) => {
       )}
     </>
   );
-};
+}; 
 
-export default QuizDataFormate;
+export default UserDataFormate

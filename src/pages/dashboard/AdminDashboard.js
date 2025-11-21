@@ -318,7 +318,7 @@ const AdminDashboard = () => {
                   <People />
                   <span>Manage Question</span>
                 </button>
-                <button className="action-btn secondary">
+                <button className="action-btn secondary" onClick={() => navigate("/user/list")}>
                   <People />
                   <span>Manage Users</span>
                 </button>

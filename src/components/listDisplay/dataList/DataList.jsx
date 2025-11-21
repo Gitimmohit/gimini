@@ -570,7 +570,7 @@ const DataList = ({
             </tr>
           </thead>
 
-          <tbody style={{ textAlign: "left", fontSize: "12px" }}>
+          <tbody style={{ textAlign: "left", fontSize: "12px",whiteSpace:"nowrap" }}>
             {ShowLoader ?
               <ColorLoader />
               : null}

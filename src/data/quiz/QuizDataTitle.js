@@ -1,5 +1,4 @@
 const QuizDataTitle = [
-    // "SL",
     "Quiz Name",  
     "Quiz Date", 
     "Age", 

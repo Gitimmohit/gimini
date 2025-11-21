@@ -41,7 +41,9 @@ const AddQuiz = () => {
 
   // premises_list
   const [premises_list, setpremises_list] = useState([]);
+  console.log("premises_list--",premises_list)
   const [premises_list2, setpremises_list2] = useState([]);
+  console.log("premises_list2--",premises_list2)
   const [premises_page, setpremises_page] = useState(1);
   const [search_premises, setsearch_premises] = useState('');
   const [premises_loaded, setpremises_loaded] = useState(false);
@@ -140,7 +142,7 @@ const AddQuiz = () => {
       setquiz_name(toTitleCase(qun_data?.quiz_name));
       setage(qun_data?.age_grup);
       setquiz_date(qun_data?.quiz_date);
-    } catch (error) {}
+    } catch (error) { }
   }, []);
 
   // get all premises at add branch
@@ -159,10 +161,15 @@ const AddQuiz = () => {
           } else {
             setpremises_loaded(true);
           }
+          // Map the response data to the desired format
+          const newData = response.data.results.map((v) => [v.id,toTitleCase(v.question),]);
+          console.log("newData--",newData)
+          const filteredData = newData.filter(([id]) => !premises_list2.some(([list2Id]) => list2Id === id));
+          console.log("filteredData--",filteredData)
           if (premises_page === 1) {
-            temp_2 = temp.map((v) => [v.id, toTitleCase(v.question)]);
+            temp_2 = filteredData;
           } else {
-            temp_2 = [...premises_list, ...temp.map((v) => [v.id, toTitleCase(v.question)])];
+            temp_2 = [...premises_list, ...filteredData];
           }
           setpremises_count(premises_count + 2);
           setpremises_list(temp_2);
@@ -194,6 +201,11 @@ const AddQuiz = () => {
   useEffect(() => {
     get_premises_data();
   }, [premises_page, search_premises]);
+
+  useEffect(() => {
+    const selectedIds = new Set(premises_list2.map(item => item[0]));
+    setpremises_list(prev => prev.filter(item => !selectedIds.has(item[0])));
+  }, [premises_list2,premises_page, search_premises]);
 
   useEffect(() => {
     if (location.state !== null && quiz_name_id !== '') {
