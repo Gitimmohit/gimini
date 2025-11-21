@@ -7,7 +7,7 @@ import {
   BiChevronLeft,
 } from "react-icons/bi";
 import { Col, Input } from "reactstrap";
-import toTitleCase from "../../../lib/titleCase/TitleCase";
+import toTitleCase from "../toTitleCase/toTitleCase";
 
 const TransferList = ({
   list_a,

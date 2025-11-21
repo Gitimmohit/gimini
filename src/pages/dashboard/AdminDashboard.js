@@ -310,7 +310,7 @@ const AdminDashboard = () => {
                 <span className="see-all">View All</span>
               </div>
               <div className="actions-grid">
-                <button className="action-btn primary">
+                <button className="action-btn primary" onClick={() => navigate("/quiz")}>
                   <Add />
                   <span>Create New Quiz</span>
                 </button>

@@ -34,6 +34,8 @@ import ScrollToTop from "./components/ScrollToTop";
 
 import Question from "./pages/question/Question";
 import AddQuestion from "./pages/question/AddQuestion";
+import Quiz from "./pages/quiz/Quiz";
+import AddQuiz from "./pages/quiz/AddQuiz";
 
 
 function App() {
@@ -74,6 +76,8 @@ function App() {
 
             <Route path="/quiz/question" element={<Question />} />
             <Route path="/quiz/add/question" element={<AddQuestion />} />
+            <Route path="/quiz" element={<Quiz />} />
+            <Route path="/quiz/add" element={<AddQuiz />} />
             <Route path="/studentapproval" element={<StudentApproval />} />
           </Routes>
         </main>
