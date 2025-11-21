@@ -255,12 +255,13 @@ const UpcomingShows = () => {
               Explore the Universe
             </motion.div>
             <h1 className="up-hero-title">
-              Journey Through the <span className="up-gradient-text">Cosmos</span>
+              Journey Through the{" "}
+              <span className="up-gradient-text">Cosmos</span>
             </h1>
             <p className="up-hero-subtitle">
-              Experience breathtaking astronomical adventures in our state-of-the-art 
-              digital planetarium. From black holes to distant galaxies, embark on 
-              unforgettable cosmic journeys.
+              Experience breathtaking astronomical adventures in our
+              state-of-the-art digital planetarium. From black holes to distant
+              galaxies, embark on unforgettable cosmic journeys.
             </p>
             <div className="up-hero-features">
               <div className="up-feature">
@@ -306,12 +307,14 @@ const UpcomingShows = () => {
                 whileHover={{ y: -8, transition: { duration: 0.3 } }}
               >
                 {/* Status Badge */}
-                <div 
+                <div
                   className="up-status-badge"
                   style={{ backgroundColor: getStatusColor(show.status) }}
                 >
                   {getStatusIcon(show.status)}
-                  <span>{show.status.charAt(0).toUpperCase() + show.status.slice(1)}</span>
+                  <span>
+                    {show.status.charAt(0).toUpperCase() + show.status.slice(1)}
+                  </span>
                 </div>
 
                 {/* Show Image */}
@@ -346,7 +349,9 @@ const UpcomingShows = () => {
                     </div>
                     <div className="up-info-item">
                       <Schedule className="up-info-icon" />
-                      <span>{show.time} • {show.duration}</span>
+                      <span>
+                        {show.time} • {show.duration}
+                      </span>
                     </div>
                     <div className="up-info-item">
                       <Groups className="up-info-icon" />
@@ -372,26 +377,25 @@ const UpcomingShows = () => {
                   <div className="up-show-footer">
                     <div className="up-pricing-section">
                       <div className="up-price-container">
-                        <div className="up-price-original">₹{show.originalPrice}</div>
+                        <div className="up-price-original">
+                          ₹{show.originalPrice}
+                        </div>
                         <div className="up-price-current">₹{show.price}</div>
-                        <div className="up-discount-tag">Save {show.discount}%</div>
+                        <div className="up-discount-tag">
+                          Save {show.discount}%
+                        </div>
                       </div>
                       <div className="up-seats-available">
                         🎫 Only {show.seats} seats left
                       </div>
                     </div>
-                    
+
                     <div className="up-action-section">
-                      <Link
-                        to={`/booking/${show.id}`}
-                        className="up-book-btn"
-                      >
+                      <Link to={`/booking/${show.id}`} className="up-book-btn">
                         <ConfirmationNumber className="up-btn-icon" />
                         Book Your Journey
                       </Link>
-                      <div className="up-urgency-tag">
-                        ⚡ Selling Fast
-                      </div>
+                      <div className="up-urgency-tag">⚡ Selling Fast</div>
                     </div>
                   </div>
                 </div>
@@ -416,7 +420,7 @@ const UpcomingShows = () => {
               <div className="up-stat-label">Cosmic Explorers</div>
               <div className="up-stat-desc">Joined our space adventures</div>
             </motion.div>
-            
+
             <motion.div
               className="up-stat-card"
               initial={{ opacity: 0, y: 30 }}
@@ -428,7 +432,7 @@ const UpcomingShows = () => {
               <div className="up-stat-label">Satisfaction Rate</div>
               <div className="up-stat-desc">Visitor experience rating</div>
             </motion.div>
-            
+
             <motion.div
               className="up-stat-card"
               initial={{ opacity: 0, y: 30 }}
@@ -440,7 +444,7 @@ const UpcomingShows = () => {
               <div className="up-stat-label">Average Rating</div>
               <div className="up-stat-desc">Across all shows</div>
             </motion.div>
-            
+
             <motion.div
               className="up-stat-card"
               initial={{ opacity: 0, y: 30 }}
@@ -469,16 +473,17 @@ const UpcomingShows = () => {
             <div className="up-cta-text">
               <h2>Ready for Your Cosmic Adventure?</h2>
               <p>
-                Don't miss out on these extraordinary journeys through space and time. 
-                Book your tickets now and secure your spot among the stars.
+                Don't miss out on these extraordinary journeys through space and
+                time. Book your tickets now and secure your spot among the
+                stars.
               </p>
             </div>
             <div className="up-cta-actions">
               <Link to="/shows/all" className="up-cta-btn up-primary">
                 View All Shows
               </Link>
-              <Link to="/membership" className="up-cta-btn up-secondary">
-                Become a Member
+              <Link to="/registerpromoter" className="up-cta-btn up-secondary">
+                Become a Promoter
               </Link>
             </div>
           </motion.div>

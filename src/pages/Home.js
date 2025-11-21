@@ -28,6 +28,7 @@ import {
   Language,
   Nightlight,
   Maximize,
+  PlayArrow,
 } from "@mui/icons-material";
 import styles from "./Home.module.css";
 
@@ -420,117 +421,141 @@ const Home = () => {
       </section>
 
       {/* Current Showcase - Enhanced */}
-      <section className={styles.showcaseSection}>
-        <div className={styles.container}>
-          <div className={styles.showcaseContent}>
+      <section className={styles.hrShowcaseSection}>
+        <div className={styles.hrContainer}>
+          <div className={styles.hrShowcaseContent}>
+            {/* Text Content */}
             <motion.div
-              className={styles.showcaseText}
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
+              className={styles.hrShowcaseText}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
               viewport={{ once: true }}
             >
-              <span className={styles.showBadge}>Featured Show</span>
-              <h2>"Journey to the Edge of the Universe"</h2>
-              <p className={styles.showDescription}>
-                Embark on an epic voyage from our solar system to the farthest
-                reaches of the observable universe. This award-winning show
-                combines breathtaking visuals with scientific accuracy to create
-                an unforgettable educational experience.
-              </p>
+              <div className={styles.hrShowHeader}>
+                <span className={styles.hrShowBadge}>Featured Show</span>
+                <h2>"Journey to the Edge of the Universe"</h2>
+                <p className={styles.hrShowDescription}>
+                  Embark on an epic voyage from our solar system to the farthest
+                  reaches of the observable universe. This award-winning show
+                  combines breathtaking visuals with scientific accuracy to
+                  create an unforgettable educational experience.
+                </p>
+              </div>
 
-              <div className={styles.showMeta}>
-                <div className={styles.metaItem}>
-                  <strong>Duration:</strong> 60 minutes
+              {/* Show Meta Information */}
+              <div className={styles.hrShowMeta}>
+                <div className={styles.hrMetaItem}>
+                  <div className={styles.hrMetaIcon}>⏱️</div>
+                  <div>
+                    <div className={styles.hrMetaLabel}>Duration</div>
+                    <div className={styles.hrMetaValue}>60 minutes</div>
+                  </div>
                 </div>
-
-                <div className={styles.metaItem}>
-                  <strong>Language:</strong> English & Hindi
+                <div className={styles.hrMetaItem}>
+                  <div className={styles.hrMetaIcon}>🗣️</div>
+                  <div>
+                    <div className={styles.hrMetaLabel}>Language</div>
+                    <div className={styles.hrMetaValue}>English & Hindi</div>
+                  </div>
                 </div>
-                <div className={styles.metaItem}>
-                  <strong>Show Times:</strong> 11AM, 2PM, 5PM, 7PM
+                <div className={styles.hrMetaItem}>
+                  <div className={styles.hrMetaIcon}>🕒</div>
+                  <div>
+                    <div className={styles.hrMetaLabel}>Show Times</div>
+                    <div className={styles.hrMetaValue}>
+                      11AM, 2PM, 5PM, 7PM
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className={styles.showDetails}>
-                <div className={styles.detailItem}>
-                  <ConfirmationNumber sx={{ color: "#64ffda" }} />
-                  <div>
+              {/* Features Grid */}
+              <div className={styles.hrShowDetails}>
+                <div className={styles.hrDetailItem}>
+                  <ConfirmationNumber className={styles.hrDetailIcon} />
+                  <div className={styles.hrDetailContent}>
                     <strong>60-minute immersive experience</strong>
                     <span>Full-dome digital projection</span>
                   </div>
                 </div>
-                <div className={styles.detailItem}>
-                  <VolumeUp sx={{ color: "#64ffda" }} />
-                  <div>
+                <div className={styles.hrDetailItem}>
+                  <VolumeUp className={styles.hrDetailIcon} />
+                  <div className={styles.hrDetailContent}>
                     <strong>7.1 Surround Sound System</strong>
                     <span>Immersive audio experience</span>
                   </div>
                 </div>
-                <div className={styles.detailItem}>
-                  <span>⭐</span>
-                  <div>
+                <div className={styles.hrDetailItem}>
+                  <div className={styles.hrDetailIcon}>⭐</div>
+                  <div className={styles.hrDetailContent}>
                     <strong>Comfortable reclining seats</strong>
                     <span>Stadium-style seating</span>
                   </div>
                 </div>
-                <div className={styles.detailItem}>
-                  <Groups sx={{ color: "#64ffda" }} />
-                  <div>
+                <div className={styles.hrDetailItem}>
+                  <Groups className={styles.hrDetailIcon} />
+                  <div className={styles.hrDetailContent}>
                     <strong>Interactive Q&A session</strong>
                     <span>With expert astronomers</span>
                   </div>
                 </div>
               </div>
 
-              <div className={styles.showActions}>
-                <Link
-                  to="/shows"
-                  className={`${styles.btn} ${styles.primaryBtn} ${styles.large}`}
-                >
+              {/* Pricing and CTA */}
+              <div className={styles.hrShowActions}>
+                <div className={styles.hrPriceSection}>
+                  <div className={styles.hrPriceTag}>
+                    <div className={styles.hrPriceOriginal}>
+                      <span className={styles.hrOriginalPrice}>₹499</span>
+                      <span className={styles.hrDiscountBadge}>49% OFF</span>
+                    </div>
+                    <div className={styles.hrPriceDiscounted}>
+                      <span className={styles.hrPrice}>₹249</span>
+                      <span className={styles.hrPriceNote}>per person</span>
+                    </div>
+                  </div>
+                  <div className={styles.hrOfferTimer}>
+                    <div className={styles.hrTimerIcon}>⏰</div>
+                    <span>Limited time offer for first-time visitors</span>
+                  </div>
+                </div>
+
+                <Link to="/shows" className={styles.hrPrimaryBtn}>
                   <ConfirmationNumber sx={{ mr: 1 }} />
                   Book Your Seat Now
                 </Link>
-                <div className={styles.priceTag}>
-                  <div className={styles.priceOriginal}>
-                    <span className={styles.originalPrice}>₹499</span>
-                    <span className={styles.discountBadge}>49% OFF</span>
-                  </div>
-                  <div className={styles.priceDiscounted}>
-                    <span className={styles.price}>₹249</span>
-                    <span className={styles.priceNote}>per person</span>
-                  </div>
-                  <div className={styles.offerTimer}>
-                    <div className={styles.timerText}>
-                      <span>⏰</span>
-                      Limited time offer for first-time visitors
-                    </div>
-                  </div>
-                </div>
               </div>
             </motion.div>
 
+            {/* Visual Content */}
             <motion.div
-              className={styles.showcaseVisual}
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
+              className={styles.hrShowcaseVisual}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <img
-                src="https://images.unsplash.com/photo-1698107146613-44b0f9fafad7?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="Journey to the Edge of the Universe Show"
-                className={styles.showImage}
-              />
-              <div className={styles.showOverlay}>
-                <div className={styles.playButton}>
-                  <span>▶</span>
+              <div className={styles.hrVisualContainer}>
+                <img
+                  src="https://images.unsplash.com/photo-1698107146613-44b0f9fafad7?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  alt="Journey to the Edge of the Universe Show"
+                  className={styles.hrShowImage}
+                />
+                <div className={styles.hrShowOverlay}>
+                  <button className={styles.hrPlayButton}>
+                    <PlayArrow className={styles.hrPlayIcon} />
+                  </button>
+                  <div className={styles.hrShowTag}>Award Winning Show</div>
                 </div>
-                <div className={styles.showTag}>Award Winning Show</div>
               </div>
-              <div className={styles.showRating}>
-                <div className={styles.stars}>★★★★★</div>
-                <div className={styles.ratingText}>4.9/5 (2,347 reviews)</div>
+
+              <div className={styles.hrShowRating}>
+                <div className={styles.hrStars}>
+                  ★★★★★
+                  <span className={styles.hrRatingValue}>4.9/5</span>
+                </div>
+                <div className={styles.hrRatingText}>(2,347 reviews)</div>
               </div>
             </motion.div>
           </div>
