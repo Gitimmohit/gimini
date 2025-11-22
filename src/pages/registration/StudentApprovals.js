@@ -20,6 +20,7 @@ const StudentApproval = () => {
   const dispatch = useDispatch();
 
   const [transactionId, setTransactionId] = useState("");
+  const [transaction_amt, settransaction_amt] = useState("");
   const [studentStatus, setStudentStatus] = useState(user.first_payment);
   const [isLoading, setIsLoading] = useState(false);
   const [show, setshow] = useState(false);
@@ -60,6 +61,7 @@ const StudentApproval = () => {
         `${ServerAddress}cards/first_payment_receipt/`,
         {
           transactionId: transactionId,
+          transaction_amt:transaction_amt,
           request_type: "CR",
           user: user.id,
           is_first_transaction: true,
@@ -153,8 +155,10 @@ const StudentApproval = () => {
       const Data = response.data.results;
       if (response.data.results.length > 0) {
         setTransactionId(Data[0].transactionId);
+        settransaction_amt(Data[0].transaction_amt);
       } else {
         setTransactionId("");
+        settransaction_amt("");
       }
       console.log("Datat Value is ", Data);
     } catch (err) {
@@ -242,6 +246,24 @@ const StudentApproval = () => {
             Submit Transaction for Approval
           </h2>
           <form onSubmit={handleSubmit} className="stud-form">
+            <div className="stud-form-group">
+              <label htmlFor="transaction_amt" className="stud-label">
+                Transaction Amount *
+              </label>
+              <input
+                type="text"
+                id="transaction_amt"
+                value={transaction_amt}
+                min={1}
+                onChange={(e) => settransaction_amt(e.target.value)}
+                placeholder="Enter your transaction amount"
+                className="stud-input"
+                required
+              />
+              <p className="stud-help-text">
+                Enter the transaction ID from your payment receipt
+              </p>
+            </div>
             <div className="stud-form-group">
               <label htmlFor="transactionId" className="stud-label">
                 Transaction ID *

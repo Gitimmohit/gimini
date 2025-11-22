@@ -177,6 +177,78 @@ const StudentDashboard = () => {
       status: "Refunded",
       transactionId: "TXN001236",
     },
+    {
+      id: 3,
+      date: "2024-03-01",
+      amount: "₹100",
+      type: "Quiz Registration",
+      status: "Refunded",
+      transactionId: "TXN001236",
+    },
+    {
+      id: 3,
+      date: "2024-03-01",
+      amount: "₹100",
+      type: "Quiz Registration",
+      status: "Refunded",
+      transactionId: "TXN001236",
+    },
+    {
+      id: 3,
+      date: "2024-03-01",
+      amount: "₹100",
+      type: "Quiz Registration",
+      status: "Refunded",
+      transactionId: "TXN001236",
+    },
+    {
+      id: 3,
+      date: "2024-03-01",
+      amount: "₹100",
+      type: "Quiz Registration",
+      status: "Refunded",
+      transactionId: "TXN001236",
+    },
+    {
+      id: 3,
+      date: "2024-03-01",
+      amount: "₹100",
+      type: "Quiz Registration",
+      status: "Refunded",
+      transactionId: "TXN001236",
+    },
+    {
+      id: 3,
+      date: "2024-03-01",
+      amount: "₹100",
+      type: "Quiz Registration",
+      status: "Refunded",
+      transactionId: "TXN001236",
+    },
+    {
+      id: 3,
+      date: "2024-03-01",
+      amount: "₹100",
+      type: "Quiz Registration",
+      status: "Refunded",
+      transactionId: "TXN001236",
+    },
+    {
+      id: 3,
+      date: "2024-03-01",
+      amount: "₹100",
+      type: "Quiz Registration",
+      status: "Refunded",
+      transactionId: "TXN001236",
+    },
+    {
+      id: 3,
+      date: "2024-03-01",
+      amount: "₹100",
+      type: "Quiz Registration",
+      status: "Refunded",
+      transactionId: "TXN001236",
+    },
   ];
 
   const referralData = {
@@ -224,7 +296,7 @@ const StudentDashboard = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h1 style={{color:"white"}}>Welcome back, Space Explorer! 🚀</h1>
+            <h1 style={{ color: "white" }}>Welcome back, Space Explorer! 🚀</h1>
             <p>Ready for your next cosmic challenge?</p>
             <button className="action-btn primary" onClick={() => navigate("/start/quiz")}>
             <span>Play Quiz</span>
@@ -294,10 +366,7 @@ const StudentDashboard = () => {
       {/* Main Content */}
       <div className="dashboard-content">
         {activeTab === "overview" && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             {/* Upcoming Quizzes */}
             <div className="content-card">
               <div className="card-header">
@@ -597,9 +666,21 @@ const StudentDashboard = () => {
             <div className="content-card">
               <div className="card-header">
                 <h2>💳 Payment History</h2>
-                <div className="wallet-balance">
-                  <AccountBalanceWallet />
-                  <span>Wallet Balance: ₹{referralData.walletBalance}</span>
+                <div
+                  style={{ display: "flex", flexDirection: "row", gap: "10px" }}
+                >
+                  <div
+                    style={{ cursor: "pointer" }}
+                    className="wallet-balance"
+                    onClick={() => navigate("/amount")}
+                  >
+                    <span>Add Balance</span>
+                  </div>
+
+                  <div className="wallet-balance">
+                    <AccountBalanceWallet />
+                    <span>Wallet Balance: ₹{referralData.walletBalance}</span>
+                  </div>
                 </div>
               </div>
               <div className="payments-table">

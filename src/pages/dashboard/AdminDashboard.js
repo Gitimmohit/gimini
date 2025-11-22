@@ -322,9 +322,9 @@ const AdminDashboard = () => {
                   <People />
                   <span>Manage Users</span>
                 </button>
-                <button className="action-btn success">
+                <button className="action-btn success" onClick={() => navigate("/transaction")}>
                   <MenuBook />
-                  <span>Add Content</span>
+                  <span>Cash Book</span>
                 </button>
                 <button className="action-btn warning">
                   <Analytics />

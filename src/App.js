@@ -41,7 +41,10 @@ import StartQuiz from "./pages/quiz/StartQuiz";
 import User from "./pages/user/User";
 import AddUser from "./pages/user/AddUser";
 import RequestApproval from "./pages/registration/RequestApproval";
-
+import Transaction from "./pages/transaction/Transaction";
+import AddTransaction from "./pages/transaction/AddTransaction";
+import Amount from "./pages/amount/Amount";
+import AddAmount from "./pages/amount/AddAmount";
 
 function App() {
   return (
@@ -78,7 +81,6 @@ function App() {
             <Route path="/sales/*" element={<SalesDashboard />} />
             <Route path="/promoter/*" element={<PromoterDashboard />} />
             <Route path="/admin/*" element={<AdminDashboard />} />
-
             <Route path="/quiz/question" element={<Question />} />
             <Route path="/quiz/add/question" element={<AddQuestion />} />
             <Route path="/quiz" element={<Quiz />} />
@@ -87,8 +89,14 @@ function App() {
             <Route path="/start/quiz" element={<StartQuiz />} />
             <Route path="/user/list" element={<User />} />
             <Route path="/add/user" element={<AddUser />} />
+            {/* add by mohit */}
             <Route path="/studentapproval" element={<StudentApproval />} />
             <Route path="/requestapproval" element={<RequestApproval />} />
+            {/* for the tranction  */}
+            <Route path="/transaction" element={<Transaction />} />
+            <Route path="/transaction/add" element={<AddTransaction />} />
+            <Route path="/amount" element={<Amount />} />
+            <Route path="/amount/add" element={<AddAmount />} />
           </Routes>
         </main>
 
