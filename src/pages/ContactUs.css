@@ -15,132 +15,135 @@
 }
 
 /* Hero Section */
+/* MAIN HERO SECTION */
 .con-contact-hero {
   position: relative;
-  padding: 120px 0 80px;
-  /* background: linear-gradient(135deg, #0c0c2e 0%, #1a1a4a 50%, #2d1b69 100%); */
+  overflow: hidden;
+  width: 100%; 
+  overflow-x: auto;
+}
+
+/* IMAGE */
+
+
+.con-contact-hero {
+  position: relative;
   overflow: hidden;
 }
+
+/* BACKGROUND IMAGE */
 .con-hero-img {
+  position: absolute;
   width: 100%;
-  height: 100vh;
+  height: 90vh;
   object-fit: cover;
-  position: absolute;
+  /* object-position: top; */
+  object-position: top center;
   top: 0;
   left: 0;
-  z-index: -1;  /* optional */
+  z-index: -1;
 }
 
-/* .con-hero-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-} */
 
-.con-stars-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: 
-    radial-gradient(2px 2px at 20px 30px, #eee, transparent),
-    radial-gradient(2px 2px at 40px 70px, #fff, transparent),
-    radial-gradient(1px 1px at 90px 40px, #fff, transparent);
-  background-size: 200px 200px;
-  animation: con-stars 20s linear infinite;
-}
-
-@keyframes con-stars {
-  from { transform: translateY(0); }
-  to { transform: translateY(-200px); }
-}
-
-/* .con-floating-planets {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
-.con-planet {
-  position: absolute;
-  border-radius: 50%;
-  animation: con-float 6s ease-in-out infinite;
-}
-
-.con-planet.con-earth {
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(45deg, #1e90ff, #00bfff);
-  top: 20%;
-  left: 10%;
-  box-shadow: 0 0 30px #1e90ff;
-  animation-delay: 0s;
-}
-
-.con-planet.con-mars {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(45deg, #ff4500, #ff6347);
-  top: 60%;
-  right: 15%;
-  box-shadow: 0 0 25px #ff4500;
-  animation-delay: 2s;
-}
-
-.con-planet.con-saturn {
-  width: 100px;
-  height: 100px;
-  background: linear-gradient(45deg, #ffa500, #ffd700);
-  bottom: 15%;
-  left: 20%;
-  box-shadow: 0 0 40px #ffa500;
-  animation-delay: 4s;
-}
-
-.con-planet.con-saturn::after {
-  content: '';
-  position: absolute;
-  width: 140px;
-  height: 15px;
-  background: transparent;
-  border: 3px solid rgba(255, 215, 0, 0.3);
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(20deg);
-} */
-
-/* @keyframes con-float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-15px) rotate(3deg); }
-} */
-
-.con-hero-content {
+/* HERO WRAPPER */
+.con-hero-wrapper {
   position: relative;
-  z-index: 2;
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
+  height: 90vh;
+  display: flex;
+  justify-content: flex-start;   /* 👈 TEXT LEFT */
+  align-items: center;
+  padding-left: 40px;            /* 👈 LEFT GAP */
 }
 
+/* HERO CONTENT – LEFT TEXT */
+.con-hero-content {
+  max-width: 600px;
+  text-align: left;              /* 👈 LEFT ALIGN */
+  color: white;
+}
+
+/* TITLE */
+.con-hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* SUBTITLE */
+.con-hero-subtitle {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  max-width: 450px;
+}
+
+/* BADGE / BUTTON */
 .con-hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(100, 255, 218, 0.1);
+  background: rgba(100, 255, 218, 0.15);
   color: #64ffda;
-  padding: 0.5rem 1.5rem;
+  padding: 0.6rem 1.4rem;
   border-radius: 25px;
   font-size: 0.9rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 2rem;
-  border: 1px solid rgba(100, 255, 218, 0.2);
+  border: 1px solid rgba(100, 255, 218, 0.3);
+  margin-left: 40px;      /* 👈 LEFT SIDE */
+  margin-top: 20px;
 }
+
+/* ----------------------- */
+/* 📱 MOBILE RESPONSIVE */
+/* ----------------------- */
+
+@media (max-width: 768px) {
+  .con-hero-img {
+    height: 80vh;
+  }
+
+  .con-hero-wrapper {
+    height: 80vh;
+    padding-left: 20px;
+  }
+
+  .con-hero-title {
+    font-size: 2.2rem;
+  }
+
+  .con-hero-subtitle {
+    font-size: 1rem;
+    max-width: 90%;
+  }
+
+  .con-hero-badge {
+    margin-left: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .con-hero-img {
+    height: 70vh;
+  }
+
+  .con-hero-wrapper {
+    height: 70vh;
+    padding-left: 16px;
+  }
+
+  .con-hero-title {
+    font-size: 1.8rem;
+  }
+
+  .con-hero-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .con-hero-badge {
+    font-size: 0.75rem;
+    padding: 0.4rem 1rem;
+  }
+}
+
 
 .con-badge-icon {
   font-size: 1.2rem !important;
@@ -150,7 +153,7 @@
   font-size: 3.5rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
-  color: #ccd6f6;
+  color: #4b4c4d;
 }
 
 .con-gradient-text {
@@ -159,7 +162,9 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-shadow: 0 0 30px rgba(100, 255, 218, 0.3);
+   white-space: nowrap;
 }
+
 
 .con-hero-subtitle {
   font-size: 1.2rem;
@@ -291,6 +296,7 @@
   color: #ccd6f6;
   margin-bottom: 0.5rem;
   font-weight: 500;
+  text-align: left;
 }
 
 .con-form-group input,
@@ -413,18 +419,25 @@
 
 .con-sidebar-icon {
   color: #64ffda;
-  font-size: 2.5rem !important;
-  margin-bottom: 1rem;
+  font-size: 2rem !important;
+  margin-bottom: .5rem;
 }
 
 .con-sidebar-card.con-emergency .con-sidebar-icon {
   color: #ff6b6b;
+}
+.con-sidebar-card {
+  text-align: left !important;
 }
 
 .con-sidebar-card h3 {
   color: #ccd6f6;
   font-size: 1.2rem;
   margin-bottom: 1rem;
+  text-align: left !important;
+}
+.con-features-list {
+  text-align: left;
 }
 
 .con-features-list {
@@ -654,15 +667,17 @@
     gap: 2rem;
   }
 }
-
 @media (max-width: 768px) {
   .con-container {
     padding: 0 1rem;
   }
 
   .con-hero-title {
-    font-size: 2.5rem;
-  }
+  display: inline-block;      /* Prevents wrapping */
+  white-space: nowrap;        /* Ensures text stays on one line */
+  font-size: 3rem;            /* Example size */
+  line-height: 1.2;
+}
 
   .con-contact-cards-grid {
     grid-template-columns: 1fr;

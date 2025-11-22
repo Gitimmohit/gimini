@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import pic2 from "../assets/pic2.jpg";
+import pic2 from "../assets/pic2.png";
 import dome2 from "../assets/dome2.png";
 import maximize from "../assets/maximize.png";
 import Asset from "../assets/Asset.png";
@@ -435,7 +435,7 @@ const Home = () => {
                   <div className={styles.hrMetaIcon}>⏱️</div>
                   <div>
                     <div className={styles.hrMetaLabel}>Duration</div>
-                    <div className={styles.hrMetaValue}>60 minutes</div>
+                    <div className={styles.hrMetaValue}>30 minutes</div>
                   </div>
                 </div>
                 <div className={styles.hrMetaItem}>
@@ -445,7 +445,7 @@ const Home = () => {
                     <div className={styles.hrMetaValue}>English & Hindi</div>
                   </div>
                 </div>
-                <div className={styles.hrMetaItem}>
+                {/* <div className={styles.hrMetaItem}>
                   <div className={styles.hrMetaIcon}>🕒</div>
                   <div>
                     <div className={styles.hrMetaLabel}>Show Times</div>
@@ -453,7 +453,7 @@ const Home = () => {
                       11AM, 2PM, 5PM, 7PM
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               {/* Features Grid */}
@@ -461,7 +461,7 @@ const Home = () => {
                 <div className={styles.hrDetailItem}>
                   <ConfirmationNumber className={styles.hrDetailIcon} />
                   <div className={styles.hrDetailContent}>
-                    <strong>60-minute immersive experience</strong>
+                    <strong>30-minute immersive experience</strong>
                     <span>Full-dome digital projection</span>
                   </div>
                 </div>
@@ -470,20 +470,6 @@ const Home = () => {
                   <div className={styles.hrDetailContent}>
                     <strong>7.1 Surround Sound System</strong>
                     <span>Immersive audio experience</span>
-                  </div>
-                </div>
-                <div className={styles.hrDetailItem}>
-                  <div className={styles.hrDetailIcon}>⭐</div>
-                  <div className={styles.hrDetailContent}>
-                    <strong>Comfortable reclining seats</strong>
-                    <span>Stadium-style seating</span>
-                  </div>
-                </div>
-                <div className={styles.hrDetailItem}>
-                  <Groups className={styles.hrDetailIcon} />
-                  <div className={styles.hrDetailContent}>
-                    <strong>Interactive Q&A session</strong>
-                    <span>With expert astronomers</span>
                   </div>
                 </div>
               </div>
@@ -502,11 +488,10 @@ const Home = () => {
                     </div>
                   </div>
                   <div className={styles.hrOfferTimer}>
-                    <div className={styles.hrTimerIcon}>⏰</div>
-                    <span>Limited time offer for first-time visitors</span>
+                    {/* <div className={styles.hrTimerIcon}>⏰</div> */}
+                    <span>⏰Limited time offer for first-time visitors</span>
                   </div>
                 </div>
-
                 <Link to="/shows" className={styles.hrPrimaryBtn}>
                   <ConfirmationNumber sx={{ mr: 1 }} />
                   Book Your Seat Now

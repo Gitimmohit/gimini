@@ -14,7 +14,7 @@ import {
   LocalOffer,
   Star,
   RocketLaunch,
-  Celebration
+  Celebration,
 } from "@mui/icons-material";
 import "./Referral.css";
 
@@ -25,12 +25,12 @@ const Referral = () => {
   // Sample referral data
   const referralCode = "COSMIC250";
   const referralLink = "https://gemini Planetarium.com/register?ref=COSMIC250";
-  
+
   const earnings = {
     totalEarned: 1250,
     pendingEarnings: 350,
     totalReferrals: 8,
-    successfulReferrals: 5
+    successfulReferrals: 5,
   };
 
   const referralSteps = [
@@ -38,20 +38,22 @@ const Referral = () => {
       step: 1,
       icon: "👤",
       title: "Share Your Link",
-      description: "Share your unique referral link with friends, family, or on social media"
+      description:
+        "Share your unique referral link with friends, family, or on social media",
     },
     {
       step: 2,
       title: "They Register",
       icon: "📝",
-      description: "Your friends register using your referral link and complete their profile"
+      description:
+        "Your friends register using your referral link and complete their profile",
     },
     {
       step: 3,
       title: "You Earn Rewards",
       icon: "💰",
-      description: "Get ₹20 for each successful registration and booking"
-    }
+      description: "Get ₹20 for each successful registration and booking",
+    },
   ];
 
   const rewards = [
@@ -60,36 +62,41 @@ const Referral = () => {
       referrals: "1-5",
       reward: "₹20 per referral",
       bonus: "No bonus",
-      icon: "🥉"
+      icon: "🥉",
     },
     {
       level: "Silver",
       referrals: "6-15",
       reward: "₹20 per referral",
       bonus: "₹100 bonus after 10 referrals",
-      icon: "🥈"
+      icon: "🥈",
     },
     {
       level: "Gold",
       referrals: "16-30",
       reward: "₹20 per referral",
       bonus: "₹300 bonus + Priority support",
-      icon: "🥇"
+      icon: "🥇",
     },
     {
       level: "Platinum",
       referrals: "31+",
       reward: "₹25 per referral",
       bonus: "₹500 bonus + Exclusive perks",
-      icon: "💎"
-    }
+      icon: "💎",
+    },
   ];
 
   const recentActivity = [
-    { name: "Rahul Sharma", date: "2024-01-15", status: "Completed", amount: 20 },
+    {
+      name: "Rahul Sharma",
+      date: "2024-01-15",
+      status: "Completed",
+      amount: 20,
+    },
     { name: "Priya Patel", date: "2024-01-14", status: "Pending", amount: 20 },
     { name: "Amit Kumar", date: "2024-01-12", status: "Completed", amount: 20 },
-    { name: "Neha Singh", date: "2024-01-10", status: "Completed", amount: 20 }
+    { name: "Neha Singh", date: "2024-01-10", status: "Completed", amount: 20 },
   ];
 
   const copyToClipboard = () => {
@@ -101,8 +108,8 @@ const Referral = () => {
   const shareReferral = () => {
     if (navigator.share) {
       navigator.share({
-        title: 'Join Cosmic Vision Planetarium',
-        text: 'Experience amazing space shows and earn rewards!',
+        title: "Join Cosmic Vision Planetarium",
+        text: "Experience amazing space shows and earn rewards!",
         url: referralLink,
       });
     } else {
@@ -112,7 +119,6 @@ const Referral = () => {
 
   return (
     <div className="ref-refer-earn-page">
-      {/* Hero Section */}
       <section className="ref-refer-hero">
         <div className="ref-hero-background">
           <div className="ref-stars-overlay"></div>
@@ -129,13 +135,14 @@ const Referral = () => {
               Earn Unlimited Rewards
             </div>
             <h1 className="ref-hero-title">
-              Refer Friends & <span className="ref-gradient-text">Earn ₹20 Each</span>
+              Refer Friends &{" "}
+              <span className="ref-gradient-text">Earn ₹20 Each</span>
             </h1>
             <p className="ref-hero-subtitle">
-              Share the cosmic experience with your friends and earn ₹20 for every successful referral. 
-              The more you share, the more you earn!
+              Share the cosmic experience with your friends and earn ₹20 for
+              every successful referral. The more you share, the more you earn!
             </p>
-            
+
             <div className="ref-hero-stats">
               <div className="ref-stat-card">
                 <AccountBalanceWallet className="ref-stat-icon" />
@@ -147,14 +154,18 @@ const Referral = () => {
               <div className="ref-stat-card">
                 <TrendingUp className="ref-stat-icon" />
                 <div className="ref-stat-content">
-                  <div className="ref-stat-number">{earnings.totalReferrals}</div>
+                  <div className="ref-stat-number">
+                    {earnings.totalReferrals}
+                  </div>
                   <div className="ref-stat-label">Total Referrals</div>
                 </div>
               </div>
               <div className="ref-stat-card">
                 <Groups className="ref-stat-icon" />
                 <div className="ref-stat-content">
-                  <div className="ref-stat-number">{earnings.successfulReferrals}</div>
+                  <div className="ref-stat-number">
+                    {earnings.successfulReferrals}
+                  </div>
                   <div className="ref-stat-label">Successful</div>
                 </div>
               </div>
@@ -164,7 +175,7 @@ const Referral = () => {
       </section>
 
       {/* Quick Referral Section */}
-      <section className="ref-quick-referral">
+      {/* <section className="ref-quick-referral">
         <div className="ref-container">
           <motion.div
             className="ref-referral-box"
@@ -216,7 +227,7 @@ const Referral = () => {
             </div>
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
       {/* How It Works Section */}
       <section className="ref-how-it-works">
@@ -280,15 +291,17 @@ const Referral = () => {
               >
                 <div className="ref-reward-icon">{reward.icon}</div>
                 <div className="ref-reward-level">{reward.level}</div>
-                <div className="ref-reward-referrals">{reward.referrals} referrals</div>
+                <div className="ref-reward-referrals">
+                  {reward.referrals} referrals
+                </div>
                 <div className="ref-reward-amount">{reward.reward}</div>
                 <div className="ref-reward-bonus">{reward.bonus}</div>
                 <div className="ref-reward-progress">
                   <div className="ref-progress-bar">
-                    <div 
-                      className="ref-progress-fill" 
-                      style={{ 
-                        width: `${(index + 1) * 25}%` 
+                    <div
+                      className="ref-progress-fill"
+                      style={{
+                        width: `${(index + 1) * 25}%`,
                       }}
                     ></div>
                   </div>
@@ -322,7 +335,10 @@ const Referral = () => {
             >
               <Security className="ref-benefit-icon" />
               <h3>Instant Payouts</h3>
-              <p>Get your earnings transferred directly to your wallet within 24 hours of successful referral</p>
+              <p>
+                Get your earnings transferred directly to your wallet within 24
+                hours of successful referral
+              </p>
             </motion.div>
 
             <motion.div
@@ -334,7 +350,10 @@ const Referral = () => {
             >
               <EmojiEvents className="ref-benefit-icon" />
               <h3>Bonus Rewards</h3>
-              <p>Earn additional bonuses when you reach referral milestones and unlock exclusive perks</p>
+              <p>
+                Earn additional bonuses when you reach referral milestones and
+                unlock exclusive perks
+              </p>
             </motion.div>
 
             <motion.div
@@ -346,7 +365,10 @@ const Referral = () => {
             >
               <TrendingUp className="ref-benefit-icon" />
               <h3>No Limits</h3>
-              <p>Refer as many friends as you want. There's no upper limit to how much you can earn</p>
+              <p>
+                Refer as many friends as you want. There's no upper limit to how
+                much you can earn
+              </p>
             </motion.div>
           </div>
         </div>
@@ -374,7 +396,10 @@ const Referral = () => {
               viewport={{ once: true }}
             >
               <h3>How much can I earn per referral?</h3>
-              <p>You earn ₹20 for every successful referral who registers and books their first show.</p>
+              <p>
+                You earn ₹20 for every successful referral who registers and
+                books their first show.
+              </p>
             </motion.div>
 
             <motion.div
@@ -385,7 +410,10 @@ const Referral = () => {
               viewport={{ once: true }}
             >
               <h3>When will I receive my earnings?</h3>
-              <p>Earnings are processed within 24 hours after your referred friend completes their first booking.</p>
+              <p>
+                Earnings are processed within 24 hours after your referred
+                friend completes their first booking.
+              </p>
             </motion.div>
 
             <motion.div
@@ -396,7 +424,9 @@ const Referral = () => {
               viewport={{ once: true }}
             >
               <h3>Is there any limit to referrals?</h3>
-              <p>No! You can refer unlimited friends and earn unlimited rewards.</p>
+              <p>
+                No! You can refer unlimited friends and earn unlimited rewards.
+              </p>
             </motion.div>
 
             <motion.div
@@ -407,7 +437,10 @@ const Referral = () => {
               viewport={{ once: true }}
             >
               <h3>How can I track my referrals?</h3>
-              <p>You can track all your referrals and earnings in your dashboard under the "Referrals" section.</p>
+              <p>
+                You can track all your referrals and earnings in your dashboard
+                under the "Referrals" section.
+              </p>
             </motion.div>
           </div>
         </div>
@@ -425,13 +458,22 @@ const Referral = () => {
           >
             <RocketLaunch className="ref-cta-icon" />
             <h2>Start Earning Today!</h2>
-            <p>Share your referral link and start earning ₹20 for every friend who joins Cosmic Vision</p>
+            <p>
+              Share your referral link and start earning ₹20 for every friend
+              who joins Cosmic Vision
+            </p>
             <div className="ref-cta-buttons">
-              <button className="ref-btn ref-primary-btn ref-large" onClick={shareReferral}>
+              <button
+                className="ref-btn ref-primary-btn ref-large"
+                onClick={shareReferral}
+              >
                 <Share />
                 Share Referral Link
               </button>
-              <Link to="/dashboard" className="ref-btn ref-secondary-btn ref-large">
+              <Link
+                to="/dashboard"
+                className="ref-btn ref-secondary-btn ref-large"
+              >
                 <TrendingUp />
                 View Dashboard
               </Link>

@@ -1,7 +1,7 @@
 // pages/ContactUs.js
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import pic1 from "../assets/pic1.jpg";
+import pic1 from "../assets/pic1.png";
 
 import {
   LocationOn,
@@ -121,34 +121,30 @@ const ContactUs = () => {
     <div className="con-contact-us-page">
       {/* Hero Section */}
       <section className="con-contact-hero">
-        <img src={pic1} alt="Digital Dome Projection" className="con-hero-img" />
-        {/* <div className="con-hero-background">
-          <div className="con-stars-overlay"></div>
-          <div className="con-floating-planets">
-            <div className="con-planet con-earth"></div>
-            <div className="con-planet con-mars"></div>
-            <div className="con-planet con-saturn"></div>
-          </div>
-        </div> */}
-        <div className="con-container">
+        <img
+          src={pic1}
+          alt="Digital Dome Projection"
+          className="con-hero-img"
+        />
+
+        <div className="con-hero-wrapper">
           <motion.div
             className="con-hero-content"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="con-hero-badge">
-              <SupportAgent className="con-badge-icon" />
-              We're Here to Help
-            </div>
             <h1 className="con-hero-title">
               Contact <span className="con-gradient-text">Cosmic Vision</span>
             </h1>
             <p className="con-hero-subtitle">
               Have questions about our shows, bookings, or special events? Our
-              cosmic support team is ready to assist you on your astronomical
-              journey.
+              cosmic support team is ready to assist you.
             </p>
+            <div className="con-hero-badge">
+              <SupportAgent className="con-badge-icon" />
+              We're Here to Help
+            </div>
           </motion.div>
         </div>
       </section>
@@ -297,7 +293,9 @@ const ContactUs = () => {
 
                   <motion.button
                     type="submit"
-                    className={`con-submit-btn ${isSubmitting ? "con-submitting" : ""}`}
+                    className={`con-submit-btn ${
+                      isSubmitting ? "con-submitting" : ""
+                    }`}
                     disabled={isSubmitting}
                     whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -326,8 +324,12 @@ const ContactUs = () => {
               viewport={{ once: true }}
             >
               <div className="con-sidebar-card">
-                <Star className="con-sidebar-icon" />
-                <h3>Why Choose Cosmic Vision?</h3>
+                {/* <Star className="con-sidebar-icon" /> */}
+                <h3>
+                  {" "}
+                  <Star className="con-sidebar-icon" />
+                  Why Choose Cosmic Vision?
+                </h3>
                 <ul className="con-features-list">
                   <li>🎯 98% Customer Satisfaction Rate</li>
                   <li>🚀 State-of-the-art Digital Dome</li>
