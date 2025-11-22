@@ -68,12 +68,12 @@ const AddQuestion = () => {
           answare: answare_id ? toTitleCase(answare_id).toUpperCase() : answare_id,
           age_grup: age ? toTitleCase(age).toUpperCase() : age,
           time: time ? time : time
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
         }
-        // {
-        //     headers: {
-        //         Authorization: `Bearer ${accessToken}`,
-        //     },
-        // }
       )
       .then(function (resp) {
         if (resp.status === 201) {
@@ -103,11 +103,11 @@ const AddQuestion = () => {
           age_grup: age ? toTitleCase(age).toUpperCase() : age,
           time: time ? time : time
         },
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${accessToken}`
-        //   }
-        // }
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        }
       )
       .then(function (resp) {
         console.log('resp--', resp);
@@ -150,6 +150,13 @@ const AddQuestion = () => {
     }
   }, [option1, option2, option3, option4, question, answare_id, age, time]);
 
+  const SetAnswareLabel = (loadtp) => {
+    if (loadtp === 'A') return 'Option 1';
+    if (loadtp === 'B') return 'Option 2';
+    if (loadtp === 'C') return 'Option 3';
+    if (loadtp === 'D') return 'Option 4';
+    return '';
+  };
   useLayoutEffect(() => {
     try {
       let qun_data = location.state.data;
@@ -161,6 +168,10 @@ const AddQuestion = () => {
       setoption3(toTitleCase(qun_data?.option3));
       setoption4(qun_data?.option4);
       setansware_id(qun_data?.answare);
+      if (qun_data.answare) {
+        const label = SetAnswareLabel(qun_data.answare.toString().trim());
+        setansware(label);
+      }
       setage(qun_data?.age_grup);
       settime(qun_data?.time);
     } catch (error) {}
@@ -345,7 +356,7 @@ const AddQuestion = () => {
                           }
                         }}
                         invalid={age_error}
-                        className='form-control-md'
+                        className='form-control-md no-arrows'
                         name='age'
                         id='input'
                         type='number'

@@ -29,7 +29,7 @@ const AddUser = () => {
     setcircle_btn(!circle_btn);
   };
   const [isupdating, setisupdating] = useState(false);
-  const [user_id, setuser_id] = useState(''); 
+  const [user_id, setuser_id] = useState('');
   const [fullname, setfullname] = useState('');
   const [fullname_err, setfullname_err] = useState(false);
   const [user_type, setuser_type] = useState('');
@@ -60,17 +60,21 @@ const AddUser = () => {
         ServerAddress + 'cards/add_user_details/',
         {
           fullname: fullname ? toTitleCase(fullname).toUpperCase() : fullname,
-          email: email ? toTitleCase(email).toUpperCase() : email,
-          user_type: user_type ? toTitleCase(user_type).toUpperCase() : user_type,
+          usertype: user_type ? toTitleCase(user_type).toUpperCase() : user_type,
+          email: email ? toTitleCase(email).toLowerCase() : email,
           mobilenumber: mobilenumber ? toTitleCase(mobilenumber).toUpperCase() : mobilenumber,
-          age_grup: age ? toTitleCase(age).toUpperCase() : age,
-          school_name: school_name ? school_name : school_name
+          school_name: school_name ? school_name : school_name,
+          dob: age ? age : age,
+          is_active: is_active,
+          is_approved: is_approved,
+          is_first_quiz: is_first_quiz,
+          is_first_show: is_first_show
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
         }
-        // {
-        //     headers: {
-        //         Authorization: `Bearer ${accessToken}`,
-        //     },
-        // }
       )
       .then(function (resp) {
         if (resp.status === 201) {
@@ -97,16 +101,16 @@ const AddUser = () => {
           mobilenumber: mobilenumber ? toTitleCase(mobilenumber).toUpperCase() : mobilenumber,
           school_name: school_name ? school_name : school_name,
           dob: age ? age : age,
-          is_active:is_active,
-          is_approved:is_approved,
-          is_first_quiz:is_first_quiz,
-          is_first_show:is_first_show,
+          is_active: is_active,
+          is_approved: is_approved,
+          is_first_quiz: is_first_quiz,
+          is_first_show: is_first_show
         },
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${accessToken}`
-        //   }
-        // }
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        }
       )
       .then(function (resp) {
         console.log('resp--', resp);
@@ -134,7 +138,7 @@ const AddUser = () => {
     }
     if (mobilenumber) {
       setmobilenumber_error(false);
-    } 
+    }
     if (age) {
       setage_error(false);
     }
@@ -144,7 +148,7 @@ const AddUser = () => {
     if (mobilenumber?.length === 10) {
       setmobile_len_err(false);
     }
-  }, [fullname, email, user_type, mobilenumber,age, school_name]);
+  }, [fullname, email, user_type, mobilenumber, age, school_name]);
 
   useLayoutEffect(() => {
     try {
@@ -153,7 +157,7 @@ const AddUser = () => {
       setuser_id(qun_data?.id);
       setfullname(toTitleCase(qun_data?.fullname));
       setuser_type(toTitleCase(qun_data?.usertype));
-      setemail((qun_data?.email));
+      setemail(qun_data?.email);
       setmobilenumber(qun_data?.mobilenumber);
       setschool_name(qun_data?.school_name);
       setage(qun_data?.dob);
@@ -173,7 +177,7 @@ const AddUser = () => {
       <Form
         onSubmit={(e) => {
           e.preventDefault();
-            if (!fullname) {
+          if (!fullname) {
             setfullname_err(true);
             document.getElementById('user_details').scrollIntoView();
           } else if (!user_type) {
@@ -182,12 +186,12 @@ const AddUser = () => {
           } else if (!email) {
             setemail_err(true);
             document.getElementById('user_details').scrollIntoView();
-          }  else if (!mobilenumber) {
+          } else if (!mobilenumber) {
             setmobilenumber_error(true);
             document.getElementById('user_details').scrollIntoView();
           } else if (mobilenumber?.length !== 10) {
             setmobile_len_err(true);
-            document.getElementById("user_details").scrollIntoView();
+            document.getElementById('user_details').scrollIntoView();
           } else if (!school_name) {
             setschool_name_error(true);
             document.getElementById('user_details').scrollIntoView();
@@ -213,7 +217,7 @@ const AddUser = () => {
             </CardTitle>
             {circle_btn ? (
               <CardBody style={{ padding: '5px' }}>
-                <Row> 
+                <Row>
                   <Col lg={3} md={6} sm={6}>
                     <div>
                       <Label className='header-child'>
@@ -229,7 +233,7 @@ const AddUser = () => {
                         name='fullname'
                         className='form-control-md'
                         id='input'
-                        placeholder='Enter Full Name' 
+                        placeholder='Enter Full Name'
                       />
                       {fullname_err && <FormFeedback type='invalid'>Full Name is required</FormFeedback>}
                     </div>
@@ -278,7 +282,7 @@ const AddUser = () => {
                       {email_err && <FormFeedback type='invalid'>Email is required</FormFeedback>}
                     </div>
                   </Col>
-                  
+
                   <Col lg={3} md={6} sm={6}>
                     <div>
                       <Label className='header-child'>
@@ -286,14 +290,17 @@ const AddUser = () => {
                       </Label>
                       <Input
                         value={mobilenumber}
-                        onChange={(e) => {
-                          setmobilenumber(e.target.value);
+                        onChange={(event) => {
+                          const { value } = event.target;
+                          if (value.length <= 10) {
+                            setmobilenumber(value);
+                          }
                         }}
                         invalid={mobilenumber_error || mobile_len_err}
-                        className='form-control-md'
+                        className='form-control-md no-arrows'
                         name='mobilenumber'
                         id='input'
-                        type='text'
+                        type='number'
                         placeholder='Enter Mobilenumber'
                       />
                       {mobilenumber_error && <FormFeedback type='invalid'>Mobile Number is required</FormFeedback>}
@@ -331,94 +338,95 @@ const AddUser = () => {
                         value={age}
                         onChange={(e) => {
                           setage(e.target.value);
-                        }} 
+                        }}
                         invalid={age_error}
                         className='form-control-md'
                         name='age'
                         id='input'
-                        type='date' 
+                        type='date'
                         placeholder='Enter Dob'
                       />
                       {age_error && <FormFeedback type='invalid'>Dob is required</FormFeedback>}
                     </div>
                   </Col>
-                <Col lg={1} md={6} sm={6}>
-                <div className="mb-2">
-                    <Label className="header-child"> Is Active</Label>
-                    <div tabIndex={0} onClick={() => setis_active(!is_active)}onFocus={() => setis_active_focus(true)}onBlur={() => setis_active_focus(false)}style={{ cursor: 'pointer' }}
-                        onKeyDown={(e) => {
+                  {user_detail?.is_superuser && (
+                    <Col lg={1} md={6} sm={6}>
+                      <div className='mb-2'>
+                        <Label className='header-child'> Is Active</Label>
+                        <div
+                          tabIndex={0}
+                          onClick={() => setis_active(!is_active)}
+                          onFocus={() => setis_active_focus(true)}
+                          onBlur={() => setis_active_focus(false)}
+                          style={{ cursor: 'pointer' }}
+                          onKeyDown={(e) => {
                             if (e.key === ' ') {
-                                e.preventDefault();
-                                setis_active(!is_active);
+                              e.preventDefault();
+                              setis_active(!is_active);
                             }
-                        }}
-                    >
-                        {is_active ? (
-                            <FiCheckSquare size={25} color={"blue"} style={{ border: is_active_focus ? '2px solid #4fa8e4' : "none", borderRadius: is_active_focus ? "4px" : "0" }} />
-                        ) : (
-                            <FiSquare size={25} style={{ border: is_active_focus ? '2px solid #4fa8e4' : "none", borderRadius: is_active_focus ? "4px" : "0" }} />
-                        )}
-                    </div>
-                </div>
-                </Col>
-                <Col lg={1} md={6} sm={6}>
-                <div className="mb-2">
-                    <Label className="header-child"> Is Approved </Label>
-                    <div tabIndex={0} onClick={() => setis_approved(!is_approved)}onFocus={() => setis_approved_focus(true)}onBlur={() => setis_approved_focus(false)}style={{ cursor: 'pointer' }}
+                          }}>
+                          {is_active ? <FiCheckSquare size={25} color={'blue'} style={{ border: is_active_focus ? '2px solid #4fa8e4' : 'none', borderRadius: is_active_focus ? '4px' : '0' }} /> : <FiSquare size={25} style={{ border: is_active_focus ? '2px solid #4fa8e4' : 'none', borderRadius: is_active_focus ? '4px' : '0' }} />}
+                        </div>
+                      </div>
+                    </Col>
+                  )}
+                  <Col lg={1} md={6} sm={6}>
+                    <div className='mb-2'>
+                      <Label className='header-child'> Is Approved </Label>
+                      <div
+                        tabIndex={0}
+                        onClick={() => setis_approved(!is_approved)}
+                        onFocus={() => setis_approved_focus(true)}
+                        onBlur={() => setis_approved_focus(false)}
+                        style={{ cursor: 'pointer' }}
                         onKeyDown={(e) => {
-                            if (e.key === ' ') {
-                                e.preventDefault();
-                                setis_approved(!is_approved);
-                            }
-                        }}
-                    >
-                        {is_approved ? (
-                            <FiCheckSquare size={25} color={"blue"} style={{ border: is_approved_focus ? '2px solid #4fa8e4' : "none", borderRadius: is_approved_focus ? "4px" : "0" }} />
-                        ) : (
-                            <FiSquare size={25} style={{ border: is_approved_focus ? '2px solid #4fa8e4' : "none", borderRadius: is_approved_focus ? "4px" : "0" }} />
-                        )}
+                          if (e.key === ' ') {
+                            e.preventDefault();
+                            setis_approved(!is_approved);
+                          }
+                        }}>
+                        {is_approved ? <FiCheckSquare size={25} color={'blue'} style={{ border: is_approved_focus ? '2px solid #4fa8e4' : 'none', borderRadius: is_approved_focus ? '4px' : '0' }} /> : <FiSquare size={25} style={{ border: is_approved_focus ? '2px solid #4fa8e4' : 'none', borderRadius: is_approved_focus ? '4px' : '0' }} />}
+                      </div>
                     </div>
-                </div>
-                </Col>
-                <Col lg={1} md={6} sm={6}>
-                <div className="mb-2">
-                    <Label className="header-child"> Is First Quiz 	 </Label>
-                    <div tabIndex={0} onClick={() => setis_first_quiz(!is_first_quiz)}onFocus={() => setis_first_quiz_focus(true)}onBlur={() => setis_first_quiz_focus(false)}style={{ cursor: 'pointer' }}
+                  </Col>
+                  <Col lg={1} md={6} sm={6}>
+                    <div className='mb-2'>
+                      <Label className='header-child'> Is First Quiz </Label>
+                      <div
+                        tabIndex={0}
+                        onClick={() => setis_first_quiz(!is_first_quiz)}
+                        onFocus={() => setis_first_quiz_focus(true)}
+                        onBlur={() => setis_first_quiz_focus(false)}
+                        style={{ cursor: 'pointer' }}
                         onKeyDown={(e) => {
-                            if (e.key === ' ') {
-                                e.preventDefault();
-                                setis_first_quiz(!is_first_quiz);
-                            }
-                        }}
-                    >
-                        {is_first_quiz ? (
-                            <FiCheckSquare size={25} color={"blue"} style={{ border: is_first_quiz_focus ? '2px solid #4fa8e4' : "none", borderRadius: is_first_quiz_focus ? "4px" : "0" }} />
-                        ) : (
-                            <FiSquare size={25} style={{ border: is_first_quiz_focus ? '2px solid #4fa8e4' : "none", borderRadius: is_first_quiz_focus ? "4px" : "0" }} />
-                        )}
+                          if (e.key === ' ') {
+                            e.preventDefault();
+                            setis_first_quiz(!is_first_quiz);
+                          }
+                        }}>
+                        {is_first_quiz ? <FiCheckSquare size={25} color={'blue'} style={{ border: is_first_quiz_focus ? '2px solid #4fa8e4' : 'none', borderRadius: is_first_quiz_focus ? '4px' : '0' }} /> : <FiSquare size={25} style={{ border: is_first_quiz_focus ? '2px solid #4fa8e4' : 'none', borderRadius: is_first_quiz_focus ? '4px' : '0' }} />}
+                      </div>
                     </div>
-                </div>
-                </Col>
-                <Col lg={1} md={6} sm={6}>
-                <div className="mb-2">
-                    <Label className="header-child"> Is First Show	 </Label>
-                    <div tabIndex={0} onClick={() => setis_first_show(!is_first_show)}onFocus={() => setis_first_show_focus(true)}onBlur={() => setis_first_show_focus(false)}style={{ cursor: 'pointer' }}
+                  </Col>
+                  <Col lg={1} md={6} sm={6}>
+                    <div className='mb-2'>
+                      <Label className='header-child'> Is First Show </Label>
+                      <div
+                        tabIndex={0}
+                        onClick={() => setis_first_show(!is_first_show)}
+                        onFocus={() => setis_first_show_focus(true)}
+                        onBlur={() => setis_first_show_focus(false)}
+                        style={{ cursor: 'pointer' }}
                         onKeyDown={(e) => {
-                            if (e.key === ' ') {
-                                e.preventDefault();
-                                setis_first_show(!is_first_show);
-                            }
-                        }}
-                    >
-                        {is_first_show ? (
-                            <FiCheckSquare size={25} color={"blue"} style={{ border: is_first_show_focus ? '2px solid #4fa8e4' : "none", borderRadius: is_first_show_focus ? "4px" : "0" }} />
-                        ) : (
-                            <FiSquare size={25} style={{ border: is_first_show_focus ? '2px solid #4fa8e4' : "none", borderRadius: is_first_show_focus ? "4px" : "0" }} />
-                        )}
+                          if (e.key === ' ') {
+                            e.preventDefault();
+                            setis_first_show(!is_first_show);
+                          }
+                        }}>
+                        {is_first_show ? <FiCheckSquare size={25} color={'blue'} style={{ border: is_first_show_focus ? '2px solid #4fa8e4' : 'none', borderRadius: is_first_show_focus ? '4px' : '0' }} /> : <FiSquare size={25} style={{ border: is_first_show_focus ? '2px solid #4fa8e4' : 'none', borderRadius: is_first_show_focus ? '4px' : '0' }} />}
+                      </div>
                     </div>
-                </div>
-                </Col>
-                  
+                  </Col>
                 </Row>
               </CardBody>
             ) : null}
@@ -447,6 +455,5 @@ const AddUser = () => {
     </>
   );
 };
- 
 
-export default AddUser
+export default AddUser;

@@ -206,7 +206,7 @@ const DataList = ({
     try {
       const response = await axios.get(ServerAddress + path, {
         headers: {
-          // Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
           "X-Custom-Data": JSON.stringify(body_data), // Custom header
         },
       });

@@ -56,7 +56,15 @@ const QuizDataFormate = ({ data, data1, can_delete }) => {
   // Delete selected items
   const delete_item_row = (idList) => {
     axios
-      .post(ServerAddress + 'cards/delete_quiz_details/', { data: idList })
+      .post(
+        ServerAddress + 'cards/delete_quiz_details/',
+        { data: idList },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        }
+      )
       .then((response) => {
         if (response.statusText === 'OK' || response.status === 200) {
           dispatch(setDeleteId(false));
@@ -106,7 +114,9 @@ const QuizDataFormate = ({ data, data1, can_delete }) => {
       dispatch(setIndexValue('age_grup'));
     } else if (index === 3) {
       dispatch(setIndexValue('created_at'));
-    } 
+    } else if (index === 4) {
+      dispatch(setIndexValue('created_by'));
+    }
   }, [index]);
 
   useEffect(() => {
@@ -115,15 +125,14 @@ const QuizDataFormate = ({ data, data1, can_delete }) => {
   }, [dispatch]);
 
   const currentData = list_toggle ? data1 : data;
+  console.log("currentData--",currentData)
 
   return (
     <>
       <ToastContainer />
       {currentData?.length === 0 ? (
         <tr>
-          <td>
-            No Data Found
-          </td>
+          <td>No Data Found</td>
         </tr>
       ) : (
         currentData.map((quiz, idx) => (
@@ -143,11 +152,13 @@ const QuizDataFormate = ({ data, data1, can_delete }) => {
               <Link to='/quiz/add' state={{ data: quiz }}>
                 {renderCell(quiz.quiz_name, 60)}
               </Link>
-            </td> 
-            <td>{quiz.quiz_date ? <DateConvertor inputDate={quiz.quiz_date} /> : '-'}</td>
+            </td>
+            <td>{quiz.quiz_date ? <DateTimeConvertor inputDateTime={quiz.quiz_date} /> : '-'}</td>
             <td>{quiz.age_grup ? toTitleCase(quiz.age_grup) : '-'}</td>
+            <td>{quiz.question ? (quiz.question).length : '-'}</td>
+            <td>{quiz.total_time ? (quiz.total_time) : '-'}</td>
             <td>{quiz.created_at ? <DateTimeConvertor inputDateTime={quiz.created_at} /> : '-'}</td>
-            <td>{renderCell(quiz.created_by, 25)}</td>
+            <td>{renderCell(quiz.bkp_created_by, 25)}</td>
           </tr>
         ))
       )}

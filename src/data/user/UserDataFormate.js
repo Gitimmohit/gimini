@@ -56,7 +56,15 @@ const UserDataFormate = ({ data, data1, can_delete }) => {
   // Delete selected items
   const delete_item_row = (idList) => {
     axios
-      .post(ServerAddress + 'ems/delete_user_details/', { data: idList })
+      .post(
+        ServerAddress + 'ems/delete_user_details/',
+        { data: idList },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        }
+      )
       .then((response) => {
         if (response.statusText === 'OK' || response.status === 200) {
           dispatch(setDeleteId(false));
@@ -106,7 +114,7 @@ const UserDataFormate = ({ data, data1, can_delete }) => {
       dispatch(setIndexValue('age_grup'));
     } else if (index === 3) {
       dispatch(setIndexValue('created_at'));
-    } 
+    }
   }, [index]);
 
   useEffect(() => {
@@ -121,9 +129,7 @@ const UserDataFormate = ({ data, data1, can_delete }) => {
       <ToastContainer />
       {currentData?.length === 0 ? (
         <tr>
-          <td>
-            No Data Found
-          </td>
+          <td>No Data Found</td>
         </tr>
       ) : (
         currentData.map((quiz, idx) => (
@@ -143,16 +149,16 @@ const UserDataFormate = ({ data, data1, can_delete }) => {
               <Link to='/add/user' state={{ data: quiz }}>
                 {renderCell(quiz.fullname, 60)}
               </Link>
-            </td> 
+            </td>
             <td>{quiz.usertype ? toTitleCase(quiz.usertype) : '-'}</td>
-            <td>{quiz.email ? (quiz.email) : '-'}</td>
-            <td>{quiz.mobilenumber ? (quiz.mobilenumber) : '-'}</td>
+            <td>{quiz.email ? quiz.email : '-'}</td>
+            <td>{quiz.mobilenumber ? quiz.mobilenumber : '-'}</td>
             <td>{quiz.school_name ? toTitleCase(quiz.school_name) : '-'}</td>
-            <td>{quiz.dob ? <DateConvertor inputDate={(quiz.dob)} /> : '-'}</td>
-            <td>{quiz.is_active ? "Yes" : 'No'}</td>
-            <td>{quiz.is_approved ? "Yes" : 'No'}</td>
-            <td>{quiz.is_first_quiz ? "Yes" : 'No'}</td>
-            <td>{quiz.is_first_show ? "Yes" : 'No'}</td>
+            <td>{quiz.dob ? <DateConvertor inputDate={quiz.dob} /> : '-'}</td>
+            <td>{quiz.is_active ? 'Yes' : 'No'}</td>
+            <td>{quiz.is_approved ? 'Yes' : 'No'}</td>
+            <td>{quiz.is_first_quiz ? 'Yes' : 'No'}</td>
+            <td>{quiz.is_first_show ? 'Yes' : 'No'}</td>
             <td>{quiz.created_at ? <DateTimeConvertor inputDateTime={quiz.created_at} /> : '-'}</td>
             <td>{renderCell(quiz.created_by, 25)}</td>
           </tr>
@@ -160,6 +166,6 @@ const UserDataFormate = ({ data, data1, can_delete }) => {
       )}
     </>
   );
-}; 
+};
 
-export default UserDataFormate
+export default UserDataFormate;

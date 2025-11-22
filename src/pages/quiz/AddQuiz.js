@@ -15,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import NSearchInput from '../../components/nsearchInput/NSearchInput';
 import Title from '../../components/common/title/Title';
 import TransferList from '../../components/transferList/TransferList';
+import DateTimeConvertor from '../../components/dateConvertor/DateTimeConvertor';
 
 const AddQuiz = () => {
   const navigate = useNavigate();
@@ -39,24 +40,22 @@ const AddQuiz = () => {
   const [quiz_date_error, setquiz_date_error] = useState(false);
   const [show, setshow] = useState(false);
 
-  // premises_list
-  const [premises_list, setpremises_list] = useState([]);
-  console.log("premises_list--",premises_list)
-  const [premises_list2, setpremises_list2] = useState([]);
-  console.log("premises_list2--",premises_list2)
-  const [premises_page, setpremises_page] = useState(1);
-  const [search_premises, setsearch_premises] = useState('');
-  const [premises_loaded, setpremises_loaded] = useState(false);
-  const [premises_count, setpremises_count] = useState(1);
-  const [premises_bottom, setpremises_bottom] = useState(56);
-  const [premises_error, setpremises_error] = useState(false);
+  // question_list
+  const [question_list, setquestion_list] = useState([]);
+  const [question_list2, setquestion_list2] = useState([]);
+  const [question_page, setquestion_page] = useState(1);
+  const [search_question, setsearch_question] = useState('');
+  const [question_loaded, setquestion_loaded] = useState(false);
+  const [question_count, setquestion_count] = useState(1);
+  const [question_bottom, setquestion_bottom] = useState(56);
+  const [question_error, setquestion_error] = useState(false);
 
   const send_quiz_name_data = () => {
     setshow(true);
-    let premises_id = premises_list2.map((v) => v[0]);
-    let premises_name = premises_list2.map((v) => v[1]);
-    let premises_id_list = [...new Set(premises_id.map((v) => `${v}`))].map((v) => parseInt(v.split(',')));
-    let premises_name_list = [...new Set(premises_name.map((v) => v.split(',').map((s) => s.trim())))].flat();
+    let question_id = question_list2.map((v) => v[0]);
+    let question_name = question_list2.map((v) => v[1]);
+    let question_id_list = [...new Set(question_id.map((v) => `${v}`))].map((v) => parseInt(v.split(',')));
+    let question_name_list = [...new Set(question_name.map((v) => v.split(',').map((s) => s.trim())))].flat();
     axios
       .post(
         ServerAddress + 'cards/add_quiz_details/',
@@ -64,14 +63,14 @@ const AddQuiz = () => {
           quiz_name: quiz_name ? toTitleCase(quiz_name).toUpperCase() : quiz_name,
           age_grup: age ? toTitleCase(age).toUpperCase() : age,
           quiz_date: quiz_date ? quiz_date : quiz_date,
-          question: premises_id_list,
-          question_name: premises_name_list
+          question: question_id_list,
+          question_name: question_name_list
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
         }
-        // {
-        //     headers: {
-        //         Authorization: `Bearer ${accessToken}`,
-        //     },
-        // }
       )
       .then(function (resp) {
         if (resp.status === 201) {
@@ -88,9 +87,9 @@ const AddQuiz = () => {
   };
   const update_quiz_name_data = () => {
     setshow(true);
-    // premises_list2 update
-    let premises_id_list = premises_list2.map((v) => v[0]).filter((v) => v !== null);
-    let premises_ids = [...new Set(premises_id_list.map((v) => `${v}`))].map((v) => parseInt(v.split(',')));
+    // question_list2 update
+    let question_id_list = question_list2.map((v) => v[0]).filter((v) => v !== null);
+    let question_ids = [...new Set(question_id_list.map((v) => `${v}`))].map((v) => parseInt(v.split(',')));
     axios
       .put(
         ServerAddress + 'cards/put_quiz_details/' + quiz_name_id,
@@ -98,14 +97,14 @@ const AddQuiz = () => {
           quiz_name: quiz_name ? toTitleCase(quiz_name).toUpperCase() : quiz_name,
           age_grup: age ? toTitleCase(age).toUpperCase() : age,
           quiz_date: quiz_date ? quiz_date : quiz_date,
-          question: premises_ids
-          // question_name: premises_name_list
+          question: question_ids
+          // question_name: question_name_list
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
         }
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${accessToken}`
-        //   }
-        // }
       )
       .then(function (resp) {
         console.log('resp--', resp);
@@ -131,7 +130,10 @@ const AddQuiz = () => {
     if (quiz_date) {
       setquiz_date_error(false);
     }
-  }, [quiz_name, age, quiz_date]);
+    if (question_list2.length !== 0) {
+      setquestion_error(false);
+    }
+  }, [quiz_name, age, quiz_date, question_list2]);
 
   useLayoutEffect(() => {
     try {
@@ -141,75 +143,75 @@ const AddQuiz = () => {
       setquiz_name_id(qun_data?.id);
       setquiz_name(toTitleCase(qun_data?.quiz_name));
       setage(qun_data?.age_grup);
-      setquiz_date(qun_data?.quiz_date);
-    } catch (error) { }
+      setquiz_date(qun_data?.quiz_date ? qun_data.quiz_date.substring(0, 16) : '');
+    } catch (error) {}
   }, []);
 
-  // get all premises at add branch
-  const get_premises_data = () => {
+  // get Questions at add Quiz
+  const GetQuestionsTransfer = (val) => {
     let temp_2 = [];
     let temp = [];
     axios
-      .get(ServerAddress + `cards/get_question_details/?search=${search_premises}&p=${premises_page}&records=${20}`, {
-        // headers: { Authorization: `Bearer ${accessToken}` }
+      .get(ServerAddress + `cards/get_question_transfer/?search=${search_question}&p=${question_page}&records=${20}&data=${val}`, {
+        headers: { Authorization: `Bearer ${accessToken}` }
       })
       .then((response) => {
         temp = response.data.results;
         if (temp.length > 0) {
           if (response.data.next === null) {
-            setpremises_loaded(false);
+            setquestion_loaded(false);
           } else {
-            setpremises_loaded(true);
+            setquestion_loaded(true);
           }
           // Map the response data to the desired format
-          const newData = response.data.results.map((v) => [v.id,toTitleCase(v.question),]);
-          console.log("newData--",newData)
-          const filteredData = newData.filter(([id]) => !premises_list2.some(([list2Id]) => list2Id === id));
-          console.log("filteredData--",filteredData)
-          if (premises_page === 1) {
-            temp_2 = filteredData;
+          const newData = response.data.results.map((v) => [v.id, toTitleCase(v.question)]);
+          if (question_page === 1) {
+            temp_2 = newData;
           } else {
-            temp_2 = [...premises_list, ...filteredData];
+            temp_2 = [...question_list, ...newData];
           }
-          setpremises_count(premises_count + 2);
-          setpremises_list(temp_2);
+          setquestion_count(question_count + 2);
+          setquestion_list(temp_2);
         } else {
-          setpremises_list([]);
-        }
-      });
-  };
-
-  // set the  premises at update  branch
-  const get_PremisesBranch = (id) => {
-    let branch_temp = [];
-    let data = [];
-    axios
-      .get(ServerAddress + `cards/get_quiz_question/?quiz_id=${id}`, {
-        // headers: { Authorization: `Bearer ${accessToken}` }
-      })
-      .then((response) => {
-        data = response.data.quiz_question;
-        if (data.length > 0) {
-          branch_temp = data.filter((v) => v.premises !== null).map((v) => [v.question, toTitleCase(v.question__question)]);
-          setpremises_list2(branch_temp);
+          setquestion_list([]);
         }
       })
       .catch((err) => {
         toast.error(`Error Occur in Get Question List, ${err}`, { position: 'bottom-right', autoClose: 5000 });
       });
   };
-  useEffect(() => {
-    get_premises_data();
-  }, [premises_page, search_premises]);
+
+  // set the  Quesations at update  Quiz
+  const GetQuizTransfer = (id) => {
+    let qun_temp = [];
+    let data = [];
+    axios
+      .get(ServerAddress + `cards/get_quiz_transfer/?quiz_id=${id}`, {
+        headers: { Authorization: `Bearer ${accessToken}` }
+      })
+      .then((response) => {
+        data = response.data.quiz_question;
+        if (data.length > 0) {
+          qun_temp = data.filter((v) => v.question !== null).map((v) => [v.question, toTitleCase(v.question__question)]);
+          setquestion_list2(qun_temp);
+        }
+      })
+      .catch((err) => {
+        toast.error(`Error Occur in Get Question List, ${err}`, { position: 'bottom-right', autoClose: 5000 });
+      });
+  };
 
   useEffect(() => {
-    const selectedIds = new Set(premises_list2.map(item => item[0]));
-    setpremises_list(prev => prev.filter(item => !selectedIds.has(item[0])));
-  }, [premises_list2,premises_page, search_premises]);
+    if (location.state === null) {
+      GetQuestionsTransfer('all');
+    } else if (location.state !== null) {
+      GetQuestionsTransfer(parseInt(location.state.data.id));
+    }
+  }, [question_page, search_question]);
 
   useEffect(() => {
     if (location.state !== null && quiz_name_id !== '') {
-      get_PremisesBranch(location.state?.data.id);
+      GetQuizTransfer(location.state?.data.id);
     }
   }, [quiz_name_id]);
 
@@ -230,6 +232,9 @@ const AddQuiz = () => {
             document.getElementById('quiz_details').scrollIntoView();
           } else if (!quiz_date) {
             setquiz_date_error(true);
+            document.getElementById('quiz_details').scrollIntoView();
+          } else if (question_list2.length === 0) {
+            setquestion_error(true);
             document.getElementById('quiz_details').scrollIntoView();
           } else {
             isupdating ? update_quiz_name_data() : send_quiz_name_data();
@@ -285,7 +290,7 @@ const AddQuiz = () => {
                           }
                         }}
                         invalid={age_error}
-                        className='form-control-md'
+                        className='form-control-md no-arrows'
                         name='age'
                         id='input'
                         type='number'
@@ -299,7 +304,7 @@ const AddQuiz = () => {
                   <Col lg={3} md={6} sm={6}>
                     <div>
                       <Label className='header-child'>
-                        Quiz Date<span className='mandatory'> *</span>
+                        Quiz Date & Time <span className='mandatory'> *</span>
                       </Label>
                       <Input
                         value={quiz_date}
@@ -310,19 +315,19 @@ const AddQuiz = () => {
                         className='form-control-md'
                         name='quiz_date'
                         id='input'
-                        type='date'
+                        type='datetime-local'
                         placeholder='Enter Quiz Date'
                       />
-                      {quiz_date_error && <FormFeedback type='invalid'>Quiz Date is required</FormFeedback>}
+                      {quiz_date_error && <FormFeedback type='invalid'>Quiz Date & Time is required</FormFeedback>}
                     </div>
                   </Col>
-                  <Label className='header-child' id='premises'>
-                    quiz_name List
+                  <Label className='header-child' id='question'>
+                    Question List
                     <span className='mandatory'> *</span>
                   </Label>
                   <Col lg={12} md={12} sm={12}>
-                    <TransferList list_a={premises_list} setlist_a={setpremises_list} list_b={premises_list2} setlist_b={setpremises_list2} page={premises_page} setpage={setpremises_page} setsearch_item={setsearch_premises} loaded={premises_loaded} count={premises_count} bottom={premises_bottom} setbottom={setpremises_bottom} />
-                    {premises_error ? <div style={{ color: '#f46a6a', fontSize: '10.4px' }}>Select At Least One Premises</div> : null}
+                    <TransferList list_a={question_list} setlist_a={setquestion_list} list_b={question_list2} setlist_b={setquestion_list2} page={question_page} setpage={setquestion_page} setsearch_item={setsearch_question} loaded={question_loaded} count={question_count} bottom={question_bottom} setbottom={setquestion_bottom} />
+                    {question_error ? <div style={{ color: '#f46a6a', fontSize: '10.4px' }}>Select At Least One question</div> : null}
                   </Col>
                 </Row>
               </CardBody>

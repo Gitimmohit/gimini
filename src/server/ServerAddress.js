@@ -1,5 +1,5 @@
 
 
-const ServerAddress = "http://10.35.50.78:7001/";
+const ServerAddress = "http://127.0.0.1:7000/";
 
 export { ServerAddress }; 

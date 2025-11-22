@@ -1,7 +1,9 @@
 const QuizDataTitle = [
     "Quiz Name",  
-    "Quiz Date", 
+    "Quiz Date Time", 
     "Age", 
+    "Total Qus ", 
+    "Total Time", 
     "Created At", 
     "Created By", 
 ]; 
