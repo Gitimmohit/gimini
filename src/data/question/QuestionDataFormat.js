@@ -19,12 +19,12 @@ const QuestionDataFormat = ({ data, data1, can_delete }) => {
   const list_toggle = useSelector((state) => state.datalist.list_toggle);
   const index = useSelector((state) => state.datalist.index);
   const is_deleted = useSelector((state) => state.pagination.is_deleted);
-
-  const [refresh, setRefresh] = useState(false);
   const ids = useSelector((state) => state.datalist.ids);
   const select_all = useSelector((state) => state.datalist.select_all);
   const delete_id = useSelector((state) => state.datalist.delete_id);
-  const [selected, setSelected] = useState([]);
+  const close = useSelector((state) => state.datalist.close);
+  const [selected, setselected] = useState([]);
+  const [refresh, setrefresh] = useState(false);
 
   // Smart Truncate + Tooltip Function
   const renderCell = (text, maxLength = 60, showTooltip = true) => {
@@ -48,8 +48,13 @@ const QuestionDataFormat = ({ data, data1, can_delete }) => {
   };
 
   // Multi-select handler
-  const handleSelect = (id) => {
-    setSelected((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+  const handlefunn = (id) => {
+    if (selected.includes(id)) {
+      let lis = [...selected];
+      setselected(lis.filter((e) => e !== id));
+    } else {
+      setselected([...selected, id]);
+    }
   };
 
   // Delete selected items
@@ -69,9 +74,9 @@ const QuestionDataFormat = ({ data, data1, can_delete }) => {
           dispatch(setDeleteId(false));
           dispatch(setIds([]));
           dispatch(setSelect(false));
-          setSelected([]);
+          setselected([]);
           toast.success(`Question Deleted successfully !`, { position: 'top-center', autoClose: 2000 });
-          setRefresh(!refresh);
+          setrefresh(!refresh);
           dispatch(setIsDeleted(!is_deleted));
         }
       })
@@ -87,13 +92,13 @@ const QuestionDataFormat = ({ data, data1, can_delete }) => {
 
   useEffect(() => {
     if (select_all && ids.length > 0) {
-      setSelected(ids);
+      setselected(ids);
     }
   }, [ids, select_all]);
 
   useEffect(() => {
     if (!select_all) {
-      setSelected([]);
+      setselected([]);
     }
   }, [select_all]);
 
@@ -103,39 +108,38 @@ const QuestionDataFormat = ({ data, data1, can_delete }) => {
     }
   }, [delete_id]);
 
-  // Sorting index handler
   useEffect(() => {
-    const fields = ['id', 'question', 'option1', 'option2', 'option3', 'option4', 'answare', 'age_grup', 'created_at', 'created_by'];
-    dispatch(setIndexValue(fields[index] || 'id'));
-  }, [index, dispatch]);
+    if (close === true) {
+      setselected([]);
+    }
+  }, [close]);
 
   useEffect(() => {
     dispatch(setToggle(false));
     dispatch(setIsDeleted(false));
   }, [dispatch]);
 
+  // Sorting index handler
   useEffect(() => {
     if (index === 0) {
-      dispatch(setIndexValue('id'));
-    } else if (index === 1) {
       dispatch(setIndexValue('question'));
-    } else if (index === 2) {
+    } else if (index === 1) {
       dispatch(setIndexValue('option1'));
-    } else if (index === 3) {
+    } else if (index === 2) {
       dispatch(setIndexValue('option2'));
-    } else if (index === 4) {
+    } else if (index === 3) {
       dispatch(setIndexValue('option3'));
-    } else if (index === 5) {
+    } else if (index === 4) {
       dispatch(setIndexValue('option4'));
-    } else if (index === 6) {
+    } else if (index === 5) {
       dispatch(setIndexValue('answare'));
-    } else if (index === 7) {
+    } else if (index === 6) {
       dispatch(setIndexValue('age_grup'));
-    } else if (index === 8) {
+    } else if (index === 7) {
       dispatch(setIndexValue('created_at'));
-    } else if (index === 9) {
+    } else if (index === 8) {
       dispatch(setIndexValue('created_by'));
-    }
+    }  
   }, [index]);
   const currentData = list_toggle ? data1 : data;
 
@@ -148,16 +152,18 @@ const QuestionDataFormat = ({ data, data1, can_delete }) => {
         </tr>
       ) : (
         currentData.map((qun, idx) => (
-          <tr key={qun.id} style={{ borderBottom: '1px solid #eee' }}>
+          <tr key={qun.id} style={{borderWidth: 1,}}>
             {/* Checkbox */}
             {(can_delete || user_detail?.is_superuser) && (
               <td
                 style={{ textAlign: 'center', cursor: 'pointer' }}
                 onClick={() => {
-                  handleSelect(qun.id);
+                  handlefunn(qun.id);
                   dispatch(setSelect(true));
+                  dispatch(setDeleteId(false));
+                  dispatch(setClose(false));
                 }}>
-                {selected.includes(qun.id) ? <FiCheckSquare size={16} /> : <FiSquare size={16} />}
+                {selected.includes(qun.id) ? <FiCheckSquare size={14} /> : <FiSquare size={14} />}
               </td>
             )}
             <td>

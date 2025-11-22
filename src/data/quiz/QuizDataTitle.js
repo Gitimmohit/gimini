@@ -4,6 +4,8 @@ const QuizDataTitle = [
     "Age", 
     "Total Qus ", 
     "Total Time", 
+    "Entry Fee", 
+    "Prize Money", 
     "Created At", 
     "Created By", 
 ]; 

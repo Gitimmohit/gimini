@@ -19,13 +19,14 @@ const QuizDataFormate = ({ data, data1, can_delete }) => {
   const accessToken = useSelector((state) => state.user.access_token);
   const list_toggle = useSelector((state) => state.datalist.list_toggle);
   const index = useSelector((state) => state.datalist.index);
-  const is_deleted = useSelector((state) => state.pagination.is_deleted);
-
+  
   const [refresh, setRefresh] = useState(false);
   const ids = useSelector((state) => state.datalist.ids);
+  const is_deleted = useSelector((state) => state.pagination.is_deleted);
+  const close = useSelector((state) => state.datalist.close);
   const select_all = useSelector((state) => state.datalist.select_all);
   const delete_id = useSelector((state) => state.datalist.delete_id);
-  const [selected, setSelected] = useState([]);
+  const [selected, setselected] = useState([]);
 
   // Smart Truncate + Tooltip Function
   const renderCell = (text, maxLength = 60, showTooltip = true) => {
@@ -49,9 +50,14 @@ const QuizDataFormate = ({ data, data1, can_delete }) => {
   };
 
   // Multi-select handler
-  const handleSelect = (id) => {
-    setSelected((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
-  };
+  const handlefunn = (id) => {
+    if (selected.includes(id)) {
+      let lis = [...selected];
+      setselected(lis.filter((e) => e !== id));
+    } else {
+      setselected([...selected, id]);
+    }
+  }; 
 
   // Delete selected items
   const delete_item_row = (idList) => {
@@ -70,7 +76,7 @@ const QuizDataFormate = ({ data, data1, can_delete }) => {
           dispatch(setDeleteId(false));
           dispatch(setIds([]));
           dispatch(setSelect(false));
-          setSelected([]);
+          setselected([]);
           toast.success(`Quiz Deleted successfully !`, { position: 'top-center', autoClose: 2000 });
           setRefresh(!refresh);
           dispatch(setIsDeleted(!is_deleted));
@@ -88,13 +94,13 @@ const QuizDataFormate = ({ data, data1, can_delete }) => {
 
   useEffect(() => {
     if (select_all && ids.length > 0) {
-      setSelected(ids);
+      setselected(ids);
     }
   }, [ids, select_all]);
 
   useEffect(() => {
     if (!select_all) {
-      setSelected([]);
+      setselected([]);
     }
   }, [select_all]);
 
@@ -103,6 +109,17 @@ const QuizDataFormate = ({ data, data1, can_delete }) => {
       delete_item_row(ids);
     }
   }, [delete_id]);
+  
+  useEffect(() => {
+    if (close === true) {
+      setselected([]);
+    }
+  }, [close]);
+
+  useEffect(() => {
+    dispatch(setToggle(false));
+    dispatch(setIsDeleted(false));
+  }, [dispatch]);
 
   // Sorting index handler
   useEffect(() => {
@@ -119,13 +136,9 @@ const QuizDataFormate = ({ data, data1, can_delete }) => {
     }
   }, [index]);
 
-  useEffect(() => {
-    dispatch(setToggle(false));
-    dispatch(setIsDeleted(false));
-  }, [dispatch]);
 
   const currentData = list_toggle ? data1 : data;
-  console.log("currentData--",currentData)
+  console.log('currentData--', currentData);
 
   return (
     <>
@@ -136,16 +149,17 @@ const QuizDataFormate = ({ data, data1, can_delete }) => {
         </tr>
       ) : (
         currentData.map((quiz, idx) => (
-          <tr key={quiz.id} style={{ borderBottom: '1px solid #eee' }}>
+          <tr key={quiz.id} style={{borderWidth: 1,}}>
             {/* Checkbox */}
             {(can_delete || user_detail?.is_superuser) && (
-              <td
-                style={{ textAlign: 'center', cursor: 'pointer' }}
+              <td 
                 onClick={() => {
-                  handleSelect(quiz.id);
+                  handlefunn(quiz.id);
                   dispatch(setSelect(true));
+                  dispatch(setDeleteId(false));
+                  dispatch(setClose(false));
                 }}>
-                {selected.includes(quiz.id) ? <FiCheckSquare size={16} /> : <FiSquare size={16} />}
+                {selected.includes(quiz.id) ? <FiCheckSquare size={14} /> : <FiSquare size={14} />}
               </td>
             )}
             <td>
@@ -155,8 +169,10 @@ const QuizDataFormate = ({ data, data1, can_delete }) => {
             </td>
             <td>{quiz.quiz_date ? <DateTimeConvertor inputDateTime={quiz.quiz_date} /> : '-'}</td>
             <td>{quiz.age_grup ? toTitleCase(quiz.age_grup) : '-'}</td>
-            <td>{quiz.question ? (quiz.question).length : '-'}</td>
-            <td>{quiz.total_time ? (quiz.total_time) : '-'}</td>
+            <td>{quiz.question ? quiz.question.length : '-'}</td>
+            <td>{quiz.total_time ? quiz.total_time : '-'}</td>
+            <td>{quiz.entry_fee ? quiz.entry_fee : '-'}</td>
+            <td>{quiz.prize_money ? toTitleCase(quiz.prize_money) : '-'}</td>
             <td>{quiz.created_at ? <DateTimeConvertor inputDateTime={quiz.created_at} /> : '-'}</td>
             <td>{renderCell(quiz.bkp_created_by, 25)}</td>
           </tr>

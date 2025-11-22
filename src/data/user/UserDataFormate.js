@@ -21,11 +21,12 @@ const UserDataFormate = ({ data, data1, can_delete }) => {
   const index = useSelector((state) => state.datalist.index);
   const is_deleted = useSelector((state) => state.pagination.is_deleted);
 
-  const [refresh, setRefresh] = useState(false);
+  const [refresh, setrefresh] = useState(false);
   const ids = useSelector((state) => state.datalist.ids);
   const select_all = useSelector((state) => state.datalist.select_all);
   const delete_id = useSelector((state) => state.datalist.delete_id);
-  const [selected, setSelected] = useState([]);
+  const close = useSelector((state) => state.datalist.close);
+  const [selected, setselected] = useState([]);
 
   // Smart Truncate + Tooltip Function
   const renderCell = (text, maxLength = 60, showTooltip = true) => {
@@ -34,13 +35,10 @@ const UserDataFormate = ({ data, data1, can_delete }) => {
     if (trimmed.length <= maxLength) {
       return toTitleCase(trimmed);
     }
-
     const truncated = trimmed.slice(0, maxLength) + '...';
-
     if (!showTooltip) {
       return toTitleCase(truncated);
     }
-
     return (
       <OverlayTrigger placement='top' overlay={<Tooltip>{toTitleCase(trimmed)}</Tooltip>}>
         <span style={{ cursor: 'pointer' }}>{toTitleCase(truncated)}</span>
@@ -48,9 +46,15 @@ const UserDataFormate = ({ data, data1, can_delete }) => {
     );
   };
 
-  // Multi-select handler
-  const handleSelect = (id) => {
-    setSelected((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+  // Multi-select handler 
+  const handlefunn = (id) => {
+    const item = (list_toggle === true ? data1 : data).find((i) => i.id === id);
+    if (item.is_superuser) return; // Skip if item is not selectable
+    if (selected.includes(id)) {
+      setselected(selected.filter((e) => e !== id));
+    } else {
+      setselected([...selected, id]);
+    }
   };
 
   // Delete selected items
@@ -70,9 +74,9 @@ const UserDataFormate = ({ data, data1, can_delete }) => {
           dispatch(setDeleteId(false));
           dispatch(setIds([]));
           dispatch(setSelect(false));
-          setSelected([]);
+          setselected([]);
           toast.success(`User Deleted successfully !`, { position: 'top-center', autoClose: 2000 });
-          setRefresh(!refresh);
+          setrefresh(!refresh);
           dispatch(setIsDeleted(!is_deleted));
         }
       })
@@ -81,28 +85,39 @@ const UserDataFormate = ({ data, data1, can_delete }) => {
       });
   };
 
-  // Sync selected with Redux
   useEffect(() => {
     dispatch(setIds(selected));
-  }, [selected, dispatch]);
+  }, [selected]);
 
   useEffect(() => {
-    if (select_all && ids.length > 0) {
-      setSelected(ids);
+    if (select_all === true) {
+      const selectableIds = (list_toggle === true ? data1 : data).filter((item) => !item.is_superuser).map((item) => item.id);
+      setselected(selectableIds);
     }
-  }, [ids, select_all]);
+  }, [select_all, data, data1, list_toggle]);
 
   useEffect(() => {
-    if (!select_all) {
-      setSelected([]);
+    if (select_all === false) {
+      setselected([]);
     }
   }, [select_all]);
+
+  useEffect(() => {
+    if (close === true) {
+      setselected([]);
+    }
+  }, [close]);
 
   useEffect(() => {
     if (delete_id === true) {
       delete_item_row(ids);
     }
-  }, [delete_id]);
+  }, [delete_id,ids]);
+
+  useEffect(() => {
+    dispatch(setToggle(false));
+    dispatch(setIsDeleted(false));
+  }, [dispatch]);
 
   // Sorting index handler
   useEffect(() => {
@@ -117,10 +132,7 @@ const UserDataFormate = ({ data, data1, can_delete }) => {
     }
   }, [index]);
 
-  useEffect(() => {
-    dispatch(setToggle(false));
-    dispatch(setIsDeleted(false));
-  }, [dispatch]);
+  
 
   const currentData = list_toggle ? data1 : data;
 
@@ -133,16 +145,18 @@ const UserDataFormate = ({ data, data1, can_delete }) => {
         </tr>
       ) : (
         currentData.map((quiz, idx) => (
-          <tr key={quiz.id} style={{ borderBottom: '1px solid #eee' }}>
+          <tr key={quiz.id} style={{borderWidth: 1,}}>
             {/* Checkbox */}
             {(can_delete || user_detail?.is_superuser) && (
               <td
-                style={{ textAlign: 'center', cursor: 'pointer' }}
+                style={quiz.is_superuser ? { cursor: 'not-allowed' } : { cursor: 'pointer' }}
                 onClick={() => {
-                  handleSelect(quiz.id);
+                  handlefunn(quiz.id);
                   dispatch(setSelect(true));
+                  dispatch(setDeleteId(false));
+                  dispatch(setClose(false)); 
                 }}>
-                {selected.includes(quiz.id) ? <FiCheckSquare size={16} /> : <FiSquare size={16} />}
+                {!quiz.is_superuser ? selected.includes(quiz.id) ? <FiCheckSquare size={14} /> : <FiSquare size={14} /> : <FiSquare size={14} color='gray' title='Selection Disabled' />}
               </td>
             )}
             <td>

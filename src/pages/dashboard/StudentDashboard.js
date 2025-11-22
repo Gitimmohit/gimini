@@ -1,5 +1,5 @@
 // components/dashboard/StudentDashboard.js
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   Quiz,
@@ -16,11 +16,37 @@ import {
   Star,
 } from "@mui/icons-material";
 import "./StudentDashboard.css";
+import { useNavigate } from "react-router-dom";
+import { ServerAddress } from "../../server/ServerAddress";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const StudentDashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [copied, setCopied] = useState(false);
+  const accessToken = useSelector((state) => state.user.access_token);
+  const navigate = useNavigate();
+  const [upcoming_quiz, setupcoming_quiz] = useState([])
+  // get Questions at add Quiz
+  const GetUpcomingQuizData = () => { 
+    axios
+      .get(ServerAddress + `cards/get_upcoming_quiz_data/`, {
+        headers: { Authorization: `Bearer ${accessToken}` }
+      })
+      .then((response) => {
+        console.log("response--",response)
+        if (response.data.success){
+          setupcoming_quiz(response.data.upcoming_quizzes)
+        }
+      })
+      .catch((err) => {
+        console.log("err--",err)
+      });
+  };
 
+  useLayoutEffect(() => { 
+    GetUpcomingQuizData()
+  }, [])
   const userStats = {
     quizzesTaken: 5,
     awardsWon: 3,
@@ -168,6 +194,26 @@ const StudentDashboard = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const formatQuizDateTime = (dateString) => {
+  if (!dateString) return "Date not set";
+  const dateObj = new Date(dateString);
+  // Agar invalid date hai
+  if (isNaN(dateObj)) return "Invalid Date";
+  const formattedDate = dateObj.toLocaleDateString("en-GB", {day:"numeric",month:"long",year:"numeric",});
+  const formattedTime = dateObj.toLocaleTimeString("en-US", {hour:"numeric",minute:"2-digit",hour12: true,});
+  return `${formattedDate} at ${formattedTime} IST`;
+  };
+  const formatTotalTime = (timeString) => {
+  if (!timeString) return "N/A"; 
+  const [hours, minutes, seconds] = timeString.split(":").map(Number);
+  let result = "";
+  if (hours > 0) result += `${hours}h `;
+  if (minutes > 0) result += `${minutes}m `;
+  if (seconds > 0 || result === "") result += `${seconds}s`;
+  return result.trim() || "0s";
+ };
+
+
   return (
     <div className="student-dashboard">
       {/* Header with Gradient Background */}
@@ -180,6 +226,9 @@ const StudentDashboard = () => {
           >
             <h1 style={{color:"white"}}>Welcome back, Space Explorer! 🚀</h1>
             <p>Ready for your next cosmic challenge?</p>
+            <button className="action-btn primary" onClick={() => navigate("/start/quiz")}>
+            <span>Play Quiz</span>
+            </button>
           </motion.div>
 
           <motion.div
@@ -256,30 +305,30 @@ const StudentDashboard = () => {
                 <span className="see-all">See All</span>
               </div>
               <div className="quizzes-list">
-                {upcomingQuizzes.map((quiz) => (
+                {upcoming_quiz.map((quiz) => (
                   <motion.div
                     key={quiz.id}
                     className="quiz-item"
                     whileHover={{ y: -2 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
-                    <div className="quiz-badge">{quiz.difficulty}</div>
+                    <div className="quiz-badge">{formatTotalTime(quiz.total_time)}</div>
                     <div className="quiz-content">
-                      <h3>{quiz.title}</h3>
+                      <h3>{quiz.quiz_name}</h3>
                       <div className="quiz-meta">
                         <span className="date">
-                          <Schedule /> {quiz.date} at {quiz.time}
+                          <Schedule /> {formatQuizDateTime(quiz.quiz_date)}  
                         </span>
                         <span className="participants">
                           👥 {quiz.participants}
                         </span>
                       </div>
                       <div className="quiz-prize">
-                        <EmojiEvents /> {quiz.prize}
+                        <EmojiEvents /> {quiz.prize_money}
                       </div>
                     </div>
                     <div className="quiz-actions">
-                      <span className="entry-fee">{quiz.entryFee}</span>
+                      <span className="entry-fee">₹{' '}{quiz.entry_fee} </span>
                       <button
                         className={`action-btn ${
                           quiz.registered ? "registered" : "primary"

@@ -349,7 +349,7 @@ const AddUser = () => {
                       {age_error && <FormFeedback type='invalid'>Dob is required</FormFeedback>}
                     </div>
                   </Col>
-                  {user_detail?.is_superuser && (
+                  {!user_detail?.is_superuser && (
                     <Col lg={1} md={6} sm={6}>
                       <div className='mb-2'>
                         <Label className='header-child'> Is Active</Label>

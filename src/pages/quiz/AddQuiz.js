@@ -36,6 +36,10 @@ const AddQuiz = () => {
   const [quiz_name_err, setquiz_name_err] = useState(false);
   const [age, setage] = useState('');
   const [age_error, setage_error] = useState(false);
+  const [prize_money, setprize_money] = useState('');
+  const [prize_money_error, setprize_money_error] = useState(false);
+  const [entry_fee, setentry_fee] = useState('');
+  const [entry_fee_error, setentry_fee_error] = useState(false);
   const [quiz_date, setquiz_date] = useState('');
   const [quiz_date_error, setquiz_date_error] = useState(false);
   const [show, setshow] = useState(false);
@@ -60,9 +64,11 @@ const AddQuiz = () => {
       .post(
         ServerAddress + 'cards/add_quiz_details/',
         {
-          quiz_name: quiz_name ? toTitleCase(quiz_name).toUpperCase() : quiz_name,
-          age_grup: age ? toTitleCase(age).toUpperCase() : age,
-          quiz_date: quiz_date ? quiz_date : quiz_date,
+          quiz_name: quiz_name ? toTitleCase(quiz_name).toUpperCase() : null,
+          age_grup: age ? age : null,
+          quiz_date: quiz_date ? quiz_date : null,
+          prize_money: prize_money ? toTitleCase(prize_money).toUpperCase() : null,
+          entry_fee: entry_fee ? entry_fee : null,
           question: question_id_list,
           question_name: question_name_list
         },
@@ -94,9 +100,11 @@ const AddQuiz = () => {
       .put(
         ServerAddress + 'cards/put_quiz_details/' + quiz_name_id,
         {
-          quiz_name: quiz_name ? toTitleCase(quiz_name).toUpperCase() : quiz_name,
-          age_grup: age ? toTitleCase(age).toUpperCase() : age,
-          quiz_date: quiz_date ? quiz_date : quiz_date,
+          quiz_name: quiz_name ? toTitleCase(quiz_name).toUpperCase() : null,
+          age_grup: age ? age : null,
+          quiz_date: quiz_date ? quiz_date : null,
+          prize_money: prize_money ? toTitleCase(prize_money).toUpperCase() : null,
+          entry_fee: entry_fee ? entry_fee : null,
           question: question_ids
           // question_name: question_name_list
         },
@@ -130,10 +138,16 @@ const AddQuiz = () => {
     if (quiz_date) {
       setquiz_date_error(false);
     }
+    if (prize_money) {
+      setprize_money_error(false);
+    }
+    if (entry_fee) {
+      setentry_fee_error(false);
+    }
     if (question_list2.length !== 0) {
       setquestion_error(false);
     }
-  }, [quiz_name, age, quiz_date, question_list2]);
+  }, [quiz_name, age, quiz_date, prize_money, entry_fee, question_list2]);
 
   useLayoutEffect(() => {
     try {
@@ -143,6 +157,8 @@ const AddQuiz = () => {
       setquiz_name_id(qun_data?.id);
       setquiz_name(toTitleCase(qun_data?.quiz_name));
       setage(qun_data?.age_grup);
+      setprize_money(qun_data?.prize_money);
+      setentry_fee(qun_data?.entry_fee);
       setquiz_date(qun_data?.quiz_date ? qun_data.quiz_date.substring(0, 16) : '');
     } catch (error) {}
   }, []);
@@ -233,6 +249,12 @@ const AddQuiz = () => {
           } else if (!quiz_date) {
             setquiz_date_error(true);
             document.getElementById('quiz_details').scrollIntoView();
+          } else if (!prize_money) {
+            setprize_money_error(true);
+            document.getElementById('quiz_details').scrollIntoView();
+          } else if (!entry_fee) {
+            setentry_fee_error(true);
+            document.getElementById('quiz_details').scrollIntoView();
           } else if (question_list2.length === 0) {
             setquestion_error(true);
             document.getElementById('quiz_details').scrollIntoView();
@@ -319,6 +341,57 @@ const AddQuiz = () => {
                         placeholder='Enter Quiz Date'
                       />
                       {quiz_date_error && <FormFeedback type='invalid'>Quiz Date & Time is required</FormFeedback>}
+                    </div>
+                  </Col>
+                  <Col lg={3} md={6} sm={6}>
+                    <div>
+                      <Label className='header-child'>
+                        Prize Money<span className='mandatory'> *</span>
+                      </Label>
+                      <Input
+                        value={prize_money}
+                        onChange={(event) => {
+                          setprize_money(event.target.value);
+                        }}
+                        invalid={prize_money_error}
+                        className='form-control-md no-arrows'
+                        name='prize_money'
+                        id='input'
+                        type='text'
+                        placeholder='Enter Prize Money'
+                      />
+                      {prize_money_error && <FormFeedback type='invalid'>Prize Money is required</FormFeedback>}
+                    </div>
+                  </Col>
+                  <Col lg={3} md={6} sm={6}>
+                    <div>
+                      <Label className='header-child'>
+                        Entry Fee<span className='mandatory'> *</span>
+                      </Label>
+                      <Input
+                        value={entry_fee}
+                        onChange={(event) => {
+                          let value = event.target.value;
+                          // Allow up to 8 digits + optional . + 2 decimals
+                          const decimalRegex = /^\d{0,8}(\.\d{0,2})?$/;
+                          if (value === '' || decimalRegex.test(value)) {
+                            setentry_fee(value);
+                          }
+                        }}
+                        onBlur={() => {
+                          if (entry_fee) {
+                            const formatted = parseFloat(entry_fee).toFixed(2);
+                            setentry_fee(formatted);
+                          }
+                        }}
+                        invalid={entry_fee_error}
+                        className='form-control-md no-arrows'
+                        name='entry_fee'
+                        id='input'
+                        type='text'
+                        placeholder='Enter Entry Fee'
+                      />
+                      {entry_fee_error && <FormFeedback type='invalid'>Entry Fee is required</FormFeedback>}
                     </div>
                   </Col>
                   <Label className='header-child' id='question'>
