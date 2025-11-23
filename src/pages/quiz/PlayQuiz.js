@@ -65,7 +65,22 @@ const PlayQuiz = () => {
   const [isQuizComplete, setIsQuizComplete] = useState(false);
   const [quizData, setquizData] = useState([]);
   console.log('quizData--', quizData);
+  // Prevent back navigation
+  useEffect(() => {
+    window.history.pushState(null, '', window.location.href);
 
+    const preventBack = () => {
+      window.history.pushState(null, '', window.location.href);
+      alert('क्विज़ के दौरान वापस नहीं जा सकते!');
+    };
+
+    window.addEventListener('popstate', preventBack);
+
+    return () => {
+      window.removeEventListener('popstate', preventBack);
+    };
+  }, []);
+  
   // get Questions at add Quiz
   const GetQuizPlayData = () => {
     axios

@@ -132,7 +132,7 @@ const QuestionDataFormat = ({ data, data1, can_delete }) => {
     } else if (index === 4) {
       dispatch(setIndexValue('option4'));
     } else if (index === 5) {
-      dispatch(setIndexValue('answare'));
+      dispatch(setIndexValue('answer'));
     } else if (index === 6) {
       dispatch(setIndexValue('age_grup'));
     } else if (index === 7) {
@@ -175,7 +175,7 @@ const QuestionDataFormat = ({ data, data1, can_delete }) => {
             <td style={{ textAlign: 'left'}}>{renderCell(qun.option2, 30)}</td>
             <td style={{ textAlign: 'left'}}>{renderCell(qun.option3, 30)}</td>
             <td style={{ textAlign: 'left'}}>{renderCell(qun.option4, 30)}</td>
-            <td style={{ textAlign: 'left'}}>{renderCell(qun.answare, 25)}</td>
+            <td style={{ textAlign: 'left'}}>{renderCell(qun.answer, 25)}</td>
             <td style={{ textAlign: 'left'}}>{qun.time ? qun.time : '-'}</td>
             <td style={{ textAlign: 'left'}}>{qun.age_grup ? toTitleCase(qun.age_grup) : '-'}</td>
             <td style={{ textAlign: 'left'}}>{qun.created_at ? <DateTimeConvertor inputDateTime={qun.created_at} /> : '-'}</td>

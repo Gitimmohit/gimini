@@ -147,7 +147,7 @@
 // };
 
 
-
+ 
 // import { useEffect, useState } from "react";
 // import { Clock, CheckCircle2 } from "lucide-react";
 // import "./QuizQuestion.css";
@@ -190,9 +190,14 @@
 //     // Disable screenshot shortcuts
 //     const disableScreenshot = (e) => {
 //       // PrtSc, Alt+PrtSc, Win+Shift+S
-//       if (e.keyCode === 44 || (e.altKey && e.keyCode === 44)) {
+//       if (
+//         e.keyCode === 44 || 
+//         (e.altKey && e.keyCode === 44) ||
+//         (e.shiftKey && e.metaKey && e.keyCode === 83) ||
+//         (e.shiftKey && e.key === 'Meta' && e.code === 'KeyS')
+//       ) {
 //         e.preventDefault();
-//         alert("स्क्रीनशॉट की अनुमति नहीं है!");
+//         // alert("स्क्रीनशॉट की अनुमति नहीं है!");
 //         return false;
 //       }
 //     };
@@ -221,13 +226,13 @@
 //     // Security: Detect tab change and logout
 //     const handleVisibilityChange = () => {
 //       if (document.hidden) {
-//         alert("आपने टैब बदल दिया! क्विज से बाहर हो रहे हैं।");
+//         // alert("आपने टैब बदल दिया! क्विज से बाहर हो रहे हैं।");
 //         window.location.href = "/";
 //       }
 //     };
 
 //     const handleBlur = () => {
-//       alert("आपने विंडो बदल दी! क्विज से बाहर हो रहे हैं।");
+//       // alert("आपने विंडो बदल दी! क्विज से बाहर हो रहे हैं।");
 //       window.location.href = "/";
 //     };
 
@@ -342,7 +347,6 @@
 // };
 
 
-
 import { useEffect, useState } from "react";
 import { Clock, CheckCircle2 } from "lucide-react";
 import "./QuizQuestion.css";
@@ -392,7 +396,7 @@ export const QuizQuestion = ({
         (e.shiftKey && e.key === 'Meta' && e.code === 'KeyS')
       ) {
         e.preventDefault();
-        // alert("स्क्रीनशॉट की अनुमति नहीं है!");
+        alert("स्क्रीनशॉट की अनुमति नहीं है!");
         return false;
       }
     };

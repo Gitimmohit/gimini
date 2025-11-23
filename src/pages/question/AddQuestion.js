@@ -66,7 +66,7 @@ const AddQuestion = () => {
           option2: option2 ? toTitleCase(option2).toUpperCase() : option2,
           option3: option3 ? toTitleCase(option3).toUpperCase() : option3,
           option4: option4 ? toTitleCase(option4).toUpperCase() : option4,
-          answare: answare_id ? toTitleCase(answare_id).toUpperCase() : answare_id,
+          answer: answare_id ? toTitleCase(answare_id).toUpperCase() : answare_id,
           age_grup: age ? toTitleCase(age).toUpperCase() : age,
           time: time ? time : time
         },
@@ -100,7 +100,7 @@ const AddQuestion = () => {
           option2: option2 ? toTitleCase(option2).toUpperCase() : option2,
           option3: option3 ? toTitleCase(option3).toUpperCase() : option3,
           option4: option4 ? toTitleCase(option4).toUpperCase() : option4,
-          answare: answare_id ? toTitleCase(answare_id).toUpperCase() : answare_id,
+          answer: answare_id ? toTitleCase(answare_id).toUpperCase() : answare_id,
           age_grup: age ? toTitleCase(age).toUpperCase() : age,
           time: time ? time : time
         },
@@ -168,9 +168,9 @@ const AddQuestion = () => {
       setoption2(toTitleCase(qun_data?.option2));
       setoption3(toTitleCase(qun_data?.option3));
       setoption4(qun_data?.option4);
-      setansware_id(qun_data?.answare);
-      if (qun_data.answare) {
-        const label = SetAnswareLabel(qun_data.answare.toString().trim());
+      setansware_id(qun_data?.answer);
+      if (qun_data.answer) {
+        const label = SetAnswareLabel(qun_data.answer.toString().trim());
         setansware(label);
       }
       setage(qun_data?.age_grup);
@@ -269,7 +269,6 @@ const AddQuestion = () => {
                         className='form-control-md'
                         id='input'
                         placeholder='Enter Option 1'
-                        readOnly={isupdating}
                       />
                       {option1_err && <FormFeedback type='invalid'>Option 1 is required</FormFeedback>}
                     </div>
