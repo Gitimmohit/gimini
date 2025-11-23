@@ -166,20 +166,20 @@ const QuestionDataFormat = ({ data, data1, can_delete }) => {
                 {selected.includes(qun.id) ? <FiCheckSquare size={14} /> : <FiSquare size={14} />}
               </td>
             )}
-            <td>
+            <td style={{ textAlign: 'left'}}>
               <Link to='/quiz/add/question' state={{ data: qun }}>
-                {renderCell(qun.question, 60)}
+                {renderCell(qun.question, 50)}
               </Link>
             </td>
-            <td>{renderCell(qun.option1, 30)}</td>
-            <td>{renderCell(qun.option2, 30)}</td>
-            <td>{renderCell(qun.option3, 30)}</td>
-            <td>{renderCell(qun.option4, 30)}</td>
-            <td>{renderCell(qun.answare, 25)}</td>
-            <td>{qun.time ? qun.time : '-'}</td>
-            <td>{qun.age_grup ? toTitleCase(qun.age_grup) : '-'}</td>
-            <td>{qun.created_at ? <DateTimeConvertor inputDateTime={qun.created_at} /> : '-'}</td>
-            <td>{renderCell(qun.bkp_created_by, 25)}</td>
+            <td style={{ textAlign: 'left'}}>{renderCell(qun.option1, 30)}</td>
+            <td style={{ textAlign: 'left'}}>{renderCell(qun.option2, 30)}</td>
+            <td style={{ textAlign: 'left'}}>{renderCell(qun.option3, 30)}</td>
+            <td style={{ textAlign: 'left'}}>{renderCell(qun.option4, 30)}</td>
+            <td style={{ textAlign: 'left'}}>{renderCell(qun.answare, 25)}</td>
+            <td style={{ textAlign: 'left'}}>{qun.time ? qun.time : '-'}</td>
+            <td style={{ textAlign: 'left'}}>{qun.age_grup ? toTitleCase(qun.age_grup) : '-'}</td>
+            <td style={{ textAlign: 'left'}}>{qun.created_at ? <DateTimeConvertor inputDateTime={qun.created_at} /> : '-'}</td>
+            <td style={{ textAlign: 'left'}}>{renderCell(qun.bkp_created_by, 25)}</td>
           </tr>
         ))
       )}

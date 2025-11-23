@@ -69,7 +69,7 @@ const PlayQuiz = () => {
   // get Questions at add Quiz
   const GetQuizPlayData = () => {
     axios
-      .get(ServerAddress + `cards/get_quiz_play_data/?quiz_id=15`, {
+      .get(ServerAddress + `cards/get_quiz_play_data/?quiz_id=16`, {
         //   .get(ServerAddress + `cards/get_quiz_play_data/?quiz_id=${'6'}`, {
         headers: { Authorization: `Bearer ${accessToken}` }
       })

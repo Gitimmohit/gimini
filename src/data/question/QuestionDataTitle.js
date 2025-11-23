@@ -5,7 +5,7 @@ const QuestionDataTitle = [
     "Option 2", 
     "Option 3", 
     "Option 4", 
-    "Answare", 
+    "Ans", 
     "Time", 
     "Age", 
     "Created At", 

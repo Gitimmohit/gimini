@@ -14,6 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NSearchInput from '../../components/nsearchInput/NSearchInput';
 import Title from '../../components/common/title/Title';
+import CustomTimePicker from '../../components/dateConvertor/CustomTimePicker';
 
 const AddQuestion = () => {
   const navigate = useNavigate();
@@ -255,7 +256,7 @@ const AddQuestion = () => {
                   <Col lg={3} md={6} sm={6}>
                     <div>
                       <Label className='header-child'>
-                        option1 <span className='mandatory'> *</span>
+                        Option1 <span className='mandatory'> *</span>
                       </Label>
                       <Input
                         onChange={(e) => {
@@ -367,7 +368,9 @@ const AddQuestion = () => {
                       {age_error && <FormFeedback type='invalid'>Age is required</FormFeedback>}
                     </div>
                   </Col>
-                  <Col lg={3} md={6} sm={6}>
+
+                  <CustomTimePicker time={time} setTime={settime} timeError={time_error} />
+                  {/* <Col lg={3} md={6} sm={6}>
                     <div>
                       <Label className='header-child'>
                         Time<span className='mandatory'> *</span>
@@ -382,12 +385,14 @@ const AddQuestion = () => {
                         name='time'
                         id='input'
                         type='time'
-                        step={1}
+                        step='1'
+                        inputMode='numeric'
+                        pattern='[0-9]{2}:[0-9]{2}:[0-9]{2}'
                         placeholder='Enter Time'
                       />
                       {time_error && <FormFeedback type='invalid'>Time is required</FormFeedback>}
                     </div>
-                  </Col>
+                  </Col> */}
                 </Row>
               </CardBody>
             ) : null}

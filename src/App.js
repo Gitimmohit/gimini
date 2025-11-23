@@ -40,6 +40,7 @@ import PlayQuiz from "./pages/quiz/PlayQuiz";
 import StartQuiz from "./pages/quiz/StartQuiz";
 import User from "./pages/user/User";
 import AddUser from "./pages/user/AddUser";
+import QuizReport from "./pages/report/QuizReport";
 import RequestApproval from "./pages/registration/RequestApproval";
 import Transaction from "./pages/transaction/Transaction";
 import AddTransaction from "./pages/transaction/AddTransaction";
@@ -90,6 +91,7 @@ function App() {
             <Route path="/user/list" element={<User />} />
             <Route path="/add/user" element={<AddUser />} />
             {/* add by mohit */}
+            <Route path="/quiz/report" element={<QuizReport />} />
             <Route path="/studentapproval" element={<StudentApproval />} />
             <Route path="/requestapproval" element={<RequestApproval />} />
             {/* for the tranction  */}

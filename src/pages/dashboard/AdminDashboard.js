@@ -326,7 +326,7 @@ const AdminDashboard = () => {
                   <MenuBook />
                   <span>Cash Book</span>
                 </button>
-                <button className="action-btn warning">
+                <button className="action-btn warning" onClick={() => navigate("/quiz/report")}>
                   <Analytics />
                   <span>Generate Report</span>
                 </button>
