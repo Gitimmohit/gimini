@@ -15,8 +15,14 @@ import {
   CheckCircle,
 } from "@mui/icons-material";
 import "./ContactUs.css";
+import { toast } from "react-toastify";
+import { ServerAddress } from "../server/ServerAddress";
+import axios from "axios";
 
 const ContactUs = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -24,29 +30,35 @@ const ContactUs = () => {
     message: "",
     inquiryType: "general",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const showToastMessage = (message) => {
+    toast.error(message, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    setIsLoading(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
+    try {
+      const response = await axios.post(
+        `${ServerAddress}cards/contact_us/`, // <-- FIXED
+        formData
+      );
+      if (response.data?.success) {
+        toast.success(response.data.message || "Form submitted successfully!");
+        setIsSubmitted(true);
+      }
       setFormData({
         name: "",
         email: "",
@@ -54,7 +66,13 @@ const ContactUs = () => {
         message: "",
         inquiryType: "general",
       });
-    }, 3000);
+    } catch (error) {
+      console.error("Error:", error);
+      const msg = error.response?.data?.message;
+      showToastMessage(msg || "Something went wrong. Try again.");
+    }
+
+    setIsLoading(false);
   };
 
   const contactInfo = [
@@ -294,13 +312,13 @@ const ContactUs = () => {
                   <motion.button
                     type="submit"
                     className={`con-submit-btn ${
-                      isSubmitting ? "con-submitting" : ""
+                      isLoading ? "con-submitting" : ""
                     }`}
-                    disabled={isSubmitting}
-                    whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                    disabled={isLoading}
+                    whileHover={{ scale: isLoading ? 1 : 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    {isSubmitting ? (
+                    {isLoading ? (
                       <>
                         <div className="con-spinner"></div>
                         Sending...

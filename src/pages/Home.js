@@ -31,12 +31,73 @@ import {
   PlayArrow,
 } from "@mui/icons-material";
 import styles from "./Home.module.css";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import { ServerAddress } from "../server/ServerAddress";
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [formData, setFormData] = useState({
+    name: "",
+    mobile: "",
+    email: "",
+    school: "",
+    city: "",
+    students: "",
+  });
+
+  const showToastMessage = (message) => {
+    toast.error(message, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+  const [isLoading, setIsLoading] = useState(false);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        `${ServerAddress}cards/book_show/`,
+        formData
+      );
+      // Reset form
+      setFormData({
+        name: "",
+        mobile: "",
+        email: "",
+        school: "",
+        city: "",
+        students: "",
+      });
+      // ✅ Correct Success Toast
+      if (response.data?.success) {
+        toast.success(response.data.message || "Show booked successfully!");
+      }
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("Error:", error);
+      // Backend error message
+      const msg = error.response?.data?.message;
+      showToastMessage(msg || "Something went wrong. Try again.");
+    }
+    setIsLoading(false);
+  };
 
   return (
     <div className={styles.homePage}>
+      <ToastContainer />
       {/* Hero Section with Space Background */}
       <section className={styles.heroSection}>
         <img
@@ -91,7 +152,7 @@ const Home = () => {
                 onClick={() => setIsModalOpen(true)}
               >
                 <Groups sx={{ mr: 1 }} />
-                Book Now
+                Book My Show
               </button>
 
               {/* Modal */}
@@ -111,25 +172,46 @@ const Home = () => {
 
                     {/* Form */}
                     <form className={styles.formGrid}>
-                      {/* Row 1 */}
                       <div>
                         <label>
                           Name <span>*</span>
                         </label>
-                        <input type="text" placeholder="Name" />
+                        <input
+                          type="text"
+                          placeholder="Name"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
+                        />
                       </div>
 
                       <div>
                         <label>
                           Mobile Number <span>*</span>
                         </label>
-                        <input type="text" placeholder="Mobile Number" />
+                        <input
+                          type="number"
+                          placeholder="Mobile Number"
+                          name="mobile"
+                          value={formData.mobile}
+                          onChange={handleChange}
+                        />
                       </div>
 
                       {/* Row 2 */}
                       <div>
-                        <label>Email</label>
-                        <input type="email" placeholder="Email" />
+                        <label>
+                          Email<span>*</span>
+                        </label>
+                        <input
+                          type="email"
+                          placeholder="Email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          className={errors.email ? "log-error" : ""}
+                          required
+                        />
                       </div>
 
                       <div>
@@ -139,6 +221,9 @@ const Home = () => {
                         <input
                           type="text"
                           placeholder="School/Organization name"
+                          name="school"
+                          value={formData.school}
+                          onChange={handleChange}
                         />
                       </div>
 
@@ -147,17 +232,35 @@ const Home = () => {
                         <label>
                           City <span>*</span>
                         </label>
-                        <input type="text" placeholder="City" />
+                        <input
+                          type="text"
+                          placeholder="City"
+                          name="city"
+                          value={formData.city}
+                          onChange={handleChange}
+                        />
                       </div>
 
                       <div>
                         <label>No of Students</label>
-                        <input type="text" placeholder="No of Students" />
+                        <input
+                          type="text"
+                          placeholder="No of Students"
+                          name="students"
+                          value={formData.students}
+                          onChange={handleChange}
+                        />
                       </div>
                     </form>
                     {/* Submit Button */}
                     <div className={styles.actionButtons}>
-                      <button className={styles.sendBtn}>Book</button>
+                      <button
+                        className={styles.sendBtn}
+                        type="submit"
+                        onClick={handleSubmit}
+                      >
+                        Book Now
+                      </button>
                     </div>
                   </div>
                 </div>
