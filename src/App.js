@@ -52,7 +52,7 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
-      <div className="App">
+      <div> 
         <Navbar />
 
         {/* Main Content */}

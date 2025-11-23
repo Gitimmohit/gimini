@@ -51,7 +51,7 @@ const QuizReport = () => {
   const GetCompleteQuizData = async () => {
     let temp_list = [];
     try {
-      const response = await axios.get(ServerAddress + `cards/get_quiz_details/?search=${quiz_search}&p=${quiz_page}&records=${10}`, {
+      const response = await axios.get(ServerAddress + `cards/get_quiz_details/?search=${quiz_search}&p=${quiz_page}&records=${10}&is_completed=True`, {
         headers: {
           Authorization: `Bearer ${AccessToken}`
         }
@@ -272,10 +272,12 @@ const QuizReport = () => {
       </Form>
       {reportData && (
         <Card className='m-2 p-3'>
+          <span style={{textAlign:"center"}}>
           <h5>{reportData.quiz_name} – Leaderboard</h5>
           <h6>
             Total Participants: {reportData.total_participants},Total Questions: {reportData.leaderboard[0]?.total_questions}
           </h6>
+          </span>
 
           <table className='table table-bordered'>
             <thead>
@@ -314,7 +316,7 @@ const QuizReport = () => {
           </table>
 
           {/* Download Button */}
-          {reportData?.length > 0 && (
+          {reportData !== null && (
             <button className='btn btn-primary' onClick={downloadExcel}>
               Download Excel
             </button>

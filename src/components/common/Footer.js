@@ -196,15 +196,15 @@ const Footer = () => {
         <footer
           className="w-full p-4 text-center text-sm text-gray-600 border-t bg-white"
           style={{
-            position: "fixed",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            zIndex: 50,
+            // position: "fixed",
+            // bottom: 0,
+            // left: 0,
+            // right: 0,
+            // display: "flex",
+            // flexDirection: "row",
+            // justifyContent: "space-between",
+            // alignItems: "center",
+            // zIndex: 50,
           }}
         >
           <div>
