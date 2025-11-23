@@ -46,6 +46,7 @@ import Transaction from "./pages/transaction/Transaction";
 import AddTransaction from "./pages/transaction/AddTransaction";
 import Amount from "./pages/amount/Amount";
 import AddAmount from "./pages/amount/AddAmount";
+import AddWithdrawalAmount from "./pages/amount/AddWithdrawalAmount";
 
 function App() {
   return (
@@ -99,6 +100,7 @@ function App() {
             <Route path="/transaction/add" element={<AddTransaction />} />
             <Route path="/amount" element={<Amount />} />
             <Route path="/amount/add" element={<AddAmount />} />
+            <Route path="/amount/withdrawal" element={<AddWithdrawalAmount />} />
           </Routes>
         </main>
 

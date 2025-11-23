@@ -26,27 +26,54 @@ const StudentDashboard = () => {
   const [copied, setCopied] = useState(false);
   const accessToken = useSelector((state) => state.user.access_token);
   const navigate = useNavigate();
-  const [upcoming_quiz, setupcoming_quiz] = useState([])
+  const [upcoming_quiz, setupcoming_quiz] = useState([]);
   // get Questions at add Quiz
-  const GetUpcomingQuizData = () => { 
+  const GetUpcomingQuizData = () => {
     axios
       .get(ServerAddress + `cards/get_upcoming_quiz_data/`, {
-        headers: { Authorization: `Bearer ${accessToken}` }
+        headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((response) => {
-        console.log("response--",response)
-        if (response.data.success){
-          setupcoming_quiz(response.data.upcoming_quizzes)
+        console.log("response--", response);
+        if (response.data.success) {
+          setupcoming_quiz(response.data.upcoming_quizzes);
         }
       })
       .catch((err) => {
-        console.log("err--",err)
+        console.log("err--", err);
       });
   };
 
-  useLayoutEffect(() => { 
-    GetUpcomingQuizData()
-  }, [])
+  useLayoutEffect(() => {
+    GetUpcomingQuizData();
+  }, []);
+
+  const [dashboard_data, setdashboard_data] = useState();
+  console.log("dashboard_data--",dashboard_data)
+  // get Questions at add Quiz
+  const dashboardData = () => {
+    axios
+      .get(
+        ServerAddress + `cards/getwallet-data/?&filter_type=${"STUDENT"}`,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      )
+      .then((response) => {
+        console.log("response1--", response);
+        if (response.data.results.length > 0) {
+          setdashboard_data(response.data.results[0]);
+        }
+      })
+      .catch((err) => {
+        console.log("err--", err);
+      });
+  };
+
+  useLayoutEffect(() => {
+    dashboardData();
+  }, []);
+
   const userStats = {
     quizzesTaken: 5,
     awardsWon: 3,
@@ -267,24 +294,31 @@ const StudentDashboard = () => {
   };
 
   const formatQuizDateTime = (dateString) => {
-  if (!dateString) return "Date not set";
-  const dateObj = new Date(dateString);
-  // Agar invalid date hai
-  if (isNaN(dateObj)) return "Invalid Date";
-  const formattedDate = dateObj.toLocaleDateString("en-GB", {day:"numeric",month:"long",year:"numeric",});
-  const formattedTime = dateObj.toLocaleTimeString("en-US", {hour:"numeric",minute:"2-digit",hour12: true,});
-  return `${formattedDate} at ${formattedTime} IST`;
+    if (!dateString) return "Date not set";
+    const dateObj = new Date(dateString);
+    // Agar invalid date hai
+    if (isNaN(dateObj)) return "Invalid Date";
+    const formattedDate = dateObj.toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+    const formattedTime = dateObj.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+    return `${formattedDate} at ${formattedTime} IST`;
   };
   const formatTotalTime = (timeString) => {
-  if (!timeString) return "N/A"; 
-  const [hours, minutes, seconds] = timeString.split(":").map(Number);
-  let result = "";
-  if (hours > 0) result += `${hours}h `;
-  if (minutes > 0) result += `${minutes}m `;
-  if (seconds > 0 || result === "") result += `${seconds}s`;
-  return result.trim() || "0s";
- };
-
+    if (!timeString) return "N/A";
+    const [hours, minutes, seconds] = timeString.split(":").map(Number);
+    let result = "";
+    if (hours > 0) result += `${hours}h `;
+    if (minutes > 0) result += `${minutes}m `;
+    if (seconds > 0 || result === "") result += `${seconds}s`;
+    return result.trim() || "0s";
+  };
 
   return (
     <div className="student-dashboard">
@@ -298,8 +332,11 @@ const StudentDashboard = () => {
           >
             <h1 style={{ color: "white" }}>Welcome back, Space Explorer! 🚀</h1>
             <p>Ready for your next cosmic challenge?</p>
-            <button className="action-btn primary" onClick={() => navigate("/start/quiz")}>
-            <span>Play Quiz</span>
+            <button
+              className="action-btn primary"
+              onClick={() => navigate("/start/quiz")}
+            >
+              <span>Play Quiz</span>
             </button>
           </motion.div>
 
@@ -381,12 +418,14 @@ const StudentDashboard = () => {
                     whileHover={{ y: -2 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
-                    <div className="quiz-badge">{formatTotalTime(quiz.total_time)}</div>
+                    <div className="quiz-badge">
+                      {formatTotalTime(quiz.total_time)}
+                    </div>
                     <div className="quiz-content">
                       <h3>{quiz.quiz_name}</h3>
                       <div className="quiz-meta">
                         <span className="date">
-                          <Schedule /> {formatQuizDateTime(quiz.quiz_date)}  
+                          <Schedule /> {formatQuizDateTime(quiz.quiz_date)}
                         </span>
                         <span className="participants">
                           👥 {quiz.participants}
@@ -397,7 +436,7 @@ const StudentDashboard = () => {
                       </div>
                     </div>
                     <div className="quiz-actions">
-                      <span className="entry-fee">₹{' '}{quiz.entry_fee} </span>
+                      <span className="entry-fee">₹ {quiz.entry_fee} </span>
                       <button
                         className={`action-btn ${
                           quiz.registered ? "registered" : "primary"
@@ -422,10 +461,15 @@ const StudentDashboard = () => {
                 <MenuBook className="stat-box-icon" />
               </div>
 
-              <div className="stat-box success">
+              <div
+                className="stat-box success"
+                onClick={() => navigate("/amount")}
+              >
                 <div className="stat-content">
                   <h3>Wallet Balance</h3>
-                  <div className="stat-value">₹800</div>
+                  <div className="stat-value">
+                    ₹{dashboard_data?.current_wallet_amount}
+                  </div>
                   <p>Available to withdraw</p>
                 </div>
                 <AccountBalanceWallet className="stat-box-icon" />
@@ -434,7 +478,9 @@ const StudentDashboard = () => {
               <div className="stat-box warning">
                 <div className="stat-content">
                   <h3>Referral Earnings</h3>
-                  <div className="stat-value">₹1,250</div>
+                  <div className="stat-value">
+                    ₹{dashboard_data?.earn_amount}
+                  </div>
                   <p>Total earned</p>
                 </div>
                 <People className="stat-box-icon" />
@@ -664,7 +710,7 @@ const StudentDashboard = () => {
             className="payments-page"
           >
             <div className="content-card">
-              <div className="card-header">
+              <div className="card-header" style={{ marginBottom: "6px" }}>
                 <h2>💳 Payment History</h2>
                 <div
                   style={{ display: "flex", flexDirection: "row", gap: "10px" }}
@@ -674,12 +720,8 @@ const StudentDashboard = () => {
                     className="wallet-balance"
                     onClick={() => navigate("/amount")}
                   >
-                    <span>Add Balance</span>
-                  </div>
-
-                  <div className="wallet-balance">
                     <AccountBalanceWallet />
-                    <span>Wallet Balance: ₹{referralData.walletBalance}</span>
+                    <span>Add Balance</span>
                   </div>
                 </div>
               </div>

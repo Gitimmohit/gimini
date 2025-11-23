@@ -101,55 +101,64 @@ const StudentRegistration = () => {
   };
 
   // for the keyboard control by keyboard
+
+  const handleOtpChange = (value, index) => {
+    // Allow only digits & max 1 character
+    if (!/^\d?$/.test(value)) return;
+
+    const updated = [...otpDigits];
+    updated[index] = value;
+    setOtpDigits(updated);
+
+    // Move to next input if a number is entered
+    if (value && inputRefs.current[index + 1]) {
+      inputRefs.current[index + 1].focus();
+    }
+  };
+
   const handleOtpKeyDown = (e, index) => {
     const key = e.key;
 
-    // Move Left (ArrowLeft)
+    // LEFT ARROW
     if (key === "ArrowLeft") {
-      if (index > 0) {
-        inputRefs.current[index - 1].focus();
-      }
+      if (index > 0) inputRefs.current[index - 1]?.focus();
       return;
     }
 
-    // Move Right (ArrowRight)
+    // RIGHT ARROW
     if (key === "ArrowRight") {
-      if (index < otpDigits.length - 1) {
-        inputRefs.current[index + 1].focus();
-      }
+      if (index < otpDigits.length - 1) inputRefs.current[index + 1]?.focus();
       return;
     }
 
-    // Backspace Logic
+    // BACKSPACE
     if (key === "Backspace") {
-      // If current box has value → clear it
+      e.preventDefault(); // IMPORTANT FIX
       if (otpDigits[index] !== "") {
-        handleOtpChange(index, "");
-        return;
-      }
-
-      // If empty → go to previous
-      if (index > 0) {
-        handleOtpChange(index - 1, "");
-        inputRefs.current[index - 1].focus();
+        handleOtpChange("", index);
+      } else if (index > 0) {
+        handleOtpChange("", index - 1);
+        inputRefs.current[index - 1]?.focus();
       }
       return;
     }
 
-    // Allow ONLY numbers
+    // ONLY allow digits
     if (!/^[0-9]$/.test(key)) {
       e.preventDefault();
       return;
     }
 
-    // When number typed → set & move next
-    handleOtpChange(index, key);
+    // Prevent browser inserting the digit automatically
+    e.preventDefault(); // 🔥 CRITICAL FIX
 
-    setTimeout(() => {
-      if (index < otpDigits.length - 1) {
-        inputRefs.current[index + 1].focus();
-      }
-    }, 50);
+    // Enter number manually
+    handleOtpChange(key, index);
+
+    // Move to next
+    if (index < otpDigits.length - 1) {
+      setTimeout(() => inputRefs.current[index + 1]?.focus(), 30);
+    }
   };
 
   // ===========================
@@ -280,17 +289,6 @@ const StudentRegistration = () => {
       });
   };
 
-  const handleOtpChange = (index, value) => {
-    if (/^\d*$/.test(value) && value.length <= 1) {
-      const newOtpDigits = [...otpDigits];
-      newOtpDigits[index] = value;
-      setOtpDigits(newOtpDigits);
-    }
-    if (value && index < otpDigits.length - 1) {
-      inputRefs.current[index + 1].focus();
-    }
-  };
-
   const showSuccessMessage = (message) => {
     toast.success(message, {
       position: "bottom-right",
@@ -385,7 +383,7 @@ const StudentRegistration = () => {
     <>
       {/* OTP Modal */}
       <div className="student-registration-page">
-        <Loader show={show} setshow={setshow} />
+        <Loader show={isLoading} setshow={setIsLoading} />
         <ToastContainer />
         <Modal
           show={show}

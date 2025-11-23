@@ -31,7 +31,7 @@ const AddAmount = () => {
   const location = useLocation();
   //redux state
   const accessToken = useSelector((state) => state.user.access_token);
-  const user_detail = useSelector((state) => state.user.userdetails);
+  const user_detail = useSelector((state) => state.user.user_details);
   // Toggle Btn
   const [circle_btn, setcircle_btn] = useState(true);
   const toggle_circle = () => {
@@ -40,16 +40,18 @@ const AddAmount = () => {
   const [isupdating, setisupdating] = useState(false);
   const [trans_id, settrans_id] = useState("");
 
-  const [username, setusername] = useState("");
+  const [username, setusername] = useState(
+    user_detail?.fullname ? toTitleCase(user_detail?.fullname) : ""
+  );
   const [username_err, setusername_err] = useState(false);
 
-  const [user_type, setuser_type] = useState("");
+  const [user_type, setuser_type] = useState(user_detail?.usertype);
   const [user_type_err, setuser_type_err] = useState(false);
 
   const [transaction_id, settransaction_id] = useState("");
   const [transaction_id_err, settransaction_id_err] = useState(false);
 
-  const [request_type, setrequest_type] = useState("");
+  const [request_type, setrequest_type] = useState("CR");
   const [request_type_error, setrequest_type_error] = useState(false);
 
   const [request_amt, setrequest_amt] = useState("");
@@ -64,7 +66,7 @@ const AddAmount = () => {
     ["B", "Approved"],
     ["C", "Reject"],
   ]);
-  const [current_status, setcurrent_status] = useState("");
+  const [current_status, setcurrent_status] = useState("Pending");
   const [current_status_id, setcurrent_status_id] = useState("");
   const [current_status_err, setcurrent_status_err] = useState(false);
 
@@ -74,9 +76,8 @@ const AddAmount = () => {
       .post(
         ServerAddress + "cards/add_tranaction/",
         {
-          transactionId: transaction_id
-            ? toTitleCase(transaction_id).toUpperCase()
-            : transaction_id,
+          user:user_detail.id,
+          transactionId: transaction_id ? transaction_id : "",
           request_type: request_type
             ? toTitleCase(request_type).toUpperCase()
             : request_type,
@@ -191,8 +192,8 @@ const AddAmount = () => {
       let qun_data = location.state.data;
       setisupdating(true);
       settrans_id(qun_data?.id);
-      setusername(qun_data?.user_name);
-      setuser_type(toTitleCase(qun_data?.user_type));
+      setusername(user_detail?.fullname);
+      setuser_type(toTitleCase(user_detail?.user_type));
       settransaction_id(toTitleCase(qun_data?.transactionId));
       setrequest_type(qun_data?.request_type);
       setis_tranaction(qun_data.is_transaction_complete);
@@ -204,12 +205,10 @@ const AddAmount = () => {
   return (
     <>
       <div className="main-cont">
-        <PageTitle
-          page={isupdating ? "Update Transaction" : "Add Transaction"}
-        />
+        <PageTitle page={isupdating ? "Update Amount" : "Add Amount"} />
         <Title
-          title={isupdating ? "Update Transaction" : "Add Transaction"}
-          parent_title={"Transaction"}
+          title={isupdating ? "Update Amount" : "Add Amount"}
+          parent_title={"Amount"}
         />
         <Loader show={show} setshow={setshow} />
         <ToastContainer />
@@ -370,6 +369,7 @@ const AddAmount = () => {
                           data_item_s={current_status}
                           set_data_item_s={setcurrent_status}
                           set_id={setcurrent_status_id}
+                          disable_me={true}
                           show_search={false}
                           show_error={true}
                           error_s={current_status_err}
@@ -387,9 +387,7 @@ const AddAmount = () => {
                           value={request_amt}
                           onChange={(event) => {
                             const { value } = event.target;
-                            if (value.length <= 2) {
-                              setrequest_amt(value);
-                            }
+                            setrequest_amt(value);
                           }}
                           invalid={request_amt_err}
                           className="form-control-md no-arrows"

@@ -25,13 +25,13 @@ import "react-toastify/dist/ReactToastify.css";
 import NSearchInput from "../../components/nsearchInput/NSearchInput";
 import Title from "../../components/common/title/Title";
 
-const AddTransaction = () => {
+const AddWithdrawalAmount = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
   //redux state
   const accessToken = useSelector((state) => state.user.access_token);
-  const user_detail = useSelector((state) => state.user.userdetails);
+  const user_detail = useSelector((state) => state.user.user_details);
   // Toggle Btn
   const [circle_btn, setcircle_btn] = useState(true);
   const toggle_circle = () => {
@@ -40,16 +40,18 @@ const AddTransaction = () => {
   const [isupdating, setisupdating] = useState(false);
   const [trans_id, settrans_id] = useState("");
 
-  const [username, setusername] = useState("");
+  const [username, setusername] = useState(
+    user_detail?.fullname ? toTitleCase(user_detail?.fullname) : ""
+  );
   const [username_err, setusername_err] = useState(false);
 
-  const [user_type, setuser_type] = useState("");
+  const [user_type, setuser_type] = useState(user_detail?.usertype);
   const [user_type_err, setuser_type_err] = useState(false);
 
   const [transaction_id, settransaction_id] = useState("");
   const [transaction_id_err, settransaction_id_err] = useState(false);
 
-  const [request_type, setrequest_type] = useState("");
+  const [request_type, setrequest_type] = useState("DR");
   const [request_type_error, setrequest_type_error] = useState(false);
 
   const [request_amt, setrequest_amt] = useState("");
@@ -64,9 +66,31 @@ const AddTransaction = () => {
     ["B", "Approved"],
     ["C", "Reject"],
   ]);
-  const [current_status, setcurrent_status] = useState("");
+  const [current_status, setcurrent_status] = useState("Pending");
   const [current_status_id, setcurrent_status_id] = useState("");
   const [current_status_err, setcurrent_status_err] = useState(false);
+
+  const [dashboard_data, setdashboard_data] = useState();
+
+  const dashboardData = () => {
+    axios
+      .get(ServerAddress + `cards/getwallet-data/?&filter_type=${"STUDENT"}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then((response) => {
+        console.log("response1--", response);
+        if (response.data.results.length > 0) {
+          setdashboard_data(response.data.results[0]);
+        }
+      })
+      .catch((err) => {
+        console.log("err--", err);
+      });
+  };
+
+  useLayoutEffect(() => {
+    dashboardData();
+  }, []);
 
   const send_transaction_data = () => {
     setshow(true);
@@ -74,16 +98,15 @@ const AddTransaction = () => {
       .post(
         ServerAddress + "cards/add_tranaction/",
         {
-          transaction_id: transaction_id ? transaction_id : null,
+          user: user_detail.id,
+          transactionId: transaction_id ? transaction_id : "",
           request_type: request_type
             ? toTitleCase(request_type).toUpperCase()
             : request_type,
           current_status: current_status
             ? toTitleCase(current_status).toUpperCase()
             : current_status,
-          transaction_amt: request_amt
-            ? toTitleCase(request_amt).toUpperCase()
-            : request_amt,
+          transaction_amt: request_amt,
         },
         {
           headers: {
@@ -191,8 +214,8 @@ const AddTransaction = () => {
       let qun_data = location.state.data;
       setisupdating(true);
       settrans_id(qun_data?.id);
-      setusername(qun_data?.user_name);
-      setuser_type(toTitleCase(qun_data?.user_type));
+      setusername(user_detail?.fullname);
+      setuser_type(toTitleCase(user_detail?.user_type));
       settransaction_id(toTitleCase(qun_data?.transactionId));
       setrequest_type(qun_data?.request_type);
       setis_tranaction(qun_data.is_transaction_complete);
@@ -204,19 +227,17 @@ const AddTransaction = () => {
   return (
     <>
       <div className="main-cont">
-        <PageTitle
-          page={isupdating ? "Update Transaction" : "Add Transaction"}
-        />
+        <PageTitle page={isupdating ? "Update Withdrawal" : "Add Withdrawal"} />
         <Title
-          title={isupdating ? "Update Transaction" : "Add Transaction"}
-          parent_title={"Transaction"}
+          title={isupdating ? "Update Withdrawal" : "Add Withdrawal"}
+          parent_title={"Withdrawal"}
         />
         <Loader show={show} setshow={setshow} />
         <ToastContainer />
         <Form
           onSubmit={(e) => {
             e.preventDefault();
-            if (!transaction_id) {
+            if (!transaction_id && isupdating) {
               settransaction_id_err(true);
               document.getElementById("question_details").scrollIntoView();
             } else if (!request_type) {
@@ -314,7 +335,8 @@ const AddTransaction = () => {
                     <Col lg={3} md={6} sm={6}>
                       <div>
                         <Label className="header-child">
-                          Transaction Id<span className="mandatory"> *</span>
+                          Transaction Id
+                          {isupdating && <span className="mandatory"> *</span>}
                         </Label>
                         <Input
                           value={transaction_id}
@@ -370,6 +392,7 @@ const AddTransaction = () => {
                           data_item_s={current_status}
                           set_data_item_s={setcurrent_status}
                           set_id={setcurrent_status_id}
+                          disable_me={true}
                           show_search={false}
                           show_error={true}
                           error_s={current_status_err}
@@ -390,6 +413,8 @@ const AddTransaction = () => {
                             setrequest_amt(value);
                           }}
                           invalid={request_amt_err}
+                          max={dashboard_data?.current_wallet_amount}
+                          min={0}
                           className="form-control-md no-arrows"
                           name="request_amt"
                           id="input"
@@ -440,4 +465,4 @@ const AddTransaction = () => {
   );
 };
 
-export default AddTransaction;
+export default AddWithdrawalAmount;

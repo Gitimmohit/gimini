@@ -169,12 +169,12 @@ const TransactionDataFormate = ({ data, data1, can_delete }) => {
             )}
             <td>{quiz.user_name}</td>
             <td>{quiz.user_type}</td>
+            <td>{quiz.transactionId}</td>
             <td>
               <Link to="/transaction/add" state={{ data: quiz }}>
-                {quiz.transactionId}
+                {quiz.transaction_amt ? quiz.transaction_amt : "-"}
               </Link>
             </td>
-            <td>{quiz.transaction_amt ? quiz.transaction_amt : "-"}</td>
             <td>{quiz.request_type ? quiz.request_type : "-"}</td>
             <td>{quiz.current_status ? quiz.current_status : "-"}</td>
             <td>{<DateConvertor inputDate={quiz.created_at} />}</td>

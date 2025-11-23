@@ -34,14 +34,20 @@ const Amount = () => {
         <Title title={"Transaction"} parent_title={"Transaction"} />
         <div className="mx-1">
           <div className="container-fluid " style={{ background: "white" }}>
-            <div
-              className="mb-2 row "
-              style={{ textAlign: "left" }}
-            >
+            <div className="mb-2 row " style={{ textAlign: "left" }}>
               <div className="col-sm-4">{<SearchList />}</div>
               <div className="col-sm-8">
                 <div className="text-sm-end">
-                  
+                  <NavBtn
+                    btn_name="Add Amount"
+                    icon={<MdAdd size={15} />}
+                    form_path="/amount/add"
+                  />
+                  <NavBtn
+                    btn_name="Withdrawal Amount"
+                    icon={<MdAdd size={15} />}
+                    form_path="/amount/withdrawal"
+                  />
                   {/* Filter Tool */}
                   {/* <Filter type={"question"} /> */}
                 </div>
@@ -53,7 +59,7 @@ const Amount = () => {
               can_delete={false}
               Data_Title={AmountDataTitle}
               Data_Format={AmountDataFormate}
-              path={`cards/transaction-request/?search=${search}&p=${page_num}&records=${data_len}&filter_type=${'USER'}`}
+              path={`cards/transaction-request/?search=${search}&p=${page_num}&records=${data_len}&filter_type=${"USER"}`}
             />
             <NumPagination path={"path"} />
           </div>
