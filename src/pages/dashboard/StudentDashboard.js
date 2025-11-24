@@ -20,15 +20,31 @@ import { useNavigate } from "react-router-dom";
 import { ServerAddress } from "../../server/ServerAddress";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import toTitleCase from "../../components/toTitleCase/toTitleCase";
+import { ToastContainer, toast } from "react-toastify";
+import Loader from "../../components/loader/Loader";
+import { Button, Modal } from "react-bootstrap";
 
 const StudentDashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [copied, setCopied] = useState(false);
   const accessToken = useSelector((state) => state.user.access_token);
+  const user_detail = useSelector((state) => state.user.user_details);
+
   const navigate = useNavigate();
+  const [show, setshow] = useState(false);
+
   const [upcoming_quiz, setupcoming_quiz] = useState([]);
+  const [quiz_id, setquiz_id] = useState("");
+  const [quiz_amount, setquiz_amount] = useState("");
+  console.log("quiz_id==", quiz_id);
+
+  const [showModal, setshowModal] = useState(false);
+  const handleCls = () => setshowModal(false);
+
   // get Questions at add Quiz
   const GetUpcomingQuizData = () => {
+    setshow(true);
     axios
       .get(ServerAddress + `cards/get_upcoming_quiz_data/`, {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -36,10 +52,12 @@ const StudentDashboard = () => {
       .then((response) => {
         console.log("response--", response);
         if (response.data.success) {
+          setshow(false);
           setupcoming_quiz(response.data.upcoming_quizzes);
         }
       })
       .catch((err) => {
+        setshow(false);
         console.log("err--", err);
       });
   };
@@ -49,23 +67,25 @@ const StudentDashboard = () => {
   }, []);
 
   const [dashboard_data, setdashboard_data] = useState();
-  console.log("dashboard_data--",dashboard_data)
+  console.log("dashboard_data--", dashboard_data);
   // get Questions at add Quiz
   const dashboardData = () => {
+    setshow(true);
     axios
-      .get(
-        ServerAddress + `cards/getwallet-data/?&filter_type=${"STUDENT"}`,
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        }
-      )
+      .get(ServerAddress + `cards/getwallet-data/?&filter_type=${"STUDENT"}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
       .then((response) => {
         console.log("response1--", response);
         if (response.data.results.length > 0) {
+          setshow(false);
           setdashboard_data(response.data.results[0]);
+        } else {
+          setshow(false);
         }
       })
       .catch((err) => {
+        setshow(false);
         console.log("err--", err);
       });
   };
@@ -287,6 +307,50 @@ const StudentDashboard = () => {
     pendingEarnings: 200,
   };
 
+  const ParticipateQuiz = () => {
+    setshow(true);
+    axios
+      .post(
+        ServerAddress + "cards/addquizparticipant/",
+        {
+          user: user_detail.id,
+          quiz: quiz_id,
+          quiz_amount: quiz_amount,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      .then(function (resp) {
+        if (resp.status === 201) {
+          setshowModal(false);
+          toast.success(`Transaction successfully !`, {
+            position: "top-center",
+            autoClose: 2000,
+          });
+        } else {
+          setshowModal(false);
+        }
+      })
+      .catch((err) => {
+        setshowModal(false);
+        toast.error(`Error Occur While Adding ${err}`, {
+          position: "bottom-right",
+          autoClose: 1000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          closeButton: false,
+        });
+        console.error(`Error Occur While Adding ${err}`);
+      });
+  };
+
   const copyReferralCode = () => {
     navigator.clipboard.writeText(referralData.referralCode);
     setCopied(true);
@@ -321,442 +385,493 @@ const StudentDashboard = () => {
   };
 
   return (
-    <div className="student-dashboard">
-      {/* Header with Gradient Background */}
-      <div className="dashboard-hero">
-        <div className="hero-content">
-          <motion.div
-            className="welcome-section"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <h1 style={{ color: "white" }}>Welcome back, Space Explorer! 🚀</h1>
-            <p>Ready for your next cosmic challenge?</p>
-            <button
-              className="action-btn primary"
-              onClick={() => navigate("/start/quiz")}
+    <>
+      <div className="student-dashboard">
+        <Loader show={show} setshow={setshow} />
+        <ToastContainer />
+
+        <Modal show={showModal} onHide={handleCls}>
+          <Modal.Header closeButton>
+            <Modal.Title>Confirmation</Modal.Title>
+          </Modal.Header>
+          <Modal.Body style={{ fontSize: "14px" }}>
+            Are You Sure you want to participate in this quiz ?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCls}>
+              Close
+            </Button>
+            <Button variant="success" onClick={() => ParticipateQuiz()}>
+              Participate
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        {/* Header with Gradient Background */}
+        <div className="dashboard-hero">
+          <div className="hero-content">
+            <motion.div
+              className="welcome-section"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
             >
-              <span>Play Quiz</span>
-            </button>
-          </motion.div>
+              <h1 style={{ color: "white" }}>
+                Welcome back, Space Explorer! 🚀
+              </h1>
+              <p>Ready for your next cosmic challenge?</p>
+              <button
+                className="action-btn primary"
+                onClick={() => navigate("/start/quiz")}
+              >
+                <span>Play Quiz</span>
+              </button>
+            </motion.div>
 
-          <motion.div
-            className="hero-stats"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-          >
-            <div className="stat-card">
-              <div className="stat-icon-wrapper">
-                <Quiz className="stat-icon" />
-              </div>
-              <div className="stat-info">
-                <h3>{userStats.quizzesTaken}</h3>
-                <span>Quizzes Taken</span>
-              </div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-icon-wrapper">
-                <EmojiEvents className="stat-icon" />
-              </div>
-              <div className="stat-info">
-                <h3>{userStats.awardsWon}</h3>
-                <span>Awards Won</span>
-              </div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-icon-wrapper">
-                <TrendingUp className="stat-icon" />
-              </div>
-              <div className="stat-info">
-                <h3>{userStats.averageScore}%</h3>
-                <span>Avg Score</span>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Navigation Tabs */}
-      <div className="dashboard-nav">
-        <div className="nav-container">
-          {[
-            { id: "overview", label: "Overview", icon: <RocketLaunch /> },
-            { id: "quizzes", label: "Live Quizzes", icon: <Quiz /> },
-            { id: "past-quizzes", label: "Past Quizzes", icon: <History /> },
-            { id: "study", label: "Study Material", icon: <MenuBook /> },
-            { id: "referral", label: "Refer & Earn", icon: <People /> },
-            { id: "payments", label: "Payments", icon: <Payment /> },
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              className={`nav-btn ${activeTab === tab.id ? "active" : ""}`}
-              onClick={() => setActiveTab(tab.id)}
+            <motion.div
+              className="hero-stats"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 }}
             >
-              <span className="nav-icon">{tab.icon}</span>
-              <span className="nav-label">{tab.label}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="dashboard-content">
-        {activeTab === "overview" && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            {/* Upcoming Quizzes */}
-            <div className="content-card">
-              <div className="card-header">
-                <h2>🎯 Upcoming Quiz Challenges</h2>
-                <span className="see-all">See All</span>
+              <div className="stat-card">
+                <div className="stat-icon-wrapper">
+                  <Quiz className="stat-icon" />
+                </div>
+                <div className="stat-info">
+                  <h3>{userStats.quizzesTaken}</h3>
+                  <span>Quizzes Taken</span>
+                </div>
               </div>
-              <div className="quizzes-list">
-                {upcoming_quiz.map((quiz) => (
-                  <motion.div
-                    key={quiz.id}
-                    className="quiz-item"
-                    whileHover={{ y: -2 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <div className="quiz-badge">
-                      {formatTotalTime(quiz.total_time)}
-                    </div>
-                    <div className="quiz-content">
-                      <h3>{quiz.quiz_name}</h3>
-                      <div className="quiz-meta">
-                        <span className="date">
-                          <Schedule /> {formatQuizDateTime(quiz.quiz_date)}
-                        </span>
-                        <span className="participants">
-                          👥 {quiz.participants}
-                        </span>
-                      </div>
-                      <div className="quiz-prize">
-                        <EmojiEvents /> {quiz.prize_money}
-                      </div>
-                    </div>
-                    <div className="quiz-actions">
-                      <span className="entry-fee">₹ {quiz.entry_fee} </span>
-                      <button
-                        className={`action-btn ${
-                          quiz.registered ? "registered" : "primary"
-                        }`}
+              <div className="stat-card">
+                <div className="stat-icon-wrapper">
+                  <EmojiEvents className="stat-icon" />
+                </div>
+                <div className="stat-info">
+                  <h3>{userStats.awardsWon}</h3>
+                  <span>Awards Won</span>
+                </div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-icon-wrapper">
+                  <TrendingUp className="stat-icon" />
+                </div>
+                <div className="stat-info">
+                  <h3>{userStats.averageScore}%</h3>
+                  <span>Avg Score</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Navigation Tabs */}
+        <div className="dashboard-nav">
+          <div className="nav-container">
+            {[
+              { id: "overview", label: "Overview", icon: <RocketLaunch /> },
+              { id: "quizzes", label: "Live Quizzes", icon: <Quiz /> },
+              { id: "past-quizzes", label: "Past Quizzes", icon: <History /> },
+              { id: "study", label: "Study Material", icon: <MenuBook /> },
+              { id: "referral", label: "Refer & Earn", icon: <People /> },
+              { id: "payments", label: "Payments", icon: <Payment /> },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                className={`nav-btn ${activeTab === tab.id ? "active" : ""}`}
+                onClick={() => setActiveTab(tab.id)}
+              >
+                <span className="nav-icon">{tab.icon}</span>
+                <span className="nav-label">{tab.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="dashboard-content">
+          {activeTab === "overview" && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              {/* Upcoming Quizzes */}
+              <div className="content-card">
+                <div className="card-header">
+                  <h2>🎯 Upcoming Quiz Challenges</h2>
+                  <span className="see-all">See All</span>
+                </div>
+                {upcoming_quiz.length > 0 ? (
+                  <div className="quizzes-list">
+                    {upcoming_quiz.map((quiz) => (
+                      <motion.div
+                        key={quiz.id}
+                        className="quiz-item"
+                        whileHover={{ y: -2 }}
+                        transition={{ type: "spring", stiffness: 300 }}
                       >
-                        {quiz.registered ? "Registered ✓" : "Register Now"}
+                        <div className="quiz-badge">
+                          {formatTotalTime(quiz.total_time)}
+                        </div>
+
+                        <div className="quiz-content">
+                          <h3>{quiz.quiz_name}</h3>
+
+                          <div className="quiz-meta">
+                            <span className="date">
+                              <Schedule /> {formatQuizDateTime(quiz.quiz_date)}
+                            </span>
+
+                            <span className="participants">
+                              👥 {quiz.participants}
+                            </span>
+                          </div>
+
+                          <div className="quiz-prize">
+                            <EmojiEvents /> {quiz.prize_money}
+                          </div>
+                        </div>
+
+                        <div className="quiz-actions">
+                          <span className="entry-fee">₹ {quiz.entry_fee}</span>
+
+                          <button
+                            className={`action-btn ${
+                              quiz.registered ? "registered" : "primary"
+                            }`}
+                            onClick={() => {
+                              setshowModal(true);
+                              setquiz_id(quiz.id);
+                              setquiz_amount(quiz.entry_fee);
+                            }}
+                          >
+                            {quiz.registered ? "Registered ✓" : "Register Now"}
+                          </button>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="no-data-found">
+                    <div className="no-data-icon">📊</div>
+                    <h3>No Upcoming Quizzes</h3>
+                    <p>Check back later for new challenges!</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Quick Stats */}
+              <div className="stats-grid">
+                <div className="stat-box primary">
+                  <div className="stat-content">
+                    <h3>Study Materials</h3>
+                    <div className="stat-value">12</div>
+                    <p>Available resources</p>
+                  </div>
+                  <MenuBook className="stat-box-icon" />
+                </div>
+
+                <div
+                  className="stat-box success"
+                  onClick={() => navigate("/amount")}
+                >
+                  <div className="stat-content">
+                    <h3>Wallet Balance</h3>
+                    <div className="stat-value">
+                      ₹{dashboard_data?.current_wallet_amount}
+                    </div>
+                    <p>Available to withdraw</p>
+                  </div>
+                  <AccountBalanceWallet className="stat-box-icon" />
+                </div>
+
+                <div className="stat-box warning">
+                  <div className="stat-content">
+                    <h3>Referral Earnings</h3>
+                    <div className="stat-value">
+                      ₹{dashboard_data?.earn_amount}
+                    </div>
+                    <p>Total earned</p>
+                  </div>
+                  <People className="stat-box-icon" />
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {activeTab === "quizzes" && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="quizzes-page"
+            >
+              <div className="content-card">
+                <div className="card-header">
+                  <h2>🎮 Live Quiz Challenges</h2>
+                  <p>Join these exciting quizzes and win amazing prizes!</p>
+                </div>
+                <div className="featured-quizzes">
+                  {upcomingQuizzes.map((quiz) => (
+                    <div key={quiz.id} className="featured-quiz">
+                      <div className="quiz-hero">
+                        <div className="quiz-tag">{quiz.difficulty}</div>
+                        <h3>{quiz.title}</h3>
+                        <p className="quiz-description">
+                          Test your knowledge and win incredible prizes in this
+                          cosmic challenge!
+                        </p>
+
+                        <div className="quiz-details">
+                          <div className="detail">
+                            <Schedule />
+                            <span>
+                              {quiz.date} • {quiz.time}
+                            </span>
+                          </div>
+                          <div className="detail">
+                            <People />
+                            <span>{quiz.participants} participants</span>
+                          </div>
+                          <div className="detail prize">
+                            <EmojiEvents />
+                            <span>{quiz.prize}</span>
+                          </div>
+                        </div>
+
+                        <div className="quiz-footer">
+                          <div className="entry-info">
+                            <span className="fee">{quiz.entryFee}</span>
+                            <span className="duration">
+                              45 min • 30 questions
+                            </span>
+                          </div>
+                          <button
+                            className={`participate-btn ${
+                              quiz.registered ? "registered" : ""
+                            }`}
+                          >
+                            {quiz.registered
+                              ? "Already Registered"
+                              : "Participate Now"}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {activeTab === "past-quizzes" && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="past-quizzes-page"
+            >
+              <div className="content-card">
+                <div className="card-header">
+                  <h2>📊 Your Quiz History</h2>
+                  <p>Track your performance and achievements</p>
+                </div>
+                <div className="past-quizzes-grid">
+                  {pastQuizzes.map((quiz) => (
+                    <div key={quiz.id} className="past-quiz-card">
+                      <div className="quiz-performance">
+                        <div className="score-circle">
+                          <div className="score-value">{quiz.score}%</div>
+                          <div className="score-label">Score</div>
+                        </div>
+                        <div className="quiz-info">
+                          <h3>{quiz.title}</h3>
+                          <p className="quiz-date">Completed on {quiz.date}</p>
+                          <div className="performance-stats">
+                            <span className="rank">🏆 Rank: #{quiz.rank}</span>
+                            <span className="participants">
+                              👥 {quiz.participants} players
+                            </span>
+                          </div>
+                          <div className="prize-earned">
+                            <EmojiEvents /> {quiz.prize}
+                          </div>
+                        </div>
+                      </div>
+                      <button className="view-certificate-btn">
+                        View Certificate
                       </button>
                     </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
-            {/* Quick Stats */}
-            <div className="stats-grid">
-              <div className="stat-box primary">
-                <div className="stat-content">
-                  <h3>Study Materials</h3>
-                  <div className="stat-value">12</div>
-                  <p>Available resources</p>
+                  ))}
                 </div>
-                <MenuBook className="stat-box-icon" />
               </div>
+            </motion.div>
+          )}
 
-              <div
-                className="stat-box success"
-                onClick={() => navigate("/amount")}
-              >
-                <div className="stat-content">
-                  <h3>Wallet Balance</h3>
-                  <div className="stat-value">
-                    ₹{dashboard_data?.current_wallet_amount}
-                  </div>
-                  <p>Available to withdraw</p>
+          {activeTab === "study" && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="study-page"
+            >
+              <div className="content-card">
+                <div className="card-header">
+                  <h2>📚 Learning Resources</h2>
+                  <p>Enhance your knowledge with our study materials</p>
                 </div>
-                <AccountBalanceWallet className="stat-box-icon" />
-              </div>
-
-              <div className="stat-box warning">
-                <div className="stat-content">
-                  <h3>Referral Earnings</h3>
-                  <div className="stat-value">
-                    ₹{dashboard_data?.earn_amount}
-                  </div>
-                  <p>Total earned</p>
+                <div className="materials-grid">
+                  {studyMaterials.map((material) => (
+                    <div key={material.id} className="material-card">
+                      <div className="material-header">
+                        <div className="material-category">
+                          {material.category}
+                        </div>
+                        <div className="material-rating">
+                          <Star /> {material.rating}
+                        </div>
+                      </div>
+                      <div className="material-icon">
+                        <MenuBook />
+                      </div>
+                      <h3>{material.title}</h3>
+                      <p className="material-type">{material.type}</p>
+                      <div className="material-details">
+                        <span>{material.size || material.duration}</span>
+                        <span>•</span>
+                        <span>{material.downloads} downloads</span>
+                      </div>
+                      <button className="download-btn">
+                        Download Resource
+                      </button>
+                    </div>
+                  ))}
                 </div>
-                <People className="stat-box-icon" />
               </div>
-            </div>
-          </motion.div>
-        )}
+            </motion.div>
+          )}
 
-        {activeTab === "quizzes" && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="quizzes-page"
-          >
-            <div className="content-card">
-              <div className="card-header">
-                <h2>🎮 Live Quiz Challenges</h2>
-                <p>Join these exciting quizzes and win amazing prizes!</p>
-              </div>
-              <div className="featured-quizzes">
-                {upcomingQuizzes.map((quiz) => (
-                  <div key={quiz.id} className="featured-quiz">
-                    <div className="quiz-hero">
-                      <div className="quiz-tag">{quiz.difficulty}</div>
-                      <h3>{quiz.title}</h3>
-                      <p className="quiz-description">
-                        Test your knowledge and win incredible prizes in this
-                        cosmic challenge!
-                      </p>
-
-                      <div className="quiz-details">
-                        <div className="detail">
-                          <Schedule />
-                          <span>
-                            {quiz.date} • {quiz.time}
-                          </span>
-                        </div>
-                        <div className="detail">
-                          <People />
-                          <span>{quiz.participants} participants</span>
-                        </div>
-                        <div className="detail prize">
-                          <EmojiEvents />
-                          <span>{quiz.prize}</span>
-                        </div>
-                      </div>
-
-                      <div className="quiz-footer">
-                        <div className="entry-info">
-                          <span className="fee">{quiz.entryFee}</span>
-                          <span className="duration">
-                            45 min • 30 questions
-                          </span>
-                        </div>
-                        <button
-                          className={`participate-btn ${
-                            quiz.registered ? "registered" : ""
-                          }`}
-                        >
-                          {quiz.registered
-                            ? "Already Registered"
-                            : "Participate Now"}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        {activeTab === "past-quizzes" && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="past-quizzes-page"
-          >
-            <div className="content-card">
-              <div className="card-header">
-                <h2>📊 Your Quiz History</h2>
-                <p>Track your performance and achievements</p>
-              </div>
-              <div className="past-quizzes-grid">
-                {pastQuizzes.map((quiz) => (
-                  <div key={quiz.id} className="past-quiz-card">
-                    <div className="quiz-performance">
-                      <div className="score-circle">
-                        <div className="score-value">{quiz.score}%</div>
-                        <div className="score-label">Score</div>
-                      </div>
-                      <div className="quiz-info">
-                        <h3>{quiz.title}</h3>
-                        <p className="quiz-date">Completed on {quiz.date}</p>
-                        <div className="performance-stats">
-                          <span className="rank">🏆 Rank: #{quiz.rank}</span>
-                          <span className="participants">
-                            👥 {quiz.participants} players
-                          </span>
-                        </div>
-                        <div className="prize-earned">
-                          <EmojiEvents /> {quiz.prize}
-                        </div>
-                      </div>
-                    </div>
-                    <button className="view-certificate-btn">
-                      View Certificate
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        {activeTab === "study" && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="study-page"
-          >
-            <div className="content-card">
-              <div className="card-header">
-                <h2>📚 Learning Resources</h2>
-                <p>Enhance your knowledge with our study materials</p>
-              </div>
-              <div className="materials-grid">
-                {studyMaterials.map((material) => (
-                  <div key={material.id} className="material-card">
-                    <div className="material-header">
-                      <div className="material-category">
-                        {material.category}
-                      </div>
-                      <div className="material-rating">
-                        <Star /> {material.rating}
-                      </div>
-                    </div>
-                    <div className="material-icon">
-                      <MenuBook />
-                    </div>
-                    <h3>{material.title}</h3>
-                    <p className="material-type">{material.type}</p>
-                    <div className="material-details">
-                      <span>{material.size || material.duration}</span>
-                      <span>•</span>
-                      <span>{material.downloads} downloads</span>
-                    </div>
-                    <button className="download-btn">Download Resource</button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        {activeTab === "referral" && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="referral-page"
-          >
-            <div className="referral-hero">
-              <div className="referral-content">
-                <h2>Invite Friends & Earn Rewards 🎁</h2>
-                <p>
-                  Share your referral code and earn ₹100 for every friend who
-                  joins and participates in a quiz!
-                </p>
-
-                <div className="referral-stats">
-                  <div className="referral-stat">
-                    <div className="stat-value">
-                      ₹{referralData.totalEarnings}
-                    </div>
-                    <div className="stat-label">Total Earned</div>
-                  </div>
-                  <div className="referral-stat">
-                    <div className="stat-value">
-                      {referralData.totalReferrals}
-                    </div>
-                    <div className="stat-label">Friends Referred</div>
-                  </div>
-                  <div className="referral-stat">
-                    <div className="stat-value">
-                      ₹{referralData.walletBalance}
-                    </div>
-                    <div className="stat-label">Available Now</div>
-                  </div>
-                </div>
-
-                <div className="referral-code-section">
-                  <h3>Your Referral Code</h3>
-                  <div className="referral-code-box">
-                    <code>{referralData.referralCode}</code>
-                    <button
-                      className={`copy-btn ${copied ? "copied" : ""}`}
-                      onClick={copyReferralCode}
-                    >
-                      <ContentCopy />
-                      {copied ? "Copied!" : "Copy"}
-                    </button>
-                  </div>
-                  <p className="referral-note">
-                    Share this code with friends. You both get ₹100 when they
-                    join and participate in their first quiz!
+          {activeTab === "referral" && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="referral-page"
+            >
+              <div className="referral-hero">
+                <div className="referral-content">
+                  <h2>Invite Friends & Earn Rewards 🎁</h2>
+                  <p>
+                    Share your referral code and earn ₹100 for every friend who
+                    joins and participates in a quiz!
                   </p>
-                </div>
 
-                <div className="referral-share-buttons">
-                  <button className="share-btn whatsapp">
-                    Share on WhatsApp
-                  </button>
-                  <button className="share-btn telegram">
-                    Share on Telegram
-                  </button>
-                  <button className="share-btn link">Copy Share Link</button>
+                  <div className="referral-stats">
+                    <div className="referral-stat">
+                      <div className="stat-value">
+                        ₹{referralData.totalEarnings}
+                      </div>
+                      <div className="stat-label">Total Earned</div>
+                    </div>
+                    <div className="referral-stat">
+                      <div className="stat-value">
+                        {referralData.totalReferrals}
+                      </div>
+                      <div className="stat-label">Friends Referred</div>
+                    </div>
+                    <div className="referral-stat">
+                      <div className="stat-value">
+                        ₹{referralData.walletBalance}
+                      </div>
+                      <div className="stat-label">Available Now</div>
+                    </div>
+                  </div>
+
+                  <div className="referral-code-section">
+                    <h3>Your Referral Code</h3>
+                    <div className="referral-code-box">
+                      <code>{referralData.referralCode}</code>
+                      <button
+                        className={`copy-btn ${copied ? "copied" : ""}`}
+                        onClick={copyReferralCode}
+                      >
+                        <ContentCopy />
+                        {copied ? "Copied!" : "Copy"}
+                      </button>
+                    </div>
+                    <p className="referral-note">
+                      Share this code with friends. You both get ₹100 when they
+                      join and participate in their first quiz!
+                    </p>
+                  </div>
+
+                  <div className="referral-share-buttons">
+                    <button className="share-btn whatsapp">
+                      Share on WhatsApp
+                    </button>
+                    <button className="share-btn telegram">
+                      Share on Telegram
+                    </button>
+                    <button className="share-btn link">Copy Share Link</button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        )}
+            </motion.div>
+          )}
 
-        {activeTab === "payments" && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="payments-page"
-          >
-            <div className="content-card">
-              <div className="card-header" style={{ marginBottom: "6px" }}>
-                <h2>💳 Payment History</h2>
-                <div
-                  style={{ display: "flex", flexDirection: "row", gap: "10px" }}
-                >
+          {activeTab === "payments" && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="payments-page"
+            >
+              <div className="content-card">
+                <div className="card-header" style={{ marginBottom: "6px" }}>
+                  <h2>💳 Payment History</h2>
                   <div
-                    style={{ cursor: "pointer" }}
-                    className="wallet-balance"
-                    onClick={() => navigate("/amount")}
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: "10px",
+                    }}
                   >
-                    <AccountBalanceWallet />
-                    <span>Add Balance</span>
-                  </div>
-                </div>
-              </div>
-              <div className="payments-table">
-                <div className="table-header">
-                  <span>Date</span>
-                  <span>Description</span>
-                  <span>Amount</span>
-                  <span>Status</span>
-                </div>
-                {paymentHistory.map((payment) => (
-                  <div key={payment.id} className="table-row">
-                    <span className="date">{payment.date}</span>
-                    <span className="description">
-                      <strong>{payment.type}</strong>
-                      <small>{payment.transactionId}</small>
-                    </span>
-                    <span
-                      className={`amount ${
-                        payment.status === "Refunded" ? "refund" : ""
-                      }`}
+                    <div
+                      style={{ cursor: "pointer" }}
+                      className="wallet-balance"
+                      onClick={() => navigate("/amount")}
                     >
-                      {payment.amount}
-                    </span>
-                    <span className={`status ${payment.status.toLowerCase()}`}>
-                      {payment.status}
-                    </span>
+                      <AccountBalanceWallet />
+                      <span>Add Balance</span>
+                    </div>
                   </div>
-                ))}
+                </div>
+                <div className="payments-table">
+                  <div className="table-header">
+                    <span>Date</span>
+                    <span>Description</span>
+                    <span>Amount</span>
+                    <span>Status</span>
+                  </div>
+                  {paymentHistory.map((payment) => (
+                    <div key={payment.id} className="table-row">
+                      <span className="date">{payment.date}</span>
+                      <span className="description">
+                        <strong>{payment.type}</strong>
+                        <small>{payment.transactionId}</small>
+                      </span>
+                      <span
+                        className={`amount ${
+                          payment.status === "Refunded" ? "refund" : ""
+                        }`}
+                      >
+                        {payment.amount}
+                      </span>
+                      <span
+                        className={`status ${payment.status.toLowerCase()}`}
+                      >
+                        {payment.status}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          </motion.div>
-        )}
+            </motion.div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
