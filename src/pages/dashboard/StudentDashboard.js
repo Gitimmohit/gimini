@@ -50,10 +50,9 @@ const StudentDashboard = () => {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((response) => {
-        console.log("response--", response);
-        if (response.data.success) {
+        if (response.data.results.success) {
           setshow(false);
-          setupcoming_quiz(response.data.upcoming_quizzes);
+          setupcoming_quiz(response.data.results.upcoming_quizzes);
         }
       })
       .catch((err) => {

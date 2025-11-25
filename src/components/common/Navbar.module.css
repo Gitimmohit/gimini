@@ -488,11 +488,6 @@
   }
 }
 
-/* Ensure body padding for fixed navbar */
-:global(body) {
-  padding-top: 60px !important;
-  scroll-behavior: smooth;
-}
 
 /* Focus styles for accessibility */
 .navLink:focus,
