@@ -1,15 +1,14 @@
 /* pages/ContactUs.css */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 .con-contact-us-page {
   min-height: 100vh;
-  /* background: #0a192f; */
   color: #ccd6f6;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .con-container {
-  max-width: 100%;
+  width: 100%;
   margin: 0 auto;
   padding: 0 2rem;
 }
@@ -19,12 +18,11 @@
 .con-contact-hero {
   position: relative;
   overflow: hidden;
-  width: 100%; 
+  width: 100%;
   overflow-x: auto;
 }
 
 /* IMAGE */
-
 
 .con-contact-hero {
   position: relative;
@@ -37,28 +35,26 @@
   width: 100%;
   height: 90vh;
   object-fit: cover;
-  /* object-position: top; */
   object-position: top center;
   top: 0;
   left: 0;
   z-index: -1;
 }
 
-
 /* HERO WRAPPER */
 .con-hero-wrapper {
   position: relative;
   height: 90vh;
   display: flex;
-  justify-content: flex-start;   /* 👈 TEXT LEFT */
+  justify-content: flex-start; /* 👈 TEXT LEFT */
   align-items: center;
-  padding-left: 40px;            /* 👈 LEFT GAP */
+  padding-left: 40px; /* 👈 LEFT GAP */
 }
 
 /* HERO CONTENT – LEFT TEXT */
 .con-hero-content {
   max-width: 600px;
-  text-align: left;              /* 👈 LEFT ALIGN */
+  text-align: left; /* 👈 LEFT ALIGN */
   color: white;
 }
 
@@ -88,7 +84,7 @@
   font-size: 0.9rem;
   font-weight: 600;
   border: 1px solid rgba(100, 255, 218, 0.3);
-  margin-left: 40px;      /* 👈 LEFT SIDE */
+  margin-left: 40px; /* 👈 LEFT SIDE */
   margin-top: 20px;
 }
 
@@ -144,7 +140,6 @@
   }
 }
 
-
 .con-badge-icon {
   font-size: 1.2rem !important;
 }
@@ -162,9 +157,8 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-shadow: 0 0 30px rgba(100, 255, 218, 0.3);
-   white-space: nowrap;
+  white-space: nowrap;
 }
-
 
 .con-hero-subtitle {
   font-size: 1.2rem;
@@ -308,7 +302,7 @@
   border-radius: 8px;
   color: #ccd6f6;
   font-size: 1rem;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   transition: all 0.3s ease;
 }
 
@@ -370,8 +364,12 @@
 }
 
 @keyframes con-spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .con-success-message {
@@ -420,7 +418,7 @@
 .con-sidebar-icon {
   color: #64ffda;
   font-size: 2rem !important;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 .con-sidebar-card.con-emergency .con-sidebar-icon {
@@ -604,7 +602,8 @@
 .con-map-container {
   position: relative;
   height: 400px;
-  background: url('https://images.unsplash.com/photo-1543722530-d2c3201371e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover;
+  background: url("https://images.unsplash.com/photo-1543722530-d2c3201371e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80")
+    center/cover;
 }
 
 .con-map-overlay {
@@ -661,7 +660,7 @@
     grid-template-columns: 1fr;
     gap: 2rem;
   }
-  
+
   .con-location-content {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -673,11 +672,11 @@
   }
 
   .con-hero-title {
-  display: inline-block;      /* Prevents wrapping */
-  white-space: nowrap;        /* Ensures text stays on one line */
-  font-size: 3rem;            /* Example size */
-  line-height: 1.2;
-}
+    display: inline-block; /* Prevents wrapping */
+    white-space: nowrap; /* Ensures text stays on one line */
+    font-size: 3rem; /* Example size */
+    line-height: 1.2;
+  }
 
   .con-contact-cards-grid {
     grid-template-columns: 1fr;
